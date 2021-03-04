@@ -29,7 +29,7 @@ type Contact struct {
 	TFNRECORDED                         bool          `json:"TFN_RECORDED"`
 	WORKREADYPARTICIPANTNUMBER          interface{}   `json:"WORKREADYPARTICIPANTNUMBER"`
 	SACESTUDENTID                       interface{}   `json:"SACESTUDENTID"`
-	TITLE                               interface{}   `json:"TITLE"`
+	Title                               interface{}   `json:"TITLE"`
 	MIDDLENAME                          interface{}   `json:"MIDDLENAME"`
 	PREFERREDNAME                       interface{}   `json:"PREFERREDNAME"`
 	POSITION                            string        `json:"POSITION"`
@@ -122,9 +122,12 @@ type Contact struct {
 	DOMAINIDS                           []interface{} `json:"DOMAINIDS"`
 }
 
-// Hello World
-func (c *ContactService) Hello() string {
-	return "Hello World"
+// ContactOptions for Updateing
+type ContactOptions struct {
+	GivenName    int `url:"givenName"`
+	Surname      int `url:"surname"`
+	Title        int `url:"title"`
+	EmailAddress int `url:"emailAddress"`
 }
 
 // GetContact Interacts with a specfic contact.
