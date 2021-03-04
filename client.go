@@ -7,6 +7,9 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"reflect"
+
+	"github.com/google/go-querystring/query"
 )
 
 // Client for the axcelerate SDK
@@ -19,6 +22,7 @@ type Client struct {
 	common service // Reuse a single struct instead of allocating one for each service on the heap.
 
 	Contact *ContactService
+	Courses *CoursesService
 }
 
 type service struct {
@@ -42,6 +46,7 @@ func NewAuthClient(baseURL *url.URL, apitoken, wstoken string, httpClient *http.
 	c.common.client = c
 
 	c.Contact = (*ContactService)(&c.common)
+	c.Courses = (*CoursesService)(&c.common)
 
 	return c
 }
@@ -83,4 +88,22 @@ func (c *Client) do(req *http.Request, v interface{}) (*http.Response, error) {
 	defer resp.Body.Close()
 	err = json.NewDecoder(resp.Body).Decode(v)
 	return resp, err
+}
+
+func addOptions(s string, opt interface{}) (string, error) {
+	v := reflect.ValueOf(opt)
+	if v.Kind() == reflect.Ptr && v.IsNil() {
+		return s, nil
+	}
+	u, err := url.Parse(s)
+	if err != nil {
+		return s, err
+	}
+	vs, err := query.Values(opt)
+	if err != nil {
+		return s, err
+	}
+	u.RawQuery = vs.Encode()
+
+	return u.String(), nil
 }
