@@ -3,7 +3,6 @@ package axcelerate
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -78,8 +77,6 @@ func (c *Client) do(req *http.Request, v interface{}) (*http.Response, error) {
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("apitoken", c.apitoken)
 	req.Header.Set("wstoken", c.wstoken)
-
-	fmt.Println(req.URL)
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {

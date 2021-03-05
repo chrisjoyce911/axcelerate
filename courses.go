@@ -2,6 +2,7 @@ package axcelerate
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"net/url"
@@ -29,9 +30,32 @@ type Course struct {
 	Type             string      `json:"TYPE"`
 }
 
+// Instance of a course
+type Instance struct {
+	Cost                int64       `json:"COST"`
+	CustomfieldWeekends interface{} `json:"CUSTOMFIELD_WEEKENDS"`
+	Datedescriptor      string      `json:"DATEDESCRIPTOR"`
+	Enrolmentopen       bool        `json:"ENROLMENTOPEN"`
+	Finishdate          string      `json:"FINISHDATE"`
+	CoursesID           int64       `json:"ID"`
+	InstanceID          int64       `json:"INSTANCEID"`
+	Isactive            bool        `json:"ISACTIVE"`
+	Location            string      `json:"LOCATION"`
+	Maxparticipants     int64       `json:"MAXPARTICIPANTS"`
+	Minparticipants     int64       `json:"MINPARTICIPANTS"`
+	Name                string      `json:"NAME"`
+	Notices             interface{} `json:"NOTICES"`
+	Ownercontactid      int64       `json:"OWNERCONTACTID"`
+	Participants        int64       `json:"PARTICIPANTS"`
+	Participantvacancy  int64       `json:"PARTICIPANTVACANCY"`
+	Startdate           string      `json:"STARTDATE"`
+	Trainercontactid    int64       `json:"TRAINERCONTACTID"`
+	Virtualclassroomid  interface{} `json:"VIRTUALCLASSROOMID"`
+}
+
 // CoursesOptions for Updateing
 type CoursesOptions struct {
-	ID             int    `url:"ID"`              // The ID of the Course to filter.
+	CoursesID      int    `url:"ID"`              // The ID of the Course to filter.
 	SearchTerm     string `url:"searchTerm"`      // The term to use when filtering activities.
 	CourseType     string `url:"type"`            // The course type to return. w = workshop, p = accredited program, el = e-learning, all = All types.
 	TrainingArea   string `url:"trainingArea"`    // The Training Area to Search
@@ -44,14 +68,6 @@ type CoursesOptions struct {
 	LastUpdatedMin bool   `url:"lastUpdated_min"` // In 'YYYY-MM-DD hh:mm' format. The course last updated date must be greater than or equal to this datetime. Courses last updated prior to Nov 2018 may not appear. Time is optional and in client's current timezone. Only applicable to w or p types.
 	LastUpdatedMax bool   `url:"lastUpdated_max"` // In 'YYYY-MM-DD hh:mm' format. The course last updated date must be less than or equal to this datetime. Courses last updated prior to Nov 2018 may not appear. Time is optional and in client's current timezone. Only applicable to w or p types.
 	IsActive       bool   `url:"givenName"`       // Whether to include active/inactive courses only. By default both will be included
-}
-
-func NewCoursesOptions() CoursesOptions {
-	var opts CoursesOptions
-	opts.IsActive = true
-	opts.Current = true
-	opts.DisplayLength = 25
-	return opts
 }
 
 // GetCourses returns a list of courses. Returns accredited, Non-accredited and e-learning courses seperately or returns all together
@@ -81,4 +97,35 @@ func (c *CoursesService) GetCourses() ([]Course, error) {
 	defer resp.Body.Close()
 	err = json.NewDecoder(resp.Body).Decode(&courses)
 	return courses, err
+}
+
+// GetCoursesInstances returns a list of instances
+func (c *CoursesService) GetCoursesInstances(coursesID int, active bool) ([]Instance, error) {
+	// lastUpdatedMin, lastUpdatedMax string
+	var instances []Instance
+
+	URL, error := url.Parse(c.client.baseURL.String())
+	URL.Path = "/api/course/instances"
+	if error != nil {
+		log.Fatal("An error occurs while handling url", error)
+	}
+	query := URL.Query()
+	query.Set("ID", fmt.Sprintf("%d", coursesID))
+	query.Set("isActive", fmt.Sprintf("%t", active))
+	query.Set("type", "w")
+
+	URL.RawQuery = query.Encode()
+
+	req, err := http.NewRequest("GET", URL.String(), nil)
+	if err != nil {
+		return instances, err
+	}
+
+	resp, err := c.client.do(req, &instances)
+	if err != nil {
+		return instances, err
+	}
+	defer resp.Body.Close()
+	err = json.NewDecoder(resp.Body).Decode(&instances)
+	return instances, err
 }
