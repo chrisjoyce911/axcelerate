@@ -53,6 +53,33 @@ type Instance struct {
 	Virtualclassroomid  interface{} `json:"VIRTUALCLASSROOMID"`
 }
 
+// Attended for a Course Instance.
+type Attended struct {
+	Attendanceid     interface{} `json:"ATTENDANCEID"`
+	Attendedduration interface{} `json:"ATTENDEDDURATION"`
+	Attendedflag     interface{} `json:"ATTENDEDFLAG"`
+	Comment          string      `json:"COMMENT"`
+	Completedflag    bool        `json:"COMPLETEDFLAG"`
+	Contactid        int64       `json:"CONTACTID"`
+	Enrolid          int64       `json:"ENROLID"`
+	Finishtime       string      `json:"FINISHTIME"`
+	Givenname        string      `json:"GIVENNAME"`
+	Starttime        string      `json:"STARTTIME"`
+	Surname          string      `json:"SURNAME"`
+}
+
+// Attendeds for a Course Instance.
+type Attendeds struct {
+	Complexid  interface{} `json:"COMPLEXID"`
+	Date       string      `json:"DATE"`
+	Duration   interface{} `json:"DURATION"`
+	Enrollees  []Attended  `json:"ENROLLEES"`
+	Finishtime string      `json:"FINISHTIME"`
+	Instanceid int64       `json:"INSTANCEID"`
+	Starttime  string      `json:"STARTTIME"`
+	Type       string      `json:"TYPE"`
+}
+
 // CoursesOptions for Updateing
 type CoursesOptions struct {
 	CoursesID      int    `url:"ID"`              // The ID of the Course to filter.
@@ -128,4 +155,32 @@ func (c *CoursesService) GetCoursesInstances(coursesID int, active bool) ([]Inst
 	defer resp.Body.Close()
 	err = json.NewDecoder(resp.Body).Decode(&instances)
 	return instances, err
+}
+
+// GetCoursesAttendeds for a Course Instance.
+func (c *CoursesService) GetCoursesAttendeds(instanceID int) ([]Attendeds, error) {
+	var attendeds []Attendeds
+
+	URL, error := url.Parse(c.client.baseURL.String())
+	URL.Path = "/api/course/instance/attendance"
+	if error != nil {
+		log.Fatal("An error occurs while handling url", error)
+	}
+	query := URL.Query()
+	query.Set("instanceID", fmt.Sprintf("%d", instanceID))
+
+	URL.RawQuery = query.Encode()
+
+	req, err := http.NewRequest("GET", URL.String(), nil)
+	if err != nil {
+		return attendeds, err
+	}
+
+	resp, err := c.client.do(req, &attendeds)
+	if err != nil {
+		return attendeds, err
+	}
+	defer resp.Body.Close()
+	err = json.NewDecoder(resp.Body).Decode(&attendeds)
+	return attendeds, err
 }
