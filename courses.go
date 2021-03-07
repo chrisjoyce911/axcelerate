@@ -138,7 +138,12 @@ func (c *CoursesService) GetCoursesInstances(coursesID int, active bool) ([]Inst
 	}
 	query := URL.Query()
 	query.Set("ID", fmt.Sprintf("%d", coursesID))
-	query.Set("isActive", fmt.Sprintf("%t", active))
+	if active {
+		query.Set("current", "1")
+	} else {
+		query.Set("current", "0")
+	}
+
 	query.Set("type", "w")
 
 	URL.RawQuery = query.Encode()
