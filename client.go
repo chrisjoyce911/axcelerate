@@ -6,7 +6,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"reflect"
 
 	"github.com/google/go-querystring/query"
 )
@@ -87,20 +86,17 @@ func (c *Client) do(req *http.Request, v interface{}) (*http.Response, error) {
 	return resp, err
 }
 
-func addOptions(s string, opt interface{}) (string, error) {
-	v := reflect.ValueOf(opt)
-	if v.Kind() == reflect.Ptr && v.IsNil() {
-		return s, nil
-	}
+func addOptions(s string, opts interface{}) (string, error) {
 	u, err := url.Parse(s)
 	if err != nil {
 		return s, err
 	}
-	vs, err := query.Values(opt)
+
+	qs, err := query.Values(opts)
 	if err != nil {
 		return s, err
 	}
-	u.RawQuery = vs.Encode()
 
+	u.RawQuery = qs.Encode()
 	return u.String(), nil
 }
