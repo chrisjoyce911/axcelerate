@@ -1,4 +1,4 @@
-# axcelerate-go [![Go Reference](https://pkg.go.dev/badge/github.com/chrisjoyce911/axcelerate.svg)](https://pkg.go.dev/github.com/chrisjoyce911/axcelerate) [![Build Status](https://travis-ci.org/multiplay/go-battleye.svg?branch=master)](https://travis-ci.org/chrisjoyce911/axcelerate)
+# axcelerate [![Go Report Card](https://goreportcard.com/badge/github.com/chrisjoyce911/axcelerate)](https://goreportcard.com/report/github.com/chrisjoyce911/axcelerate) [![Go Reference](https://pkg.go.dev/badge/github.com/chrisjoyce911/axcelerate.svg)](https://pkg.go.dev/github.com/chrisjoyce911/axcelerate) [![Build Status](https://travis-ci.org/multiplay/go-battleye.svg?branch=master)](https://travis-ci.org/chrisjoyce911/axcelerate) [![License](https://img.shields.io/badge/license-unlicense-blue.svg)](https://github.com/chrisjoyce911/axcelerate/blob/master/LICENSE)
 
 Provides a simple interface to theRESTFul API for interfacing with aXcelerate.
 
