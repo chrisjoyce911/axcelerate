@@ -30,7 +30,11 @@ type service struct {
 }
 
 // NewClient for all operations
-func NewClient(baseURL *url.URL, apitoken, wstoken string, httpClient *http.Client) *Client {
+func NewClient(apitoken, wstoken string, baseURL *url.URL, httpClient *http.Client) *Client {
+
+	if baseURL == nil {
+		baseURL, _ = url.Parse("https://admin.axcelerate.com.au")
+	}
 
 	if httpClient == nil {
 		httpClient = http.DefaultClient
