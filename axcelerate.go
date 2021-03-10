@@ -140,6 +140,9 @@ func (c *Client) Do(req AxRequest, v interface{}) (*Response, error) {
 	fmt.Println("Do - " + req.url.String())
 
 	thisReq, err := http.NewRequest(req.method, req.url.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	thisReq.Header.Set("Accept", "application/json")
 	thisReq.Header.Set("apitoken", c.apitoken)
