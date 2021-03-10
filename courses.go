@@ -43,14 +43,15 @@ type Course struct {
 // lastUpdated_min	datetime	false				In 'YYYY-MM-DD hh:mm' format. The course last updated date must be greater than or equal to this datetime. Courses last updated prior to Nov 2018 may not appear. Time is optional and in client's current timezone. Only applicable to w or p types.
 // lastUpdated_max	datetime	false				In 'YYYY-MM-DD hh:mm' format. The course last updated date must be less than or equal to this datetime. Courses last updated prior to Nov 2018 may not appear. Time is optional and in client's current timezone. Only applicable to w or p types.
 // isActive			boolean		false				Whether to include active/inactive courses only. By default both will be included
-func (s *CoursesService) GetCourses(parms map[string]string) (*[]Course, *Response, error) {
-	a := new([]Course)
-	resp, err := do(s.client, "GET", Params{parms: parms, u: "/courses/"}, a)
+func (s *CoursesService) GetCourses(parms map[string]string) ([]Course, *Response, error) {
+	var obj []Course
+
+	resp, err := do(s.client, "GET", Params{parms: parms, u: "/courses/"}, obj)
 
 	if err != nil {
-		return nil, resp, err
+		return obj, resp, err
 	}
 
-	json.Unmarshal([]byte(resp.Body), &a)
-	return a, resp, err
+	json.Unmarshal([]byte(resp.Body), &obj)
+	return obj, resp, err
 }

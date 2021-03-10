@@ -131,12 +131,12 @@ type ContactOptions struct {
 }
 
 // GetContact Interacts with a specfic contact.
-func (s *ContactService) GetContact(contactID int) (*Contact, *Response, error) {
-	a := new(Contact)
+func (s *ContactService) GetContact(contactID int) (Contact, *Response, error) {
+	var a Contact
 
 	resp, err := do(s.client, "GET", Params{u: fmt.Sprintf("/contact/%d", contactID)}, a)
 	if err != nil {
-		return nil, resp, err
+		return a, resp, err
 	}
 
 	json.Unmarshal([]byte(resp.Body), &a)

@@ -48,8 +48,8 @@ lastUpdated_min	datetime
 lastUpdated_max	datetime
 	In YYYY-MM-DD hh:mm format. The course instance last updated date must be less than or equal to this datetime. Instances last updated prior to Nov 2018 may not appear. Time is optional and in clients current timezone. Only applicable to w or p types.
 */
-func (s *CoursesService) GetCoursesInstances(coursesID int, activityType string, parms map[string]string) (*[]Instance, *Response, error) {
-	a := new([]Instance)
+func (s *CoursesService) GetCoursesInstances(coursesID int, activityType string, parms map[string]string) ([]Instance, *Response, error) {
+	var obj []Instance
 
 	if len(parms) == 0 {
 		parms = map[string]string{}
@@ -58,12 +58,12 @@ func (s *CoursesService) GetCoursesInstances(coursesID int, activityType string,
 	parms["ID"] = fmt.Sprintf("%d", coursesID)
 	parms["type"] = activityType
 
-	resp, err := do(s.client, "GET", Params{parms: parms, u: "/course/instances"}, a)
+	resp, err := do(s.client, "GET", Params{parms: parms, u: "/course/instances"}, obj)
 
 	if err != nil {
-		return nil, resp, err
+		return obj, resp, err
 	}
 
-	json.Unmarshal([]byte(resp.Body), &a)
-	return a, resp, err
+	json.Unmarshal([]byte(resp.Body), &obj)
+	return obj, resp, err
 }

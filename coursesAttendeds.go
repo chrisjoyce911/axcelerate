@@ -57,8 +57,8 @@ departure
 comment
 	Associate a comment with this attendance record.
 */
-func (s *CoursesService) GetCoursesAttendeds(instanceID int, parms map[string]string) (*[]Attendeds, *Response, error) {
-	a := new([]Attendeds)
+func (s *CoursesService) GetCoursesAttendeds(instanceID int, parms map[string]string) ([]Attendeds, *Response, error) {
+	var obj []Attendeds
 
 	if len(parms) == 0 {
 		parms = map[string]string{}
@@ -67,12 +67,12 @@ func (s *CoursesService) GetCoursesAttendeds(instanceID int, parms map[string]st
 	parms["instanceID"] = fmt.Sprintf("%d", instanceID)
 	parms["type"] = "w"
 
-	resp, err := do(s.client, "GET", Params{parms: parms, u: "/course/instance/attendance"}, a)
+	resp, err := do(s.client, "GET", Params{parms: parms, u: "/course/instance/attendance"}, obj)
 
 	if err != nil {
-		return nil, resp, err
+		return obj, resp, err
 	}
 
-	json.Unmarshal([]byte(resp.Body), &a)
-	return a, resp, err
+	json.Unmarshal([]byte(resp.Body), &obj)
+	return obj, resp, err
 }

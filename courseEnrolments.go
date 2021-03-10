@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 )
 
-// Enrolments for a course
-type Enrolments []struct {
+// Enrolment for a course
+type Enrolment struct {
 	Activities []struct {
 		Activities []interface{} `json:"ACTIVITIES"`
 		Amountpaid interface{}   `json:"AMOUNTPAID"`
@@ -104,14 +104,14 @@ type
 filterType
 	Filter related activities. s = show Subjects and related eLearning, el = show related eLearning only. Only s & el works at this time. To use this filter you must also pass a contactID for the student.
 */
-func (s *CoursesService) GetEnrolments(parms map[string]string) (*[]Enrolments, *Response, error) {
-	a := new([]Enrolments)
-	resp, err := do(s.client, "GET", Params{parms: parms, u: "/course/enrolments"}, a)
+func (s *CoursesService) GetEnrolments(parms map[string]string) ([]Enrolment, *Response, error) {
+	var obj []Enrolment
+	resp, err := do(s.client, "GET", Params{parms: parms, u: "/course/enrolments"}, obj)
 
 	if err != nil {
-		return nil, resp, err
+		return obj, resp, err
 	}
 
-	json.Unmarshal([]byte(resp.Body), &a)
-	return a, resp, err
+	json.Unmarshal([]byte(resp.Body), &obj)
+	return obj, resp, err
 }

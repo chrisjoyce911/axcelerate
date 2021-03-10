@@ -46,20 +46,20 @@ instanceID
 activityType
 	The type of the activity. w = workshop, p = accredited program, el = e-learning.
 */
-func (s *CoursesService) GetCoursesInstanceDetail(instanceID int, activityType string) (*InstanceDetail, *Response, error) {
-	a := new(InstanceDetail)
+func (s *CoursesService) GetCoursesInstanceDetail(instanceID int, activityType string) (InstanceDetail, *Response, error) {
+	var obj InstanceDetail
 
 	parms := map[string]string{}
 
 	parms["instanceID"] = fmt.Sprintf("%d", instanceID)
 	parms["type"] = activityType
 
-	resp, err := do(s.client, "GET", Params{parms: parms, u: "/course/instance/detail"}, a)
+	resp, err := do(s.client, "GET", Params{parms: parms, u: "/course/instance/detail"}, obj)
 
 	if err != nil {
-		return nil, resp, err
+		return obj, resp, err
 	}
 
-	json.Unmarshal([]byte(resp.Body), &a)
-	return a, resp, err
+	json.Unmarshal([]byte(resp.Body), &obj)
+	return obj, resp, err
 }
