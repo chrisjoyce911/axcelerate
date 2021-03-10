@@ -130,7 +130,7 @@ type ContactOptions struct {
 	EmailAddress int `url:"emailAddress"`
 }
 
-// GetContact Interacts with a specfic contact.
+// GetContact Interacts with a specific contact.
 func (s *ContactService) GetContact(contactID int) (Contact, *Response, error) {
 	var a Contact
 
