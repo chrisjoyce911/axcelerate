@@ -1,3 +1,6 @@
+// Package axcelerate provides a simple interface to theRESTFul API for interfacing with aXcelerate.
+// All responses can be access as the returned as JSON structures as well as an object
+// All endpoint parameters can be set for all endpoints using a simple map
 package axcelerate
 
 import (
@@ -27,6 +30,17 @@ type Client struct {
 
 type service struct {
 	client *Client
+}
+
+// APIerr may happeen along with a status code
+// aXcelerate has a standard error struct that is returned whenever something goes wrong.
+// This includes validation errors, as well as unexpected application errors.
+type APIerr struct {
+	Code     string `json:"code"`
+	Data     string `json:"data"`
+	Details  string `json:"details"`
+	Error    bool   `json:"error"`
+	Messages string `json:"messages"`
 }
 
 // NewClient for all operations
