@@ -28,7 +28,7 @@ type Course struct {
 	Type             string      `json:"TYPE"`
 }
 
-// GetCourses returns a list of courses. Returns accredited, Non-accredited and e-learning courses seperately or returns all together
+// GetCourses returns a list of courses. Returns accredited, Non-accredited and e-learning courses separately or returns all together
 // Header			Type		Required	Default	Description
 // ID				numeric		false				The ID of the Course to filter.
 // searchTerm		string		false				The term to use when filtering activities.
