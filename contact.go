@@ -3,12 +3,12 @@ package axcelerate
 import (
 	"encoding/json"
 	"fmt"
-	"net/http"
-	"net/url"
 )
 
 // ContactService handles all interactions with Contact
-type ContactService service
+type ContactService struct {
+	client *Client
+}
 
 // Contact object with the full contact information
 type Contact struct {
@@ -131,21 +131,15 @@ type ContactOptions struct {
 }
 
 // GetContact Interacts with a specfic contact.
-func (c *ContactService) GetContact(contactID int) (Contact, error) {
-	var contact Contact
-	path := fmt.Sprintf("/api/contact/%d", contactID)
-	rel := &url.URL{Path: path}
-	u := c.client.baseURL.ResolveReference(rel)
-	req, err := http.NewRequest("GET", u.String(), nil)
+func (s *ContactService) GetContact(contactID int) (*Contact, *Response, error) {
+	a := new(Contact)
+
+	resp, err := do(s.client, "GET", Params{u: fmt.Sprintf("/contact/%d", contactID)}, a)
 	if err != nil {
-		return contact, err
+		return nil, resp, err
 	}
 
-	resp, err := c.client.do(req, &contact)
-	if err != nil {
-		return contact, err
-	}
-	defer resp.Body.Close()
-	err = json.NewDecoder(resp.Body).Decode(&contact)
-	return contact, err
+	json.Unmarshal([]byte(resp.Body), &a)
+
+	return a, resp, err
 }
