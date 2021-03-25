@@ -1,0 +1,40 @@
+[
+  {
+    "ID": 16380,
+    "INSTANCEID": 407209,
+    "NAME": "aXcelerate Client Forum",
+    "STARTDATE": "2017-03-06 09:00",
+    "FINISHDATE": "2017-03-09 12:30",
+    "DATEDESCRIPTOR": "6 - 9 March 2017",
+    "LOCATION": "Sydney CBD",
+    "COST": 20,
+    "OWNERCONTACTID": 1038809,
+    "TRAINERCONTACTID": 4744,
+    "NOTICES": null,
+    "PARTICIPANTS": 18,
+    "MAXPARTICIPANTS": 20,
+    "MINPARTICIPANTS": 1,
+    "PARTICIPANTVACANCY": 2,
+    "ENROLMENTOPEN": false,
+    "ISACTIVE": true
+  },
+  {
+    "ID": 16380,
+    "INSTANCEID": 423316,
+    "NAME": "aXcelerate Client Forum",
+    "STARTDATE": "2017-03-14 09:30",
+    "FINISHDATE": "2017-03-14 13:00",
+    "DATEDESCRIPTOR": "14 March 2017",
+    "LOCATION": "Melbourne",
+    "COST": 0,
+    "OWNERCONTACTID": 4744,
+    "TRAINERCONTACTID": 4744,
+    "NOTICES": null,
+    "PARTICIPANTS": 1,
+    "MAXPARTICIPANTS": 12,
+    "MINPARTICIPANTS": 5,
+    "PARTICIPANTVACANCY": 11,
+    "ENROLMENTOPEN": true,
+    "ISACTIVE": true
+  }
+]
