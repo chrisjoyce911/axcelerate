@@ -1,0 +1,39 @@
+{
+  "UNITS": [
+    {
+      "MODULE": {},
+      "UNITID": 35668,
+      "SCHEDULEDSTARTDATE": null,
+      "UNIT": "Implement and monitor environmentally sustainable work practices",
+      "UNITCODE": "BSBSUS301A",
+      "UNITORDER": 1,
+      "SCHEDULEDENDDATE": null,
+      "ELECTIVE": 0
+    },
+    {
+      "MODULE": {},
+      "UNITID": 37713,
+      "SCHEDULEDSTARTDATE": null,
+      "UNIT": "Provide technical advice",
+      "UNITCODE": "DEFCM008B",
+      "UNITORDER": 2,
+      "SCHEDULEDENDDATE": null,
+      "ELECTIVE": 0
+    }
+  ],
+  "REPORTINGSTANDARD": "QLD DETE (DETConnect)",
+  "OWNERCONTACTID": 1100635,
+  "ENROLMENTOPEN": false,
+  "LOCATION": "VM Learning Offices",
+  "DELIVERYLOCATIONID": 701,
+  "INSTANCEID": 67569,
+  "TRAINERCONTACTID": null,
+  "STARTDATE": "2014-05-22 00:00",
+  "FINISHDATE": "2014-05-22 00:00",
+  "COST": 0,
+  "NAME": "AAAAA test",
+  "ID": 4109,
+  "DATEDESCRIPTOR": "22/05/2014 - 22/05/2014",
+  "PUBLIC": false,
+  "NOTICES": null
+}

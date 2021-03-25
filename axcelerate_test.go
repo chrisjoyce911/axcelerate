@@ -2,6 +2,7 @@ package axcelerate
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -41,4 +42,14 @@ func NewTestClient(fn RoundTripFunc) *http.Client {
 	return &http.Client{
 		Transport: RoundTripFunc(fn),
 	}
+}
+
+// LoadTestData get test data for body responice
+func LoadTestData(file string) string {
+
+	b, err := ioutil.ReadFile(fmt.Sprintf("testdata/%s", file))
+	if err != nil {
+		fmt.Print(err)
+	}
+	return string(b)
 }

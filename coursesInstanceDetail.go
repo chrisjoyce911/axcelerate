@@ -1,8 +1,10 @@
 package axcelerate
 
 import (
-	"encoding/json"
 	"fmt"
+	"time"
+
+	jsontime "github.com/liamylian/jsontime/v2/v2"
 )
 
 // InstanceDetail details of an activity instance.
@@ -12,7 +14,7 @@ type InstanceDetail struct {
 	CustomfieldWeekends interface{}   `json:"CUSTOMFIELD_WEEKENDS"`
 	Datedescriptor      string        `json:"DATEDESCRIPTOR"`
 	Enrolmentopen       bool          `json:"ENROLMENTOPEN"`
-	Finishdate          string        `json:"FINISHDATE"`
+	Finishdate          time.Time     `json:"FINISHDATE"`
 	ID                  int64         `json:"ID"`
 	Instanceid          int64         `json:"INSTANCEID"`
 	Items               []interface{} `json:"ITEMS"`
@@ -33,7 +35,7 @@ type InstanceDetail struct {
 	Participants       int64       `json:"PARTICIPANTS"`
 	Participantvacancy int64       `json:"PARTICIPANTVACANCY"`
 	Public             bool        `json:"PUBLIC"`
-	Startdate          string      `json:"STARTDATE"`
+	Startdate          time.Time   `json:"STARTDATE"`
 	Trainercontactid   int64       `json:"TRAINERCONTACTID"`
 	Venuecontactid     int64       `json:"VENUECONTACTID"`
 }
@@ -47,6 +49,11 @@ activityType
 	The type of the activity. w = workshop, p = accredited program, el = e-learning.
 */
 func (s *CoursesService) GetCoursesInstanceDetail(instanceID int, activityType string) (InstanceDetail, *Response, error) {
+	var json = jsontime.ConfigWithCustomTimeFormat
+	jsontime.SetDefaultTimeFormat("2006-01-02 15:04", time.Local)
+
+	// jsontime.AddTimeFormatAlias("axcelerate_datetime", "2006-01-02 15:04")
+	time.LoadLocation("Asia/Shanghai")
 	var obj InstanceDetail
 
 	parms := map[string]string{}
