@@ -35,7 +35,7 @@ type Enrolment struct {
 	} `json:"ACTIVITIES"`
 	Amountpaid                           int64       `json:"AMOUNTPAID"`
 	Code                                 string      `json:"CODE"`
-	Contactid                            int64       `json:"CONTACTID"`
+	ContactID                            int64       `json:"CONTACTID"`
 	CustomfieldAgreetoelearning          string      `json:"CUSTOMFIELD_AGREETOELEARNING"`
 	CustomfieldAgreetosoa                interface{} `json:"CUSTOMFIELD_AGREETOSOA"`
 	CustomfieldAvetmissconsent           interface{} `json:"CUSTOMFIELD_AVETMISSCONSENT"`
@@ -56,26 +56,26 @@ type Enrolment struct {
 	CustomfieldTrueandcorrectdec         interface{} `json:"CUSTOMFIELD_TRUEANDCORRECTDEC"`
 	Delivery                             string      `json:"DELIVERY"`
 	Email                                string      `json:"EMAIL"`
-	Enrolid                              int64       `json:"ENROLID"`
+	EnrolID                              int64       `json:"ENROLID"`
 	Enrolmentdate                        string      `json:"ENROLMENTDATE"`
 	Finishdate                           interface{} `json:"FINISHDATE"`
 	Givenname                            string      `json:"GIVENNAME"`
 	ID                                   int64       `json:"ID"`
-	Instanceid                           int64       `json:"INSTANCEID"`
+	InstanceID                           int64       `json:"INSTANCEID"`
 	Learnerid                            int64       `json:"LEARNERID"`
 	Mobilephone                          string      `json:"MOBILEPHONE"`
 	Name                                 string      `json:"NAME"`
-	Ownerid                              int64       `json:"OWNERID"`
+	OwnerID                              int64       `json:"OWNERID"`
 	Pstacdatevic                         interface{} `json:"PSTACDATEVIC"`
 	Schooldeliverylocationid             interface{} `json:"SCHOOLDELIVERYLOCATIONID"`
-	Schoolorgid                          interface{} `json:"SCHOOLORGID"`
-	Schooltypeid                         string      `json:"SCHOOLTYPEID"`
+	SchoolorgID                          interface{} `json:"SCHOOLORGID"`
+	SchooltypeID                         string      `json:"SCHOOLTYPEID"`
 	Startdate                            string      `json:"STARTDATE"`
 	Status                               string      `json:"STATUS"`
 	Surname                              string      `json:"SURNAME"`
 	Type                                 string      `json:"TYPE"`
-	Vicprogramenrolmentid                string      `json:"VICPROGRAMENROLMENTID"`
-	Vicprogramstatusid                   string      `json:"VICPROGRAMSTATUSID"`
+	VicprogramenrolmentID                string      `json:"VICPROGRAMENROLMENTID"`
+	VicprogramstatusID                   string      `json:"VICPROGRAMSTATUSID"`
 }
 
 /*
