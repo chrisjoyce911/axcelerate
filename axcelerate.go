@@ -131,8 +131,6 @@ func (c *Client) Do(req AxRequest, v interface{}) (*Response, error) {
 
 	req.url.RawQuery, _ = url.QueryUnescape(req.data.Encode())
 
-	fmt.Println("Do - " + req.url.String())
-
 	thisReq, err := http.NewRequest(req.method, req.url.String(), nil)
 	if err != nil {
 		return nil, err
