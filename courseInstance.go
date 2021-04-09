@@ -10,8 +10,7 @@ type Instance struct {
 	Cost                int64       `json:"COST"`
 	CustomfieldWeekends interface{} `json:"CUSTOMFIELD_WEEKENDS"`
 	Datedescriptor      string      `json:"DATEDESCRIPTOR"`
-	EnrolmentOpen       bool
-	EnrolmentString     string      `json:"ENROLMENTOPEN"`
+	EnrolmentOpen       bool        `json:"ENROLMENTOPEN"`
 	Finishdate          string      `json:"FINISHDATE"`
 	CoursesID           int64       `json:"ID"`
 	InstanceID          int64       `json:"INSTANCEID"`
@@ -66,17 +65,6 @@ func (s *CoursesService) GetCoursesInstances(coursesID int, activityType string,
 	}
 
 	json.Unmarshal([]byte(resp.Body), &obj)
-
-	for i, x := range obj {
-
-		// TODO : this is very bad .. API should return valid datatypes
-		if x.EnrolmentString == "false" {
-			obj[i].EnrolmentOpen = false
-		}
-		if x.EnrolmentString == "true" {
-			obj[i].EnrolmentOpen = true
-		}
-	}
 
 	return obj, resp, err
 }
