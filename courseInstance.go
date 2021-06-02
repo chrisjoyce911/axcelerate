@@ -12,7 +12,7 @@ type Instance struct {
 	Datedescriptor      string      `json:"DATEDESCRIPTOR"`
 	EnrolmentOpen       bool        `json:"ENROLMENTOPEN"`
 	Finishdate          string      `json:"FINISHDATE"`
-	CoursesID           int         `json:"ID"`
+	CourseID            int         `json:"ID"`
 	InstanceID          int         `json:"INSTANCEID"`
 	Isactive            bool        `json:"ISACTIVE"`
 	Location            string      `json:"LOCATION"`
