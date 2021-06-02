@@ -7,25 +7,26 @@ import (
 
 // Instance of a course
 type Instance struct {
-	Cost                int64       `json:"COST"`
+	Cost                int         `json:"COST"`
 	CustomfieldWeekends interface{} `json:"CUSTOMFIELD_WEEKENDS"`
 	Datedescriptor      string      `json:"DATEDESCRIPTOR"`
 	EnrolmentOpen       bool        `json:"ENROLMENTOPEN"`
 	Finishdate          string      `json:"FINISHDATE"`
-	CoursesID           int64       `json:"ID"`
-	InstanceID          int64       `json:"INSTANCEID"`
+	CoursesID           int         `json:"ID"`
+	InstanceID          int         `json:"INSTANCEID"`
 	Isactive            bool        `json:"ISACTIVE"`
 	Location            string      `json:"LOCATION"`
-	Maxparticipants     int64       `json:"MAXPARTICIPANTS"`
-	Minparticipants     int64       `json:"MINPARTICIPANTS"`
+	Maxparticipants     int         `json:"MAXPARTICIPANTS"`
+	Minparticipants     int         `json:"MINPARTICIPANTS"`
 	Name                string      `json:"NAME"`
 	Notices             interface{} `json:"NOTICES"`
-	Ownercontactid      int64       `json:"OWNERCONTACTID"`
-	Participants        int64       `json:"PARTICIPANTS"`
-	Participantvacancy  int64       `json:"PARTICIPANTVACANCY"`
+	Ownercontactid      int         `json:"OWNERCONTACTID"`
+	Participants        int         `json:"PARTICIPANTS"`
+	Participantvacancy  int         `json:"PARTICIPANTVACANCY"`
 	Startdate           string      `json:"STARTDATE"`
-	TrainercontactID    int64       `json:"TRAINERCONTACTID"`
+	TrainercontactID    int         `json:"TRAINERCONTACTID"`
 	VirtualclassroomID  interface{} `json:"VIRTUALCLASSROOMID"`
+	COUNT               int         `json:"COUNT"`
 }
 
 /*
