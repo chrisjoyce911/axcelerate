@@ -17,6 +17,7 @@ type Instance struct {
 	InstanceID          int         `json:"INSTANCEID"`
 	IsActive            bool        `json:"ISACTIVE"`
 	Location            string      `json:"LOCATION"`
+	Domain              string      `json:"DOMAINNAME"`
 	Maxparticipants     int         `json:"MAXPARTICIPANTS"`
 	Minparticipants     int         `json:"MINPARTICIPANTS"`
 	Name                string      `json:"NAME"`
@@ -27,7 +28,7 @@ type Instance struct {
 	Startdate           string      `json:"STARTDATE"`
 	TrainercontactID    int         `json:"TRAINERCONTACTID"`
 	VirtualclassroomID  interface{} `json:"VIRTUALCLASSROOMID"`
-	COUNT               int         `json:"COUNT"`
+	Count               int         `json:"COUNT"`
 }
 
 /*
