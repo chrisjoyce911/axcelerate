@@ -1,10 +1,28 @@
 {
     "cSpell.words": [
+        "AGREETOSOA",
+        "AVETMISSCONSENT",
+        "CONTACTID",
+        "ENROLID",
         "Enrolments",
         "INSTANCEID",
+        "LEARNERID",
+        "NCVER",
         "OWNERCONTACTID",
+        "OWNERID",
         "Organisation",
+        "PFAQUIZ",
+        "PFAQUIZDATE",
+        "PFAQUIZLINK",
+        "PSTACDATEVIC",
         "ROWID",
-        "TRAINERCONTACTID"
+        "SCHOOLDELIVERYLOCATIONID",
+        "SCHOOLORGID",
+        "SCHOOLTYPEID",
+        "STATEMENTOFATTAINMENTLINK",
+        "TRAINERCONTACTID",
+        "VICENROLMENTID",
+        "VICPROGRAMENROLMENTID",
+        "VICPROGRAMSTATUSID"
     ]
 }

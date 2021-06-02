@@ -30,8 +30,8 @@ type Enrolment struct {
 		Status             string      `json:"STATUS"`
 		Surname            string      `json:"SURNAME"`
 		Type               string      `json:"TYPE"`
-		Vicenrolmentid     string      `json:"VICENROLMENTID"`
-		Virtualclassroomid interface{} `json:"VIRTUALCLASSROOMID"`
+		VicenrolmentID     string      `json:"VICENROLMENTID"`
+		VirtualClassroomID interface{} `json:"VIRTUALCLASSROOMID"`
 	} `json:"ACTIVITIES"`
 	Amountpaid                           int64       `json:"AMOUNTPAID"`
 	Code                                 string      `json:"CODE"`
@@ -79,7 +79,7 @@ type Enrolment struct {
 }
 
 /*
-GetEnrolments returns an array of structs containing the unique learnerID and contactID for each student's enrolment
+GetEnrolments returns an array of struct containing the unique learnerID and contactID for each student's enrolment
 
 Request Parameters
 
