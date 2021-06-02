@@ -1,33 +1,35 @@
 package axcelerate
 
 import (
-	"encoding/json"
 	"fmt"
+	"time"
+
+	jsontime "github.com/liamylian/jsontime/v2/v2"
 )
 
 // Instance of a course
 type Instance struct {
 	Cost                int         `json:"COST"`
 	CustomfieldWeekends interface{} `json:"CUSTOMFIELD_WEEKENDS"`
-	Datedescriptor      string      `json:"DATEDESCRIPTOR"`
+	DateDescriptor      string      `json:"DATEDESCRIPTOR"`
 	EnrolmentOpen       bool        `json:"ENROLMENTOPEN"`
 	Public              bool        `json:"PUBLIC"`
-	Finishdate          string      `json:"FINISHDATE"`
 	CourseID            int         `json:"ID"`
 	InstanceID          int         `json:"INSTANCEID"`
 	IsActive            bool        `json:"ISACTIVE"`
 	Location            string      `json:"LOCATION"`
 	Domain              string      `json:"DOMAINNAME"`
-	Maxparticipants     int         `json:"MAXPARTICIPANTS"`
-	Minparticipants     int         `json:"MINPARTICIPANTS"`
+	MaxParticipants     int         `json:"MAXPARTICIPANTS"`
+	MinParticipants     int         `json:"MINPARTICIPANTS"`
 	Name                string      `json:"NAME"`
 	Notices             interface{} `json:"NOTICES"`
 	Ownercontactid      int         `json:"OWNERCONTACTID"`
 	Participants        int         `json:"PARTICIPANTS"`
-	Participantvacancy  int         `json:"PARTICIPANTVACANCY"`
-	Startdate           string      `json:"STARTDATE"`
-	TrainercontactID    int         `json:"TRAINERCONTACTID"`
-	VirtualclassroomID  interface{} `json:"VIRTUALCLASSROOMID"`
+	ParticipantVacancy  int         `json:"PARTICIPANTVACANCY"`
+	StartDate           time.Time   `json:"STARTDATE" time_format:"axc_datetime"`
+	FinishDate          time.Time   `json:"FINISHDATE" time_format:"axc_datetime"`
+	TrainerContactID    int         `json:"TRAINERCONTACTID"`
+	VirtualClassroomID  interface{} `json:"VIRTUALCLASSROOMID"`
 	Count               int         `json:"COUNT"`
 }
 
@@ -66,6 +68,8 @@ func (s *CoursesService) GetCoursesInstances(coursesID int, activityType string,
 	if err != nil {
 		return obj, resp, err
 	}
+
+	var json = jsontime.ConfigWithCustomTimeFormat
 
 	json.Unmarshal([]byte(resp.Body), &obj)
 

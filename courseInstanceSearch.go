@@ -1,8 +1,6 @@
 package axcelerate
 
-import (
-	"encoding/json"
-)
+import jsontime "github.com/liamylian/jsontime/v2/v2"
 
 /*
 
@@ -84,7 +82,12 @@ func (s *CoursesService) GetCoursesInstanceSearch(parms map[string]string) ([]In
 		return obj, resp, err
 	}
 
+	var json = jsontime.ConfigWithCustomTimeFormat
+	jsontime.AddTimeFormatAlias("axc_datetime", "2006-01-02 15:04:05")
+
 	json.Unmarshal([]byte(resp.Body), &obj)
 
 	return obj, resp, err
 }
+
+// 2020-11-30 13:00:00
