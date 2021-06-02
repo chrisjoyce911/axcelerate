@@ -11,10 +11,11 @@ type Instance struct {
 	CustomfieldWeekends interface{} `json:"CUSTOMFIELD_WEEKENDS"`
 	Datedescriptor      string      `json:"DATEDESCRIPTOR"`
 	EnrolmentOpen       bool        `json:"ENROLMENTOPEN"`
+	Public              bool        `json:"PUBLIC"`
 	Finishdate          string      `json:"FINISHDATE"`
 	CourseID            int         `json:"ID"`
 	InstanceID          int         `json:"INSTANCEID"`
-	Isactive            bool        `json:"ISACTIVE"`
+	IsActive            bool        `json:"ISACTIVE"`
 	Location            string      `json:"LOCATION"`
 	Maxparticipants     int         `json:"MAXPARTICIPANTS"`
 	Minparticipants     int         `json:"MINPARTICIPANTS"`
