@@ -18,10 +18,10 @@ type Course struct {
 	Duration         float32     `json:"DURATION"`
 	Durationtype     interface{} `json:"DURATIONTYPE"`
 	ID               int64       `json:"ID"`
-	Isactive         bool        `json:"ISACTIVE"`
+	IsActive         bool        `json:"ISACTIVE"`
 	Name             string      `json:"NAME"`
 	Primaryimage     interface{} `json:"PRIMARYIMAGE"`
-	Rowid            int64       `json:"ROWID"`
+	RowID            int64       `json:"ROWID"`
 	Secondaryimage   interface{} `json:"SECONDARYIMAGE"`
 	Shortdescription interface{} `json:"SHORTDESCRIPTION"`
 	Streamname       interface{} `json:"STREAMNAME"`
@@ -39,7 +39,7 @@ type Course struct {
 // sortColumn		numeric		false		1		The column index to sort by.
 // sortDirection	string		false		ASC		The sort by direction 'ASC' OR 'DESC'.
 // current			boolean		false		true	Current courses flag. True to show only current courses
-// public			boolean		false		true	Whether to include public courses only. If false, returns all couse types regardless of public settings.
+// public			boolean		false		true	Whether to include public courses only. If false, returns all course types regardless of public settings.
 // lastUpdated_min	datetime	false				In 'YYYY-MM-DD hh:mm' format. The course last updated date must be greater than or equal to this datetime. Courses last updated prior to Nov 2018 may not appear. Time is optional and in client's current timezone. Only applicable to w or p types.
 // lastUpdated_max	datetime	false				In 'YYYY-MM-DD hh:mm' format. The course last updated date must be less than or equal to this datetime. Courses last updated prior to Nov 2018 may not appear. Time is optional and in client's current timezone. Only applicable to w or p types.
 // isActive			boolean		false				Whether to include active/inactive courses only. By default both will be included

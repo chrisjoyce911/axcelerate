@@ -16,13 +16,13 @@ type Enrolment struct {
 			Description string `json:"DESCRIPTION"`
 		} `json:"DELIVERY"`
 		Email              string      `json:"EMAIL"`
-		Enrolid            int64       `json:"ENROLID"`
+		EnrolID            int64       `json:"ENROLID"`
 		Enrolmentdate      string      `json:"ENROLMENTDATE"`
 		Finishdate         interface{} `json:"FINISHDATE"`
 		Givenname          string      `json:"GIVENNAME"`
 		ID                 int64       `json:"ID"`
-		Instanceid         int64       `json:"INSTANCEID"`
-		Learnerid          int64       `json:"LEARNERID"`
+		InstanceID         int64       `json:"INSTANCEID"`
+		LearnerID          int64       `json:"LEARNERID"`
 		Mobilephone        string      `json:"MOBILEPHONE"`
 		Name               string      `json:"NAME"`
 		Outcomecode        string      `json:"OUTCOMECODE"`
@@ -62,7 +62,7 @@ type Enrolment struct {
 	Givenname                            string      `json:"GIVENNAME"`
 	ID                                   int64       `json:"ID"`
 	InstanceID                           int64       `json:"INSTANCEID"`
-	Learnerid                            int64       `json:"LEARNERID"`
+	LearnerID                            int64       `json:"LEARNERID"`
 	Mobilephone                          string      `json:"MOBILEPHONE"`
 	Name                                 string      `json:"NAME"`
 	OwnerID                              int64       `json:"OWNERID"`

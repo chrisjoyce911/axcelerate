@@ -24,8 +24,8 @@ type Instance struct {
 	Participants        int64       `json:"PARTICIPANTS"`
 	Participantvacancy  int64       `json:"PARTICIPANTVACANCY"`
 	Startdate           string      `json:"STARTDATE"`
-	Trainercontactid    int64       `json:"TRAINERCONTACTID"`
-	Virtualclassroomid  interface{} `json:"VIRTUALCLASSROOMID"`
+	TrainercontactID    int64       `json:"TRAINERCONTACTID"`
+	VirtualclassroomID  interface{} `json:"VIRTUALCLASSROOMID"`
 }
 
 /*
@@ -40,7 +40,7 @@ Request Parameters
 public
 	Whether to include public courses only. If false, returns ALL course instances for type w and el. For type p, passing false will return ONLY non-public classes.
 current
-	Whether to include only current courses. A current course instance is a course that is currently running, or coming up. If false, returns all couse instances.
+	Whether to include only current courses. A current course instance is a course that is currently running, or coming up. If false, returns all course instances.
 isActive
 	Whether to include active/inactive courses instances only. By default both will be included
 lastUpdated_min	datetime
