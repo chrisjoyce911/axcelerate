@@ -19,8 +19,8 @@ type Enrolment struct {
 		} `json:"DELIVERY"`
 		Email              string      `json:"EMAIL"`
 		EnrolmentID        int         `json:"ENROLID"`
-		EnrolmentDate      time.Time   `json:"ENROLMENTDATE" time_format:"axc_datetime"`
-		FinishDate         time.Time   `json:"FINISHDATE" time_format:"axc_datetime"`
+		EnrolmentDate      time.Time   `json:"ENROLMENTDATE" time_format:"axc_date_hours"`
+		FinishDate         time.Time   `json:"FINISHDATE" time_format:"axc_date_hours"`
 		Givenname          string      `json:"GIVENNAME"`
 		ID                 int         `json:"ID"`
 		InstanceID         int         `json:"INSTANCEID"`
@@ -28,7 +28,7 @@ type Enrolment struct {
 		Mobilephone        string      `json:"MOBILEPHONE"`
 		Name               string      `json:"NAME"`
 		Outcomecode        string      `json:"OUTCOMECODE"`
-		StartDate          time.Time   `json:"STARTDATE" time_format:"axc_datetime"`
+		StartDate          time.Time   `json:"STARTDATE" time_format:"axc_date_hours"`
 		Status             string      `json:"STATUS"`
 		Surname            string      `json:"SURNAME"`
 		Type               string      `json:"TYPE"`
@@ -62,9 +62,9 @@ type Enrolment struct {
 	InstanceID                           int         `json:"INSTANCEID"`
 	LearnerID                            int         `json:"LEARNERID"`
 	EnrolmentID                          int         `json:"ENROLID"`
-	EnrolmentDate                        time.Time   `json:"ENROLMENTDATE" time_format:"axc_datetime"`
-	Startdate                            time.Time   `json:"STARTDATE" time_format:"axc_datetime"`
-	Finishdate                           time.Time   `json:"FINISHDATE" time_format:"axc_datetime"`
+	EnrolmentDate                        time.Time   `json:"ENROLMENTDATE" time_format:"axc_date_hours"`
+	Startdate                            time.Time   `json:"STARTDATE" time_format:"axc_date_hours"`
+	Finishdate                           time.Time   `json:"FINISHDATE" time_format:"axc_date_hours"`
 	Email                                string      `json:"EMAIL"`
 	MobilePhone                          string      `json:"MOBILEPHONE"`
 	Givenname                            string      `json:"GIVENNAME"`
@@ -116,7 +116,7 @@ func (s *CoursesService) GetEnrolments(parms map[string]string) ([]Enrolment, *R
 	}
 
 	var json = jsontime.ConfigWithCustomTimeFormat
-	jsontime.AddTimeFormatAlias("axc_datetime", "2006-01-02 15:04:05")
+	jsontime.AddTimeFormatAlias("axc_date_hours", "2006-01-02 15:04")
 
 	json.Unmarshal([]byte(resp.Body), &obj)
 	return obj, resp, err
