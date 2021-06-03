@@ -1,7 +1,9 @@
 package axcelerate
 
 import (
-	"encoding/json"
+	"time"
+
+	jsontime "github.com/liamylian/jsontime/v2/v2"
 )
 
 // Enrolment for a course
@@ -10,32 +12,31 @@ type Enrolment struct {
 		Activities []interface{} `json:"ACTIVITIES"`
 		Amountpaid interface{}   `json:"AMOUNTPAID"`
 		Code       string        `json:"CODE"`
-		Contactid  int64         `json:"CONTACTID"`
+		ContactID  int           `json:"CONTACTID"`
 		Delivery   struct {
-			Code        int64  `json:"CODE"`
+			Code        int    `json:"CODE"`
 			Description string `json:"DESCRIPTION"`
 		} `json:"DELIVERY"`
 		Email              string      `json:"EMAIL"`
-		EnrolID            int64       `json:"ENROLID"`
-		Enrolmentdate      string      `json:"ENROLMENTDATE"`
-		Finishdate         interface{} `json:"FINISHDATE"`
+		EnrolmentID        int         `json:"ENROLID"`
+		EnrolmentDate      time.Time   `json:"ENROLMENTDATE" time_format:"axc_datetime"`
+		FinishDate         time.Time   `json:"FINISHDATE" time_format:"axc_datetime"`
 		Givenname          string      `json:"GIVENNAME"`
-		ID                 int64       `json:"ID"`
-		InstanceID         int64       `json:"INSTANCEID"`
-		LearnerID          int64       `json:"LEARNERID"`
+		ID                 int         `json:"ID"`
+		InstanceID         int         `json:"INSTANCEID"`
+		LearnerID          int         `json:"LEARNERID"`
 		Mobilephone        string      `json:"MOBILEPHONE"`
 		Name               string      `json:"NAME"`
 		Outcomecode        string      `json:"OUTCOMECODE"`
-		Startdate          string      `json:"STARTDATE"`
+		StartDate          time.Time   `json:"STARTDATE" time_format:"axc_datetime"`
 		Status             string      `json:"STATUS"`
 		Surname            string      `json:"SURNAME"`
 		Type               string      `json:"TYPE"`
 		VicenrolmentID     string      `json:"VICENROLMENTID"`
 		VirtualClassroomID interface{} `json:"VIRTUALCLASSROOMID"`
 	} `json:"ACTIVITIES"`
-	Amountpaid                           int64       `json:"AMOUNTPAID"`
+	AmountPaid                           int         `json:"AMOUNTPAID"`
 	Code                                 string      `json:"CODE"`
-	ContactID                            int64       `json:"CONTACTID"`
 	CustomfieldAgreetoelearning          string      `json:"CUSTOMFIELD_AGREETOELEARNING"`
 	CustomfieldAgreetosoa                interface{} `json:"CUSTOMFIELD_AGREETOSOA"`
 	CustomfieldAvetmissconsent           interface{} `json:"CUSTOMFIELD_AVETMISSCONSENT"`
@@ -54,25 +55,27 @@ type Enrolment struct {
 	CustomfieldThirdpartyemployer        interface{} `json:"CUSTOMFIELD_THIRDPARTYEMPLOYER"`
 	CustomfieldThirdpartyemployeremail   interface{} `json:"CUSTOMFIELD_THIRDPARTYEMPLOYEREMAIL"`
 	CustomfieldTrueandcorrectdec         interface{} `json:"CUSTOMFIELD_TRUEANDCORRECTDEC"`
+	PriceBeat                            interface{} `json:"CUSTOMFIELD_PRICEBEAT"`
 	Delivery                             string      `json:"DELIVERY"`
+	ContactID                            int         `json:"CONTACTID"`
+	CourseID                             int         `json:"ID"`
+	InstanceID                           int         `json:"INSTANCEID"`
+	LearnerID                            int         `json:"LEARNERID"`
+	EnrolmentID                          int         `json:"ENROLID"`
+	EnrolmentDate                        time.Time   `json:"ENROLMENTDATE" time_format:"axc_datetime"`
+	Startdate                            time.Time   `json:"STARTDATE" time_format:"axc_datetime"`
+	Finishdate                           time.Time   `json:"FINISHDATE" time_format:"axc_datetime"`
 	Email                                string      `json:"EMAIL"`
-	EnrolID                              int64       `json:"ENROLID"`
-	Enrolmentdate                        string      `json:"ENROLMENTDATE"`
-	Finishdate                           interface{} `json:"FINISHDATE"`
+	MobilePhone                          string      `json:"MOBILEPHONE"`
 	Givenname                            string      `json:"GIVENNAME"`
-	ID                                   int64       `json:"ID"`
-	InstanceID                           int64       `json:"INSTANCEID"`
-	LearnerID                            int64       `json:"LEARNERID"`
-	Mobilephone                          string      `json:"MOBILEPHONE"`
+	Surname                              string      `json:"SURNAME"`
 	Name                                 string      `json:"NAME"`
-	OwnerID                              int64       `json:"OWNERID"`
+	OwnerID                              int         `json:"OWNERID"`
 	Pstacdatevic                         interface{} `json:"PSTACDATEVIC"`
 	Schooldeliverylocationid             interface{} `json:"SCHOOLDELIVERYLOCATIONID"`
 	SchoolorgID                          interface{} `json:"SCHOOLORGID"`
 	SchooltypeID                         string      `json:"SCHOOLTYPEID"`
-	Startdate                            string      `json:"STARTDATE"`
 	Status                               string      `json:"STATUS"`
-	Surname                              string      `json:"SURNAME"`
 	Type                                 string      `json:"TYPE"`
 	VicprogramenrolmentID                string      `json:"VICPROGRAMENROLMENTID"`
 	VicprogramstatusID                   string      `json:"VICPROGRAMSTATUSID"`
@@ -111,6 +114,9 @@ func (s *CoursesService) GetEnrolments(parms map[string]string) ([]Enrolment, *R
 	if err != nil {
 		return obj, resp, err
 	}
+
+	var json = jsontime.ConfigWithCustomTimeFormat
+	jsontime.AddTimeFormatAlias("axc_datetime", "2006-01-02 15:04:05")
 
 	json.Unmarshal([]byte(resp.Body), &obj)
 	return obj, resp, err
