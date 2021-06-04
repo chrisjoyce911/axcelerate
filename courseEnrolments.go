@@ -8,77 +8,28 @@ import (
 
 // Enrolment for a course
 type Enrolment struct {
-	Activities []struct {
-		Activities []interface{} `json:"ACTIVITIES"`
-		Amountpaid interface{}   `json:"AMOUNTPAID"`
-		Code       string        `json:"CODE"`
-		ContactID  int           `json:"CONTACTID"`
-		Delivery   struct {
-			Code        int    `json:"CODE"`
-			Description string `json:"DESCRIPTION"`
-		} `json:"DELIVERY"`
-		Email              string      `json:"EMAIL"`
-		EnrolmentID        int         `json:"ENROLID"`
-		EnrolmentDate      time.Time   `json:"ENROLMENTDATE" time_format:"axc_date_hours"`
-		FinishDate         time.Time   `json:"FINISHDATE" time_format:"axc_date_hours"`
-		Givenname          string      `json:"GIVENNAME"`
-		ID                 int         `json:"ID"`
-		InstanceID         int         `json:"INSTANCEID"`
-		LearnerID          int         `json:"LEARNERID"`
-		Mobilephone        string      `json:"MOBILEPHONE"`
-		Name               string      `json:"NAME"`
-		Outcomecode        string      `json:"OUTCOMECODE"`
-		StartDate          time.Time   `json:"STARTDATE" time_format:"axc_date_hours"`
-		Status             string      `json:"STATUS"`
-		Surname            string      `json:"SURNAME"`
-		Type               string      `json:"TYPE"`
-		VicenrolmentID     string      `json:"VICENROLMENTID"`
-		VirtualClassroomID interface{} `json:"VIRTUALCLASSROOMID"`
-	} `json:"ACTIVITIES"`
-	AmountPaid                           int         `json:"AMOUNTPAID"`
-	Code                                 string      `json:"CODE"`
-	CustomfieldAgreetoelearning          string      `json:"CUSTOMFIELD_AGREETOELEARNING"`
-	CustomfieldAgreetosoa                interface{} `json:"CUSTOMFIELD_AGREETOSOA"`
-	CustomfieldAvetmissconsent           interface{} `json:"CUSTOMFIELD_AVETMISSCONSENT"`
-	CustomfieldCprlink                   interface{} `json:"CUSTOMFIELD_CPRLINK"`
-	CustomfieldDeclaration               interface{} `json:"CUSTOMFIELD_DECLARATION"`
-	CustomfieldEmployername              interface{} `json:"CUSTOMFIELD_EMPLOYERNAME"`
-	CustomfieldPfaquiz                   interface{} `json:"CUSTOMFIELD_PFAQUIZ"`
-	CustomfieldPfaquizdate               interface{} `json:"CUSTOMFIELD_PFAQUIZDATE"`
-	CustomfieldPfaquizlink               interface{} `json:"CUSTOMFIELD_PFAQUIZLINK"`
-	CustomfieldSoaverificationstatus     interface{} `json:"CUSTOMFIELD_SOAVERIFICATIONSTATUS"`
-	CustomfieldSoaverifieddate           interface{} `json:"CUSTOMFIELD_SOAVERIFIEDDATE"`
-	CustomfieldSoaverify                 interface{} `json:"CUSTOMFIELD_SOAVERIFY"`
-	CustomfieldStatementofattainmentlink interface{} `json:"CUSTOMFIELD_STATEMENTOFATTAINMENTLINK"`
-	CustomfieldTerms                     interface{} `json:"CUSTOMFIELD_TERMS"`
-	CustomfieldThirdpartyconsent         interface{} `json:"CUSTOMFIELD_THIRDPARTYCONSENT"`
-	CustomfieldThirdpartyemployer        interface{} `json:"CUSTOMFIELD_THIRDPARTYEMPLOYER"`
-	CustomfieldThirdpartyemployeremail   interface{} `json:"CUSTOMFIELD_THIRDPARTYEMPLOYEREMAIL"`
-	CustomfieldTrueandcorrectdec         interface{} `json:"CUSTOMFIELD_TRUEANDCORRECTDEC"`
-	PriceBeat                            interface{} `json:"CUSTOMFIELD_PRICEBEAT"`
-	Delivery                             string      `json:"DELIVERY"`
-	ContactID                            int         `json:"CONTACTID"`
-	CourseID                             int         `json:"ID"`
-	InstanceID                           int         `json:"INSTANCEID"`
-	LearnerID                            int         `json:"LEARNERID"`
-	EnrolmentID                          int         `json:"ENROLID"`
-	EnrolmentDate                        time.Time   `json:"ENROLMENTDATE" time_format:"axc_date_hours"`
-	Startdate                            time.Time   `json:"STARTDATE" time_format:"axc_date_hours"`
-	Finishdate                           time.Time   `json:"FINISHDATE" time_format:"axc_date_hours"`
-	Email                                string      `json:"EMAIL"`
-	MobilePhone                          string      `json:"MOBILEPHONE"`
-	Givenname                            string      `json:"GIVENNAME"`
-	Surname                              string      `json:"SURNAME"`
-	Name                                 string      `json:"NAME"`
-	OwnerID                              int         `json:"OWNERID"`
-	Pstacdatevic                         interface{} `json:"PSTACDATEVIC"`
-	Schooldeliverylocationid             interface{} `json:"SCHOOLDELIVERYLOCATIONID"`
-	SchoolorgID                          interface{} `json:"SCHOOLORGID"`
-	SchooltypeID                         string      `json:"SCHOOLTYPEID"`
-	Status                               string      `json:"STATUS"`
-	Type                                 string      `json:"TYPE"`
-	VicprogramenrolmentID                string      `json:"VICPROGRAMENROLMENTID"`
-	VicprogramstatusID                   string      `json:"VICPROGRAMSTATUSID"`
+	EnrolmentID   int       `json:"ENROLID"`
+	InstanceID    int       `json:"INSTANCEID"`
+	ContactID     int       `json:"CONTACTID"`
+	CourseID      int       `json:"ID"`
+	LearnerID     int       `json:"LEARNERID"`
+	OwnerID       int       `json:"OWNERID"`
+	AmountPaid    float32   `json:"AMOUNTPAID"`
+	Code          string    `json:"CODE"`
+	CompeteName   string    `json:"CUSTOMFIELD_COMPETENAME"`
+	PriceBeat     string    `json:"CUSTOMFIELD_PRICEBEAT"`
+	Delivery      string    `json:"DELIVERY"`
+	Name          string    `json:"NAME"`
+	EnrolmentDate time.Time `json:"ENROLMENTDATE" time_format:"axc_date_hours"`
+	Startdate     time.Time `json:"STARTDATE" time_format:"axc_date_hours"`
+	Finishdate    time.Time `json:"FINISHDATE" time_format:"axc_date_hours"`
+	MobilePhone   string    `json:"MOBILEPHONE"`
+	GivenName     string    `json:"GIVENNAME"`
+	Surname       string    `json:"SURNAME"`
+	Email         string    `json:"EMAIL"`
+	Status        string    `json:"STATUS"`
+	Type          string    `json:"TYPE"`
+	LastUpdateUTC time.Time `json:"LASTUPDATEDUTC" time_format:"axc_date_hours"`
 }
 
 /*
