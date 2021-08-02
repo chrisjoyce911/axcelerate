@@ -2,7 +2,6 @@
 
 Provides a simple interface to theRESTFul API for interfacing with aXcelerate.
 
-## Usage
 
 ## Roadmap
 
@@ -11,3 +10,4 @@ This library is being initially developed for use with the [aXcelerate RESTFul S
 ## Contributing
 
 I would like to cover the entire aXcelerate RESTFul Service API and contributions are of course always welcome. See CONTRIBUTING.md for details.
+```

@@ -3,6 +3,9 @@ package axcelerate
 import (
 	"encoding/json"
 	"fmt"
+	"time"
+
+	jsontime "github.com/liamylian/jsontime/v2/v2"
 )
 
 // ContactService handles all interactions with Contact
@@ -28,7 +31,7 @@ type Contact struct {
 	Coachcontactid                      interface{}   `json:"COACHCONTACTID"`
 	Comment                             interface{}   `json:"COMMENT"`
 	Contactactive                       bool          `json:"CONTACTACTIVE"`
-	Contactentrydate                    string        `json:"CONTACTENTRYDATE"`
+	Contactentrydate                    time.Time     `json:"CONTACTENTRYDATE" time_format:"axc_date_hours"`
 	Contactid                           int64         `json:"CONTACTID"`
 	Contactroleid                       interface{}   `json:"CONTACTROLEID"`
 	Country                             string        `json:"COUNTRY"`
@@ -47,7 +50,7 @@ type Contact struct {
 	Disabilitytypeids                   []interface{} `json:"DISABILITYTYPEIDS"`
 	Disabilitytypenames                 []interface{} `json:"DISABILITYTYPENAMES"`
 	Division                            interface{}   `json:"DIVISION"`
-	Dob                                 string        `json:"DOB"`
+	DOB                                 time.Time     `json:"DOB" time_format:"axc_date"`
 	Domainids                           []interface{} `json:"DOMAINIDS"`
 	Emailaddress                        string        `json:"EMAILADDRESS"`
 	Emailaddressalternative             interface{}   `json:"EMAILADDRESSALTERNATIVE"`
@@ -67,7 +70,7 @@ type Contact struct {
 	Indigenousstatusname                interface{}   `json:"INDIGENOUSSTATUSNAME"`
 	Labourforceid                       interface{}   `json:"LABOURFORCEID"`
 	Labourforcename                     interface{}   `json:"LABOURFORCENAME"`
-	Lastupdated                         string        `json:"LASTUPDATED"`
+	Lastupdated                         time.Time     `json:"LASTUPDATED" time_format:"axc_date_hours"`
 	Lui                                 interface{}   `json:"LUI"`
 	Mainlanguageid                      interface{}   `json:"MAINLANGUAGEID"`
 	Mainlanguagename                    interface{}   `json:"MAINLANGUAGENAME"`
@@ -142,4 +145,22 @@ func (s *ContactService) GetContact(contactID int) (Contact, *Response, error) {
 	json.Unmarshal([]byte(resp.Body), &a)
 
 	return a, resp, err
+}
+
+// GetContact Interacts with a specific contact.
+func (s *ContactService) SearchContacts(parms map[string]string) ([]Contact, *Response, error) {
+	var obj []Contact
+
+	resp, err := do(s.client, "GET", Params{parms: parms, u: "/contacts/search"}, obj)
+
+	if err != nil {
+		return obj, resp, err
+	}
+
+	var json = jsontime.ConfigWithCustomTimeFormat
+	jsontime.AddTimeFormatAlias("axc_date_hours", "2006-01-02 15:04")
+	jsontime.AddTimeFormatAlias("axc_date", "2006-01-02")
+
+	json.Unmarshal([]byte(resp.Body), &obj)
+	return obj, resp, err
 }
