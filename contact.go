@@ -17,26 +17,26 @@ type ContactService struct {
 type Contact struct {
 	Address1                            string        `json:"ADDRESS1"`
 	Address2                            string        `json:"ADDRESS2"`
-	Agentcontactid                      interface{}   `json:"AGENTCONTACTID"`
+	AgentContactID                      int64         `json:"AGENTCONTACTID"`
 	Anzscocode                          interface{}   `json:"ANZSCOCODE"`
 	Anzsiccode                          interface{}   `json:"ANZSICCODE"`
 	Atschoolflag                        bool          `json:"ATSCHOOLFLAG"`
 	Atschoolname                        interface{}   `json:"ATSCHOOLNAME"`
 	Buildingname                        interface{}   `json:"BUILDINGNAME"`
-	Categoryids                         []interface{} `json:"CATEGORYIDS"`
+	CategoryIDs                         []interface{} `json:"CATEGORYIDS"`
 	Citizenstatusid                     interface{}   `json:"CITIZENSTATUSID"`
 	Citizenstatusname                   interface{}   `json:"CITIZENSTATUSNAME"`
 	City                                string        `json:"CITY"`
-	Cityofbirth                         interface{}   `json:"CITYOFBIRTH"`
+	CityOfBirth                         interface{}   `json:"CITYOFBIRTH"`
 	Coachcontactid                      interface{}   `json:"COACHCONTACTID"`
 	Comment                             interface{}   `json:"COMMENT"`
 	Contactactive                       bool          `json:"CONTACTACTIVE"`
 	Contactentrydate                    time.Time     `json:"CONTACTENTRYDATE" time_format:"axc_date_hours"`
-	Contactid                           int64         `json:"CONTACTID"`
-	Contactroleid                       interface{}   `json:"CONTACTROLEID"`
+	ContactID                           int64         `json:"CONTACTID"`
+	ContactRoleID                       interface{}   `json:"CONTACTROLEID"`
 	Country                             string        `json:"COUNTRY"`
-	Countryid                           int64         `json:"COUNTRYID"`
-	Countryofbirthid                    interface{}   `json:"COUNTRYOFBIRTHID"`
+	CountryID                           int64         `json:"COUNTRYID"`
+	CountryofBirthID                    interface{}   `json:"COUNTRYOFBIRTHID"`
 	Countryofbirthname                  interface{}   `json:"COUNTRYOFBIRTHNAME"`
 	Countryofcitizenid                  interface{}   `json:"COUNTRYOFCITIZENID"`
 	Countryofcitizenname                interface{}   `json:"COUNTRYOFCITIZENNAME"`
@@ -62,31 +62,31 @@ type Contact struct {
 	Englishproficiencyid                interface{}   `json:"ENGLISHPROFICIENCYID"`
 	Fax                                 interface{}   `json:"FAX"`
 	Givenname                           string        `json:"GIVENNAME"`
-	Highestschoollevelid                interface{}   `json:"HIGHESTSCHOOLLEVELID"`
+	HighestschoollevelID                interface{}   `json:"HIGHESTSCHOOLLEVELID"`
 	Highestschoollevelyear              interface{}   `json:"HIGHESTSCHOOLLEVELYEAR"`
 	Historicclientid                    interface{}   `json:"HISTORICCLIENTID"`
 	Ielts                               interface{}   `json:"IELTS"`
 	Indigenousstatusid                  interface{}   `json:"INDIGENOUSSTATUSID"`
 	Indigenousstatusname                interface{}   `json:"INDIGENOUSSTATUSNAME"`
-	Labourforceid                       interface{}   `json:"LABOURFORCEID"`
+	LabourforceID                       interface{}   `json:"LABOURFORCEID"`
 	Labourforcename                     interface{}   `json:"LABOURFORCENAME"`
-	Lastupdated                         time.Time     `json:"LASTUPDATED" time_format:"axc_date_hours"`
+	LastUpdated                         time.Time     `json:"LASTUPDATED" time_format:"axc_date_hours"`
 	Lui                                 interface{}   `json:"LUI"`
 	Mainlanguageid                      interface{}   `json:"MAINLANGUAGEID"`
 	Mainlanguagename                    interface{}   `json:"MAINLANGUAGENAME"`
 	Middlename                          interface{}   `json:"MIDDLENAME"`
 	Mobilephone                         string        `json:"MOBILEPHONE"`
-	Optionalid                          interface{}   `json:"OPTIONALID"`
+	OptionalID                          interface{}   `json:"OPTIONALID"`
 	Organisation                        string        `json:"ORGANISATION"`
-	Orgid                               int64         `json:"ORGID"`
-	Otherphone                          interface{}   `json:"OTHERPHONE"`
-	Payercontactid                      interface{}   `json:"PAYERCONTACTID"`
+	OrgID                               int64         `json:"ORGID"`
+	OtherPhone                          interface{}   `json:"OTHERPHONE"`
+	PayerContactID                      interface{}   `json:"PAYERCONTACTID"`
 	Phone                               interface{}   `json:"PHONE"`
 	Photo                               interface{}   `json:"PHOTO"`
 	Pobox                               interface{}   `json:"POBOX"`
 	Position                            string        `json:"POSITION"`
 	Postcode                            string        `json:"POSTCODE"`
-	Preferredname                       interface{}   `json:"PREFERREDNAME"`
+	PreferredName                       interface{}   `json:"PREFERREDNAME"`
 	Prioreducationids                   []interface{} `json:"PRIOREDUCATIONIDS"`
 	Prioreducationnames                 []interface{} `json:"PRIOREDUCATIONNAMES"`
 	Prioreducationstatus                bool          `json:"PRIOREDUCATIONSTATUS"`
@@ -98,7 +98,7 @@ type Contact struct {
 	Scountry                            string        `json:"SCOUNTRY"`
 	Scountryid                          int64         `json:"SCOUNTRYID"`
 	Section                             interface{}   `json:"SECTION"`
-	Sex                                 interface{}   `json:"SEX"`
+	Sex                                 string        `json:"SEX"`
 	Source                              interface{}   `json:"SOURCE"`
 	Sourcecodeid                        int64         `json:"SOURCECODEID"`
 	Spobox                              interface{}   `json:"SPOBOX"`
@@ -114,15 +114,76 @@ type Contact struct {
 	Surname                             string        `json:"SURNAME"`
 	Surveycontactstatuscode             interface{}   `json:"SURVEYCONTACTSTATUSCODE"`
 	TfnRecorded                         bool          `json:"TFN_RECORDED"`
-	Title                               interface{}   `json:"TITLE"`
+	Title                               string        `json:"TITLE"`
 	Unitno                              string        `json:"UNITNO"`
-	Usi                                 string        `json:"USI"`
-	UsiExemption                        bool          `json:"USI_EXEMPTION"`
-	UsiVerified                         bool          `json:"USI_VERIFIED"`
+	USI                                 string        `json:"USI"`
+	USIExemption                        bool          `json:"USI_EXEMPTION"`
+	USIVerified                         bool          `json:"USI_VERIFIED"`
 	Vsn                                 interface{}   `json:"VSN"`
 	Website                             interface{}   `json:"WEBSITE"`
 	Workphone                           interface{}   `json:"WORKPHONE"`
 	Workreadyparticipantnumber          interface{}   `json:"WORKREADYPARTICIPANTNUMBER"`
+}
+
+type ContactEnrolment struct {
+	Rowid                                int         `json:"ROWID"`
+	Type                                 string      `json:"TYPE"`
+	ID                                   int         `json:"ID"`
+	InstanceID                           int         `json:"INSTANCEID"`
+	EnrolID                              int         `json:"ENROLID"`
+	VicenrolmentID                       string      `json:"VICENROLMENTID,omitempty"`
+	InvoiceID                            interface{} `json:"INVOICEID"`
+	InvoicePaid                          bool        `json:"INVOICEPAID"`
+	LearnerID                            int         `json:"LEARNERID"`
+	Code                                 string      `json:"CODE"`
+	Location                             string      `json:"LOCATION"`
+	Delivery                             string      `json:"DELIVERY"`
+	DeliveryMode                         string      `json:"DELIVERYMODE"`
+	Activitytype                         string      `json:"ACTIVITYTYPE"`
+	Name                                 string      `json:"NAME"`
+	CommencedDate                        time.Time   `json:"COMMENCEDDATE" time_format:"axc_date"`
+	StartDate                            time.Time   `json:"STARTDATE" time_format:"axc_date"`
+	FinishDate                           time.Time   `json:"FINISHDATE" time_format:"axc_date"`
+	CompletionDate                       time.Time   `json:"COMPLETIONDATE" time_format:"axc_date"`
+	Mandatory                            bool        `json:"MANDATORY"`
+	Status                               string      `json:"STATUS"`
+	ProgramStatusidvic                   interface{} `json:"PROGRAMSTATUSIDVIC"`
+	SchoolTypeID                         interface{} `json:"SCHOOLTYPEID"`
+	SchoolOrgID                          interface{} `json:"SCHOOLORGID"`
+	Count                                int         `json:"COUNT"`
+	OutcomeCode                          string      `json:"OUTCOMECODE,omitempty"`
+	LaunchURL                            string      `json:"LAUNCHURL,omitempty"`
+	Pstacdatevic                         interface{} `json:"PSTACDATEVIC,omitempty"`
+	VicprogramenrolmentID                string      `json:"VICPROGRAMENROLMENTID,omitempty"`
+	CustomfieldAgreetoelearning          string      `json:"CUSTOMFIELD_AGREETOELEARNING,omitempty"`
+	CustomfieldAgreetosoa                interface{} `json:"CUSTOMFIELD_AGREETOSOA,omitempty"`
+	CustomfieldTerms                     string      `json:"CUSTOMFIELD_TERMS,omitempty"`
+	CustomfieldDeclaration               interface{} `json:"CUSTOMFIELD_DECLARATION,omitempty"`
+	CustomfieldAvetmissconsent           interface{} `json:"CUSTOMFIELD_AVETMISSCONSENT,omitempty"`
+	CustomfieldPfaquizdate               string      `json:"CUSTOMFIELD_PFAQUIZDATE,omitempty"`
+	CustomfieldPfaquizlink               string      `json:"CUSTOMFIELD_PFAQUIZLINK,omitempty"`
+	CustomfieldPfaquiz                   string      `json:"CUSTOMFIELD_PFAQUIZ,omitempty"`
+	CustomfieldEmployername              interface{} `json:"CUSTOMFIELD_EMPLOYERNAME,omitempty"`
+	CustomfieldSoaverificationstatus     interface{} `json:"CUSTOMFIELD_SOAVERIFICATIONSTATUS,omitempty"`
+	CustomfieldSoaverify                 interface{} `json:"CUSTOMFIELD_SOAVERIFY,omitempty"`
+	CustomfieldSoaverifieddate           interface{} `json:"CUSTOMFIELD_SOAVERIFIEDDATE,omitempty"`
+	CustomfieldStatementofattainmentlink interface{} `json:"CUSTOMFIELD_STATEMENTOFATTAINMENTLINK,omitempty"`
+	CustomfieldThirdpartyconsent         interface{} `json:"CUSTOMFIELD_THIRDPARTYCONSENT,omitempty"`
+	CustomfieldThirdpartyemployer        interface{} `json:"CUSTOMFIELD_THIRDPARTYEMPLOYER,omitempty"`
+	CustomfieldThirdpartyemployeremail   interface{} `json:"CUSTOMFIELD_THIRDPARTYEMPLOYEREMAIL,omitempty"`
+	CustomfieldTrueandcorrectdec         interface{} `json:"CUSTOMFIELD_TRUEANDCORRECTDEC,omitempty"`
+	CustomfieldCprlink                   interface{} `json:"CUSTOMFIELD_CPRLINK,omitempty"`
+	Complexdates                         []struct {
+		Date             time.Time `json:"DATE" time_format:"axc_date"`
+		StartTime        time.Time `json:"STARTTIME" time_format:"axc_time"`
+		EndTime          time.Time `json:"ENDTIME" time_format:"axc_time"`
+		TrainerContactID int       `json:"TRAINERCONTACTID"`
+		Location         string    `json:"LOCATION"`
+		RoomID           int       `json:"ROOMID"`
+	} `json:"COMPLEXDATES,omitempty"`
+	CustomfieldPriceBeat   interface{} `json:"CUSTOMFIELD_PRICEBEAT,omitempty"`
+	CustomfieldCompeteName interface{} `json:"CUSTOMFIELD_COMPETENAME,omitempty"`
+	CustomfieldWeekends    interface{} `json:"CUSTOMFIELD_WEEKENDS,omitempty"`
 }
 
 // ContactOptions for Updateing
@@ -162,5 +223,24 @@ func (s *ContactService) SearchContacts(parms map[string]string) ([]Contact, *Re
 	jsontime.AddTimeFormatAlias("axc_date", "2006-01-02")
 
 	json.Unmarshal([]byte(resp.Body), &obj)
+	return obj, resp, err
+}
+
+// ContactEnrolments Returns enrolments for a specific contact
+func (s *ContactService) ContactEnrolments(contactID int, parms map[string]string) ([]ContactEnrolment, *Response, error) {
+	var obj []ContactEnrolment
+
+	resp, err := do(s.client, "GET", Params{parms: parms, u: fmt.Sprintf("/contact/enrolments/%d", contactID)}, obj)
+
+	if err != nil {
+		return obj, resp, err
+	}
+
+	var json = jsontime.ConfigWithCustomTimeFormat
+	jsontime.AddTimeFormatAlias("axc_time", "15:04")
+	jsontime.AddTimeFormatAlias("axc_date", "2006-01-02")
+
+	json.Unmarshal([]byte(resp.Body), &obj)
+
 	return obj, resp, err
 }

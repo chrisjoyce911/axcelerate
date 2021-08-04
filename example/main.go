@@ -14,10 +14,20 @@ func main() {
 
 	client := axcelerate.NewClient(apitoken, wstoken, nil, nil)
 
+	// Search for somone via their email
 	parms := map[string]string{"emailAddress": "xxx@xxx"}
-	e, _, _ := client.Contact.SearchContacts(parms)
+	c, _, _ := client.Contact.SearchContacts(parms)
 
-	fmt.Print(e)
-	fmt.Println(len(e))
+	for _, i := range c {
+		fmt.Printf("%s\t%d\t%s\t%s\t%s\t%s\n", i.USI, i.ContactID, i.Emailaddress, i.Givenname, i.Surname, i.Source)
+
+		// For everyone we find get their enrolments
+		eparms := map[string]string{"type": "w"}
+		e, _, _ := client.Contact.ContactEnrolments(int(i.ContactID), eparms)
+
+		for _, i := range e {
+			fmt.Printf("%s\t%s\t%s\t%s\n", i.Type, i.Name, i.StartDate, i.Location)
+		}
+	}
 
 }
