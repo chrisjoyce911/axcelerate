@@ -126,7 +126,7 @@ type Contact struct {
 }
 
 type ContactEnrolment struct {
-	Rowid                                int         `json:"ROWID"`
+	RowID                                int         `json:"ROWID"`
 	Type                                 string      `json:"TYPE"`
 	ID                                   int         `json:"ID"`
 	InstanceID                           int         `json:"INSTANCEID"`
