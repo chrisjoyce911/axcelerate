@@ -32,10 +32,10 @@ type Contact struct {
 	Comment                             interface{}   `json:"COMMENT"`
 	Contactactive                       bool          `json:"CONTACTACTIVE"`
 	Contactentrydate                    time.Time     `json:"CONTACTENTRYDATE" time_format:"axc_date_hours"`
-	ContactID                           int64         `json:"CONTACTID"`
+	ContactID                           int           `json:"CONTACTID"`
 	ContactRoleID                       interface{}   `json:"CONTACTROLEID"`
 	Country                             string        `json:"COUNTRY"`
-	CountryID                           int64         `json:"COUNTRYID"`
+	CountryID                           int           `json:"COUNTRYID"`
 	CountryofBirthID                    interface{}   `json:"COUNTRYOFBIRTHID"`
 	Countryofbirthname                  interface{}   `json:"COUNTRYOFBIRTHNAME"`
 	Countryofcitizenid                  interface{}   `json:"COUNTRYOFCITIZENID"`
