@@ -8,18 +8,19 @@ import (
 
 // Enrolment for a course
 type Enrolment struct {
-	EnrolmentID   int       `json:"ENROLID"`
-	InstanceID    int       `json:"INSTANCEID"`
-	ContactID     int       `json:"CONTACTID"`
-	CourseID      int       `json:"ID"`
-	LearnerID     int       `json:"LEARNERID"`
-	OwnerID       int       `json:"OWNERID"`
-	AmountPaid    float32   `json:"AMOUNTPAID"`
-	Code          string    `json:"CODE"`
-	CompeteName   string    `json:"CUSTOMFIELD_COMPETENAME"`
-	PriceBeat     string    `json:"CUSTOMFIELD_PRICEBEAT"`
-	Delivery      string    `json:"DELIVERY"`
-	Name          string    `json:"NAME"`
+	EnrolmentID int     `json:"ENROLID"`
+	InstanceID  int     `json:"INSTANCEID"`
+	ContactID   int     `json:"CONTACTID"`
+	CourseID    int     `json:"ID"`
+	LearnerID   int     `json:"LEARNERID"`
+	OwnerID     int     `json:"OWNERID"`
+	AmountPaid  float32 `json:"AMOUNTPAID"`
+	Code        string  `json:"CODE"`
+	// CompeteName string  `json:"CUSTOMFIELD_COMPETENAME"`
+	// PriceBeat string `json:"CUSTOMFIELD_PRICEBEAT"`
+	Delivery string `json:"DELIVERY"`
+	Name     string `json:"NAME"`
+
 	EnrolmentDate time.Time `json:"ENROLMENTDATE" time_format:"axc_date_hours"`
 	Startdate     time.Time `json:"STARTDATE" time_format:"axc_date_hours"`
 	Finishdate    time.Time `json:"FINISHDATE" time_format:"axc_date_hours"`
