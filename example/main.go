@@ -38,4 +38,11 @@ func main() {
 		}
 	}
 
+	parms = map[string]string{"instanceID": "1702030", "type": "w"}
+	obj, _, _ := client.Courses.GetEnrolments(parms)
+
+	for _, i := range obj {
+		fmt.Printf("%d\t%f\t%s\t%v\n", i.ContactID, i.AmountPaid, i.CompeteName, i.PriceBeat)
+	}
+
 }
