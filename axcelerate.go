@@ -24,6 +24,7 @@ type Client struct {
 
 	Contact *ContactService
 	Courses *CoursesService
+	Accounting *AccountingService
 }
 
 // APIerr may happeen along with a status code
@@ -58,6 +59,7 @@ func NewClient(apitoken, wstoken string, baseURL *url.URL, httpClient *http.Clie
 
 	c.Contact = &ContactService{client: c}
 	c.Courses = &CoursesService{client: c}
+	c.Accounting = &AccountingService{client: c}
 
 	return c
 }
