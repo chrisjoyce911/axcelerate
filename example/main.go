@@ -14,6 +14,14 @@ func main() {
 
 	client := axcelerate.NewClient(apitoken, wstoken, nil, nil)
 
+	c, resp, err := client.Contact.GetContact(1)
+
+	fmt.Print(resp)
+	fmt.Printf("%v", c)
+	fmt.Print(err)
+
+	fmt.Println(c.Source)
+
 	// Search for somone via their email
 	// parms := map[string]string{"emailAddress": "xxxx@xxxx"}
 	// c, _, _ := client.Contact.SearchContacts(parms)
@@ -44,8 +52,8 @@ func main() {
 	// 	fmt.Printf("%d\t%f\t%s\t%v\n", i.ContactID, i.AmountPaid, i.CompeteName, i.PriceBeat)
 	// }
 
-	inv, resp, _ := client.Accounting.GetInvoice(2853348)
-	fmt.Print(resp)
-	fmt.Printf("%v", inv)
+	// inv, resp, _ := client.Accounting.GetInvoice(2853348)
+	// fmt.Print(resp)
+	// fmt.Printf("%v", inv)
 
 }
