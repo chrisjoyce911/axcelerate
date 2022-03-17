@@ -1,7 +1,6 @@
 package axcelerate
 
 import (
-	"encoding/json"
 	"fmt"
 	"time"
 
@@ -53,7 +52,7 @@ type Contact struct {
 	DOB                                 time.Time     `json:"DOB" time_format:"axc_date"`
 	Domainids                           []interface{} `json:"DOMAINIDS"`
 	Emailaddress                        string        `json:"EMAILADDRESS"`
-	Emailaddressalternative             interface{}   `json:"EMAILADDRESSALTERNATIVE"`
+	Emailaddressalternative             string        `json:"EMAILADDRESSALTERNATIVE"`
 	Emergencycontact                    interface{}   `json:"EMERGENCYCONTACT"`
 	Emergencycontactphone               interface{}   `json:"EMERGENCYCONTACTPHONE"`
 	Emergencycontactrelation            interface{}   `json:"EMERGENCYCONTACTRELATION"`
@@ -86,7 +85,7 @@ type Contact struct {
 	Pobox                               interface{}   `json:"POBOX"`
 	Position                            string        `json:"POSITION"`
 	Postcode                            string        `json:"POSTCODE"`
-	PreferredName                       interface{}   `json:"PREFERREDNAME"`
+	PreferredName                       string        `json:"PREFERREDNAME"`
 	Prioreducationids                   []interface{} `json:"PRIOREDUCATIONIDS"`
 	Prioreducationnames                 []interface{} `json:"PRIOREDUCATIONNAMES"`
 	Prioreducationstatus                bool          `json:"PRIOREDUCATIONSTATUS"`
@@ -99,7 +98,7 @@ type Contact struct {
 	Scountryid                          int64         `json:"SCOUNTRYID"`
 	Section                             interface{}   `json:"SECTION"`
 	Sex                                 string        `json:"SEX"`
-	Source                              interface{}   `json:"SOURCE"`
+	Source                              string        `json:"SOURCE"`
 	Sourcecodeid                        int64         `json:"SOURCECODEID"`
 	Spobox                              interface{}   `json:"SPOBOX"`
 	Spostcode                           string        `json:"SPOSTCODE"`
@@ -202,6 +201,10 @@ func (s *ContactService) GetContact(contactID int) (Contact, *Response, error) {
 	if err != nil {
 		return a, resp, err
 	}
+
+	var json = jsontime.ConfigWithCustomTimeFormat
+	jsontime.AddTimeFormatAlias("axc_date_hours", "2006-01-02 15:04")
+	jsontime.AddTimeFormatAlias("axc_date", "2006-01-02")
 
 	json.Unmarshal([]byte(resp.Body), &a)
 
