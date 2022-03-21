@@ -14,13 +14,15 @@ func main() {
 
 	client := axcelerate.NewClient(apitoken, wstoken, nil, nil)
 
-	c, resp, err := client.Contact.GetContact(1)
+	// c, resp, err := client.Contact.GetContact(1)
+
+	c, resp, err := client.Contact.VerifyUSI(1)
 
 	fmt.Print(resp)
 	fmt.Printf("%v", c)
 	fmt.Print(err)
 
-	fmt.Println(c.Source)
+	// fmt.Println(c.Source)
 
 	// Search for somone via their email
 	// parms := map[string]string{"emailAddress": "xxxx@xxxx"}
