@@ -15,7 +15,7 @@ type InstanceDetail struct {
 	DateDescriptor      string        `json:"DATEDESCRIPTOR"`
 	EnrolmentOpen       bool          `json:"ENROLMENTOPEN"`
 	FinishDate          time.Time     `json:"FINISHDATE"`
-	ID                  int64         `json:"ID"`
+	CourseID            int64         `json:"ID"`
 	InstanceID          int64         `json:"INSTANCEID"`
 	Items               []interface{} `json:"ITEMS"`
 	LinkedClassID       int64         `json:"LINKEDCLASSID"`

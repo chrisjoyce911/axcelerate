@@ -38,7 +38,7 @@ func TestCoursesService_GetCoursesInstanceDetail(t *testing.T) {
 			want: InstanceDetail{
 				DateDescriptor:  "22/05/2014 - 22/05/2014",
 				EnrolmentOpen:   false,
-				ID:              4109,
+				CourseID:        4109,
 				Location:        "VM Learning Offices",
 				MinParticipants: 0,
 				Name:            "AAAAA test",
