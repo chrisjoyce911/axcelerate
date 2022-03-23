@@ -36,16 +36,16 @@ func TestCoursesService_GetCoursesInstanceDetail(t *testing.T) {
 			},
 			args: args{instanceID: 422662, activityType: "p"},
 			want: InstanceDetail{
-				Datedescriptor:  "22/05/2014 - 22/05/2014",
-				Enrolmentopen:   false,
+				DateDescriptor:  "22/05/2014 - 22/05/2014",
+				EnrolmentOpen:   false,
 				ID:              4109,
 				Location:        "VM Learning Offices",
-				Minparticipants: 0,
+				MinParticipants: 0,
 				Name:            "AAAAA test",
-				Ownercontactid:  1100635,
-				Instanceid:      67569,
-				Finishdate:      time.Date(2014, 05, 22, 0, 0, 0, 0, time.Local),
-				Startdate:       time.Date(2014, 05, 22, 0, 0, 0, 0, time.Local),
+				OwnerContactID:  1100635,
+				InstanceID:      67569,
+				FinishDate:      time.Date(2014, 05, 22, 0, 0, 0, 0, time.Local),
+				StartDate:       time.Date(2014, 05, 22, 0, 0, 0, 0, time.Local),
 			},
 
 			want1: &Response{

@@ -15,8 +15,9 @@ func main() {
 	client := axcelerate.NewClient(apitoken, wstoken, nil, nil)
 
 	// c, resp, err := client.Contact.GetContact(1)
+	// c, resp, err := client.Contact.VerifyUSI(1)
 
-	c, resp, err := client.Contact.VerifyUSI(1)
+	c, resp, err := client.Courses.GetCoursesInstanceDetail(1495521, "w")
 
 	fmt.Print(resp)
 	fmt.Printf("%v", c)

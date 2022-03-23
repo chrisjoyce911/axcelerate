@@ -9,17 +9,17 @@ import (
 
 // InstanceDetail details of an activity instance.
 type InstanceDetail struct {
-	Complexdates        []interface{} `json:"COMPLEXDATES"`
+	ComplexDates        []interface{} `json:"COMPLEXDATES"`
 	Cost                int64         `json:"COST"`
 	CustomfieldWeekends interface{}   `json:"CUSTOMFIELD_WEEKENDS"`
-	Datedescriptor      string        `json:"DATEDESCRIPTOR"`
-	Enrolmentopen       bool          `json:"ENROLMENTOPEN"`
-	Finishdate          time.Time     `json:"FINISHDATE"`
+	DateDescriptor      string        `json:"DATEDESCRIPTOR"`
+	EnrolmentOpen       bool          `json:"ENROLMENTOPEN"`
+	FinishDate          time.Time     `json:"FINISHDATE"`
 	ID                  int64         `json:"ID"`
-	Instanceid          int64         `json:"INSTANCEID"`
+	InstanceID          int64         `json:"INSTANCEID"`
 	Items               []interface{} `json:"ITEMS"`
-	Linkedclassid       int64         `json:"LINKEDCLASSID"`
-	Linkedelearning     []struct {
+	LinkedClassID       int64         `json:"LINKEDCLASSID"`
+	LinkedeLearning     []struct {
 		Code       string      `json:"CODE"`
 		Enddate    interface{} `json:"ENDDATE"`
 		Instanceid int64       `json:"INSTANCEID"`
@@ -27,17 +27,17 @@ type InstanceDetail struct {
 		Startdate  interface{} `json:"STARTDATE"`
 	} `json:"LINKEDELEARNING"`
 	Location           string      `json:"LOCATION"`
-	Maxparticipants    int64       `json:"MAXPARTICIPANTS"`
-	Minparticipants    int64       `json:"MINPARTICIPANTS"`
+	MaxParticipants    int64       `json:"MAXPARTICIPANTS"`
+	MinParticipants    int64       `json:"MINPARTICIPANTS"`
 	Name               string      `json:"NAME"`
 	Notices            interface{} `json:"NOTICES"`
-	Ownercontactid     int64       `json:"OWNERCONTACTID"`
+	OwnerContactID     int64       `json:"OWNERCONTACTID"`
 	Participants       int64       `json:"PARTICIPANTS"`
-	Participantvacancy int64       `json:"PARTICIPANTVACANCY"`
+	ParticipantVacancy int64       `json:"PARTICIPANTVACANCY"`
 	Public             bool        `json:"PUBLIC"`
-	Startdate          time.Time   `json:"STARTDATE"`
-	Trainercontactid   int64       `json:"TRAINERCONTACTID"`
-	Venuecontactid     int64       `json:"VENUECONTACTID"`
+	StartDate          time.Time   `json:"STARTDATE"`
+	TrainerContactID   int64       `json:"TRAINERCONTACTID"`
+	VenueContactID     int64       `json:"VENUECONTACTID"`
 }
 
 /*
