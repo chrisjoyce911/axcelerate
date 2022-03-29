@@ -22,8 +22,8 @@ type Client struct {
 
 	APIEndSux string
 
-	Contact *ContactService
-	Courses *CoursesService
+	Contact    *ContactService
+	Courses    *CoursesService
 	Accounting *AccountingService
 }
 
@@ -42,7 +42,7 @@ type APIerr struct {
 func NewClient(apitoken, wstoken string, baseURL *url.URL, httpClient *http.Client) *Client {
 
 	if baseURL == nil {
-		baseURL, _ = url.Parse("https://admin.axcelerate.com.au")
+		baseURL, _ = url.Parse("https://awfa.app.axcelerate.com")
 	}
 
 	if httpClient == nil {
