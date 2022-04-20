@@ -194,14 +194,16 @@ type ContactOptions struct {
 }
 
 type USIstatus struct {
-	Data struct {
-		DateOfBirth string `json:"dateOfBirth"`
-		FamilyName  string `json:"familyName"`
-		FirstName   string `json:"firstName"`
-		UsiStatus   string `json:"usiStatus"`
-	} `json:"DATA"`
-	Msg         string `json:"MSG"`
-	UsiVerified bool   `json:"USI_VERIFIED"`
+	Data        USIdata `json:"DATA"`
+	Msg         string  `json:"MSG"`
+	UsiVerified bool    `json:"USI_VERIFIED"`
+}
+
+type USIdata struct {
+	DateOfBirth string `json:"dateOfBirth"`
+	FamilyName  string `json:"familyName"`
+	FirstName   string `json:"firstName"`
+	UsiStatus   string `json:"usiStatus"`
 }
 
 // GetContact Interacts with a specific contact.
@@ -253,27 +255,6 @@ func (s *ContactService) ContactEnrolments(contactID int, parms map[string]strin
 	var json = jsontime.ConfigWithCustomTimeFormat
 	jsontime.AddTimeFormatAlias("axc_time", "15:04")
 	jsontime.AddTimeFormatAlias("axc_date", "2006-01-02")
-
-	json.Unmarshal([]byte(resp.Body), &obj)
-
-	return obj, resp, err
-}
-
-func (s *ContactService) VerifyUSI(contactID int) (USIstatus, *Response, error) {
-	var obj USIstatus
-
-	parms := map[string]string{
-		"contactID": fmt.Sprintf("%d", contactID),
-	}
-
-	resp, err := do(s.client, "POST", Params{parms: parms, u: "/contact/verifyUSI"}, obj)
-
-	if err != nil {
-		return obj, resp, err
-	}
-
-	var json = jsontime.ConfigWithCustomTimeFormat
-	jsontime.AddTimeFormatAlias("axc_datetime", "2006-01-02 15:04:05")
 
 	json.Unmarshal([]byte(resp.Body), &obj)
 

@@ -1,0 +1,10 @@
+{
+    "USI_VERIFIED": false,
+    "DATA": {
+        "usiStatus": "Valid",
+        "firstName": "MATCH",
+        "familyName": "NO_MATCH",
+        "dateOfBirth": "MATCH"
+    },
+    "MSG": "USI Valid but the student's personal data does not match. This must be fixed before their USI can be marked as verified. Please check: Surname. "
+}
