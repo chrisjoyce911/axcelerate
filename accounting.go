@@ -22,20 +22,20 @@ type Items struct {
 	TotalTax int `json:"TOTALTAX"`
 	Children struct {
 	} `json:"CHILDREN"`
-	UnitPriceTax   int         `json:"UNITPRICETAX"`
+	UnitPriceTax   float32     `json:"UNITPRICETAX"`
 	DomainID       int         `json:"DOMAINID"`
 	HasChildren    int         `json:"HASCHILDREN"`
 	PartID         int         `json:"PARTID"`
-	UnitPriceNett  int         `json:"UNITPRICENETT"`
+	UnitPriceNett  float32     `json:"UNITPRICENETT"`
 	Qty            int         `json:"QTY"`
 	TaxPercent     int         `json:"TAXPERCENT"`
 	TotalGross     int         `json:"TOTALGROSS"`
 	ItemCode       string      `json:"ITEMCODE"`
 	FinanceCode    string      `json:"FINANCECODE"`
-	TotalNett      int         `json:"TOTALNETT"`
+	TotalNett      float32     `json:"TOTALNETT"`
 	SourceID       int         `json:"SOURCEID"`
 	ServiceDate    string      `json:"SERVICEDATE" time_format:"axc_date"`
-	UnitPriceGross int         `json:"UNITPRICEGROSS"`
+	UnitPriceGross float32     `json:"UNITPRICEGROSS"`
 	ItemID         int         `json:"ITEMID"`
 	Description    string      `json:"DESCRIPTION"`
 	CostCentreCode interface{} `json:"COSTCENTRECODE"`
