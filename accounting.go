@@ -3,7 +3,6 @@ package axcelerate
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 // CoursesService handles all interactions with Contact
@@ -45,7 +44,7 @@ type Items struct {
 // Invoice object with the full Invoice information
 type Invoice struct {
 	Invoicenr          string     `json:"INVOICENR"`
-	PriceGross         int        `json:"PRICEGROSS"`
+	PriceGross         float32    `json:"PRICEGROSS"`
 	Address2           string     `json:"ADDRESS2"`
 	OwnerContactID     int        `json:"OWNERCONTACTID"`
 	Organisation       string     `json:"ORGANISATION"`
@@ -90,10 +89,10 @@ type Invoice struct {
 	City               string     `json:"CITY"`
 	OrderNumber        string     `json:"ORDERNR"`
 	Email              string     `json:"EMAIL"`
-	Pricenett          int        `json:"PRICENETT"`
+	PriceNett          float32    `json:"PRICENETT"`
 	Country            string     `json:"COUNTRY"`
 	Invguid            string     `json:"INVGUID"`
-	Balance            int        `json:"BALANCE"`
+	Balance            float32    `json:"BALANCE"`
 	Postcode           string     `json:"POSTCODE"`
 	IsPaid             bool       `json:"ISPAID"`
 }
@@ -108,8 +107,6 @@ func (s *AccountingService) GetInvoice(invoiceID int) (Invoice, *Response, error
 	parms := map[string]string{"invoiceID": fmt.Sprintf("/%d", invoiceID)}
 
 	url := fmt.Sprintf("/accounting/invoice/%d", invoiceID)
-	log.Print(url)
-
 	resp, err := do(s.client, "GET", Params{parms: parms, u: url}, obj)
 
 	if err != nil {
