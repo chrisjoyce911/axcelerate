@@ -22,23 +22,23 @@ type Items struct {
 	TotalTax int `json:"TOTALTAX"`
 	Children struct {
 	} `json:"CHILDREN"`
-	Unitpricetax   int         `json:"UNITPRICETAX"`
+	UnitPriceTax   int         `json:"UNITPRICETAX"`
 	DomainID       int         `json:"DOMAINID"`
 	HasChildren    int         `json:"HASCHILDREN"`
 	PartID         int         `json:"PARTID"`
-	Unitpricenett  int         `json:"UNITPRICENETT"`
+	UnitPriceNett  int         `json:"UNITPRICENETT"`
 	Qty            int         `json:"QTY"`
 	TaxPercent     int         `json:"TAXPERCENT"`
 	TotalGross     int         `json:"TOTALGROSS"`
 	ItemCode       string      `json:"ITEMCODE"`
-	Financecode    string      `json:"FINANCECODE"`
-	Totalnett      int         `json:"TOTALNETT"`
+	FinanceCode    string      `json:"FINANCECODE"`
+	TotalNett      int         `json:"TOTALNETT"`
 	SourceID       int         `json:"SOURCEID"`
 	ServiceDate    string      `json:"SERVICEDATE" time_format:"axc_date"`
-	Unitpricegross int         `json:"UNITPRICEGROSS"`
-	Itemid         int         `json:"ITEMID"`
+	UnitPriceGross int         `json:"UNITPRICEGROSS"`
+	ItemID         int         `json:"ITEMID"`
 	Description    string      `json:"DESCRIPTION"`
-	Costcentrecode interface{} `json:"COSTCENTRECODE"`
+	CostCentreCode interface{} `json:"COSTCENTRECODE"`
 }
 
 // Invoice object with the full Invoice information
