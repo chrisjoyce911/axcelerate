@@ -30,6 +30,6 @@ func (s *CoursesService) GetCoursesLocations(public, onlyFuture bool) ([]Locatio
 		return obj, resp, err
 	}
 
-	json.Unmarshal([]byte(resp.Body), &obj)
+	err = json.Unmarshal([]byte(resp.Body), &obj)
 	return obj, resp, err
 }

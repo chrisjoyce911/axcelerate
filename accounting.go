@@ -113,6 +113,6 @@ func (s *AccountingService) GetInvoice(invoiceID int) (Invoice, *Response, error
 		return obj, resp, err
 	}
 
-	json.Unmarshal([]byte(resp.Body), &obj)
+	err = json.Unmarshal([]byte(resp.Body), &obj)
 	return obj, resp, err
 }

@@ -22,7 +22,7 @@ func (s *ContactService) VerifyUSI(contactID int) (USIstatus, *Response, error) 
 	var json = jsontime.ConfigWithCustomTimeFormat
 	jsontime.AddTimeFormatAlias("axc_datetime", "2006-01-02 15:04:05")
 
-	json.Unmarshal([]byte(resp.Body), &obj)
+	err = json.Unmarshal([]byte(resp.Body), &obj)
 
 	return obj, resp, err
 }

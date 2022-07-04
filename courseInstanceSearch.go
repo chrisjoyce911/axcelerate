@@ -85,7 +85,7 @@ func (s *CoursesService) GetCoursesInstanceSearch(parms map[string]string) ([]In
 	var json = jsontime.ConfigWithCustomTimeFormat
 	jsontime.AddTimeFormatAlias("axc_datetime", "2006-01-02 15:04:05")
 
-	json.Unmarshal([]byte(resp.Body), &obj)
+	err = json.Unmarshal([]byte(resp.Body), &obj)
 
 	return obj, resp, err
 }

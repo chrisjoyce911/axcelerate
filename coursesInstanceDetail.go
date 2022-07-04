@@ -67,6 +67,6 @@ func (s *CoursesService) GetCoursesInstanceDetail(instanceID int, activityType s
 		return obj, resp, err
 	}
 
-	json.Unmarshal([]byte(resp.Body), &obj)
+	err = json.Unmarshal([]byte(resp.Body), &obj)
 	return obj, resp, err
 }

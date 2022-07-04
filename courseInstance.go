@@ -71,7 +71,7 @@ func (s *CoursesService) GetCoursesInstances(coursesID int, activityType string,
 
 	var json = jsontime.ConfigWithCustomTimeFormat
 
-	json.Unmarshal([]byte(resp.Body), &obj)
+	err = json.Unmarshal([]byte(resp.Body), &obj)
 
 	return obj, resp, err
 }

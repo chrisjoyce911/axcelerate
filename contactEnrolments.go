@@ -20,7 +20,7 @@ func (s *ContactService) ContactEnrolments(contactID int, parms map[string]strin
 	jsontime.AddTimeFormatAlias("axc_time", "15:04")
 	jsontime.AddTimeFormatAlias("axc_date", "2006-01-02")
 
-	json.Unmarshal([]byte(resp.Body), &obj)
+	err = json.Unmarshal([]byte(resp.Body), &obj)
 
 	return obj, resp, err
 }

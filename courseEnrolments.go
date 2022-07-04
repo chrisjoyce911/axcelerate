@@ -70,6 +70,6 @@ func (s *CoursesService) GetEnrolments(parms map[string]string) ([]Enrolment, *R
 	var json = jsontime.ConfigWithCustomTimeFormat
 	jsontime.AddTimeFormatAlias("axc_date_hours", "2006-01-02 15:04")
 
-	json.Unmarshal([]byte(resp.Body), &obj)
+	err = json.Unmarshal([]byte(resp.Body), &obj)
 	return obj, resp, err
 }

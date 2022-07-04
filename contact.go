@@ -221,7 +221,7 @@ func (s *ContactService) GetContact(contactID int) (Contact, *Response, error) {
 	jsontime.AddTimeFormatAlias("axc_date_hours", "2006-01-02 15:04")
 	jsontime.AddTimeFormatAlias("axc_date", "2006-01-02")
 
-	json.Unmarshal([]byte(resp.Body), &a)
+	err = json.Unmarshal([]byte(resp.Body), &a)
 
 	return a, resp, err
 }
@@ -240,6 +240,6 @@ func (s *ContactService) SearchContacts(parms map[string]string) ([]Contact, *Re
 	jsontime.AddTimeFormatAlias("axc_date_hours", "2006-01-02 15:04")
 	jsontime.AddTimeFormatAlias("axc_date", "2006-01-02")
 
-	json.Unmarshal([]byte(resp.Body), &obj)
+	err = json.Unmarshal([]byte(resp.Body), &obj)
 	return obj, resp, err
 }

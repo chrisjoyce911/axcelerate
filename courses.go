@@ -52,6 +52,6 @@ func (s *CoursesService) GetCourses(parms map[string]string) ([]Course, *Respons
 		return obj, resp, err
 	}
 
-	json.Unmarshal([]byte(resp.Body), &obj)
+	err = json.Unmarshal([]byte(resp.Body), &obj)
 	return obj, resp, err
 }
