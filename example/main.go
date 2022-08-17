@@ -17,8 +17,9 @@ func main() {
 	// c, resp, err := client.Contact.GetContact(1)
 	// c, resp, err := client.Contact.VerifyUSI(1)
 
-	c, resp, err := client.Courses.GetCoursesInstanceDetail(1495521, "w")
+	// c, resp, err := client.Courses.GetCoursesInstanceDetail(1495521, "w")
 
+	c, resp, err := client.Courses.UpdateInstanceCost(1901499, "w", 135)
 	fmt.Print(resp)
 	fmt.Printf("%v", c)
 	fmt.Print(err)
