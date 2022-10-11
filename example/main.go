@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/chrisjoyce911/axcelerate"
@@ -14,15 +15,12 @@ func main() {
 
 	client := axcelerate.NewClient(apitoken, wstoken, nil, nil)
 
+	UpdateInstanceMaxParticipants(client)
+
 	// c, resp, err := client.Contact.GetContact(1)
 	// c, resp, err := client.Contact.VerifyUSI(1)
 
 	// c, resp, err := client.Courses.GetCoursesInstanceDetail(1495521, "w")
-
-	c, resp, err := client.Courses.UpdateInstanceCost(1901499, "w", 135)
-	fmt.Print(resp)
-	fmt.Printf("%v", c)
-	fmt.Print(err)
 
 	// fmt.Println(c.Source)
 
@@ -59,5 +57,26 @@ func main() {
 	// inv, resp, _ := client.Accounting.GetInvoice(2853348)
 	// fmt.Print(resp)
 	// fmt.Printf("%v", inv)
+
+}
+
+func UpdateInstanceMaxParticipants(client *axcelerate.Client) {
+
+	max := 10
+	workshops := []int{
+		1904663,
+		1904664,
+		1913826,
+	}
+
+	for w := range workshops {
+		c, _, err := client.Courses.UpdateInstanceMaxParticipants(workshops[w], "w", max)
+
+		log.Printf("%d\t %s\n", c.InstanceID, c.Message)
+		if err != nil {
+			fmt.Print(err)
+		}
+
+	}
 
 }
