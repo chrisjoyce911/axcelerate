@@ -54,6 +54,41 @@ func (s *CoursesService) UpdateInstanceCost(instanceID int, activityType string,
 }
 
 /*
+UpdateInstanceName Updates existing instance name
+
+instanceID
+
+	The instanceID of the activity you want details from.
+
+activityType
+
+	The type of the activity. w = workshop, p = accredited program, el = e-learning.
+
+name
+
+	The new name (ProgramName) for the instance
+*/
+func (s *CoursesService) UpdateInstanceName(instanceID int, activityType string, name string) (UpdateInstanceDetail, *Response, error) {
+
+	var obj UpdateInstanceDetail
+
+	parms := map[string]string{}
+
+	parms["ID"] = fmt.Sprintf("%d", instanceID)
+	parms["type"] = activityType
+	parms["ProgramName"] = name
+
+	resp, err := do(s.client, "PUT", Params{parms: parms, u: "/course/instance/"}, obj)
+
+	if err != nil {
+		return obj, resp, err
+	}
+
+	err = json.Unmarshal([]byte(resp.Body), &obj)
+	return obj, resp, err
+}
+
+/*
 UpdateInstanceMaxParticipants Updates existing instance Max Participants
 
 instanceID
