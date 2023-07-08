@@ -73,7 +73,7 @@ type Contact struct {
 	Lui                                 interface{}   `json:"LUI"`
 	Mainlanguageid                      interface{}   `json:"MAINLANGUAGEID"`
 	Mainlanguagename                    interface{}   `json:"MAINLANGUAGENAME"`
-	Middlename                          string   	  `json:"MIDDLENAME"`
+	Middlename                          string        `json:"MIDDLENAME"`
 	Mobilephone                         string        `json:"MOBILEPHONE"`
 	OptionalID                          interface{}   `json:"OPTIONALID"`
 	Organisation                        string        `json:"ORGANISATION"`
@@ -179,12 +179,13 @@ type ContactEnrolment struct {
 }
 
 type EnrolmentComplexdates struct {
-	Date             time.Time `json:"DATE" time_format:"axc_date"`
-	StartTime        time.Time `json:"STARTTIME" time_format:"axc_time"`
-	EndTime          time.Time `json:"ENDTIME" time_format:"axc_time"`
-	TrainerContactID int       `json:"TRAINERCONTACTID"`
-	Location         string    `json:"LOCATION"`
-	RoomID           int       `json:"ROOMID"`
+	Date      time.Time `json:"DATE" time_format:"axc_date"`
+	StartTime time.Time `json:"STARTTIME" time_format:"axc_time"`
+	EndTime   time.Time `json:"ENDTIME" time_format:"axc_time_long"`
+
+	TrainerContactID int    `json:"TRAINERCONTACTID"`
+	Location         string `json:"LOCATION"`
+	RoomID           int    `json:"ROOMID"`
 }
 
 // ContactOptions for Updateing

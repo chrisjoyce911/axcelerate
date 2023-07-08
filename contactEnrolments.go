@@ -18,6 +18,7 @@ func (s *ContactService) ContactEnrolments(contactID int, parms map[string]strin
 
 	var json = jsontime.ConfigWithCustomTimeFormat
 	jsontime.AddTimeFormatAlias("axc_time", "15:04")
+	jsontime.AddTimeFormatAlias("axc_time_long", "15:04:05")
 	jsontime.AddTimeFormatAlias("axc_date", "2006-01-02")
 
 	err = json.Unmarshal([]byte(resp.Body), &obj)
