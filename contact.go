@@ -73,7 +73,7 @@ type Contact struct {
 	Lui                                 interface{}   `json:"LUI"`
 	Mainlanguageid                      interface{}   `json:"MAINLANGUAGEID"`
 	Mainlanguagename                    interface{}   `json:"MAINLANGUAGENAME"`
-	Middlename                          interface{}   `json:"MIDDLENAME"`
+	Middlename                          string   	  `json:"MIDDLENAME"`
 	Mobilephone                         string        `json:"MOBILEPHONE"`
 	OptionalID                          interface{}   `json:"OPTIONALID"`
 	Organisation                        string        `json:"ORGANISATION"`
