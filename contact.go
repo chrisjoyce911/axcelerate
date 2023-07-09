@@ -180,7 +180,7 @@ type ContactEnrolment struct {
 
 type EnrolmentComplexdates struct {
 	Date      time.Time `json:"DATE" time_format:"axc_date"`
-	StartTime time.Time `json:"STARTTIME" time_format:"axc_time"`
+	StartTime time.Time `json:"STARTTIME" time_format:"axc_time_long"`
 	EndTime   time.Time `json:"ENDTIME" time_format:"axc_time_long"`
 
 	TrainerContactID int    `json:"TRAINERCONTACTID"`
