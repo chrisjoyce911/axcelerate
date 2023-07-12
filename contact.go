@@ -21,7 +21,7 @@ type Contact struct {
 	Anzsiccode                          interface{}   `json:"ANZSICCODE"`
 	Atschoolflag                        bool          `json:"ATSCHOOLFLAG"`
 	Atschoolname                        interface{}   `json:"ATSCHOOLNAME"`
-	Buildingname                        interface{}   `json:"BUILDINGNAME"`
+	Buildingname                        string        `json:"BUILDINGNAME"`
 	CategoryIDs                         []interface{} `json:"CATEGORYIDS"`
 	Citizenstatusid                     interface{}   `json:"CITIZENSTATUSID"`
 	Citizenstatusname                   interface{}   `json:"CITIZENSTATUSNAME"`
@@ -80,9 +80,9 @@ type Contact struct {
 	OrgID                               int64         `json:"ORGID"`
 	OtherPhone                          interface{}   `json:"OTHERPHONE"`
 	PayerContactID                      interface{}   `json:"PAYERCONTACTID"`
-	Phone                               interface{}   `json:"PHONE"`
+	Phone                               string        `json:"PHONE"`
 	Photo                               interface{}   `json:"PHOTO"`
-	Pobox                               interface{}   `json:"POBOX"`
+	Pobox                               string        `json:"POBOX"`
 	Position                            string        `json:"POSITION"`
 	Postcode                            string        `json:"POSTCODE"`
 	PreferredName                       string        `json:"PREFERREDNAME"`
@@ -120,7 +120,7 @@ type Contact struct {
 	USIVerified                         bool          `json:"USI_VERIFIED"`
 	Vsn                                 interface{}   `json:"VSN"`
 	Website                             interface{}   `json:"WEBSITE"`
-	Workphone                           interface{}   `json:"WORKPHONE"`
+	Workphone                           string        `json:"WORKPHONE"`
 	Workreadyparticipantnumber          interface{}   `json:"WORKREADYPARTICIPANTNUMBER"`
 }
 
