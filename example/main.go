@@ -15,7 +15,9 @@ func main() {
 
 	client := axcelerate.NewClient(apitoken, wstoken, nil, nil)
 
-	UpdateInstanceMaxParticipants(client)
+	contactSearch(client)
+
+	// UpdateInstanceMaxParticipants(client)
 
 	// c, resp, err := client.Contact.GetContact(1)
 	// c, resp, err := client.Contact.VerifyUSI(1)
@@ -57,6 +59,23 @@ func main() {
 	// inv, resp, _ := client.Accounting.GetInvoice(2853348)
 	// fmt.Print(resp)
 	// fmt.Printf("%v", inv)
+
+}
+
+func contactSearch(client *axcelerate.Client) {
+
+	parms := map[string]string{"emailAddress": "chris@joyce.au"}
+	contacts, _, err := client.Contact.ContactSearch(parms)
+
+	if err != nil {
+		fmt.Print(err)
+		return
+	}
+
+	for c := range contacts {
+		log.Printf("%d\t %s\n", contacts[c].ContactID, contacts[c].Emailaddress)
+
+	}
 
 }
 
