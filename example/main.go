@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/chrisjoyce911/axcelerate"
 )
@@ -16,6 +17,9 @@ func main() {
 	client := axcelerate.NewClient(apitoken, wstoken, nil, nil)
 
 	contactSearch(client)
+	contactEnrolments(client)
+
+	contactCertificate(client)
 
 	// UpdateInstanceMaxParticipants(client)
 
@@ -59,6 +63,47 @@ func main() {
 	// inv, resp, _ := client.Accounting.GetInvoice(2853348)
 	// fmt.Print(resp)
 	// fmt.Printf("%v", inv)
+
+}
+
+func contactCertificate(client *axcelerate.Client) {
+
+	cert, _, err := client.Contact.ContactEnrolmentsCertificate(12787538)
+
+	if err != nil {
+		fmt.Print(err)
+		return
+	}
+
+	saveMediaToDisk(cert, "./example/")
+
+}
+
+func saveMediaToDisk(media axcelerate.Media, directory string) error {
+	err := os.MkdirAll(directory, 0755)
+	if err != nil {
+		return err
+	}
+
+	filePath := filepath.Join(directory, media.FileName)
+	err = os.WriteFile(filePath, media.Data, 0644)
+	return err
+}
+
+func contactEnrolments(client *axcelerate.Client) {
+
+	parms := map[string]string{}
+	enrolments, _, err := client.Contact.ContactEnrolments(10148651, parms)
+
+	if err != nil {
+		fmt.Print(err)
+		return
+	}
+
+	for e := range enrolments {
+		log.Printf("%d\t %s\n", enrolments[e].EnrolID, enrolments[e].Code)
+
+	}
 
 }
 
