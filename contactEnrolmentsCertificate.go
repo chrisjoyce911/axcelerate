@@ -49,13 +49,6 @@ func (s *ContactService) ContactEnrolmentsCertificate(enrolID int) (Media, *Resp
 
 	media := createMedia(pdfData, fileName)
 
-	// Output the media struct
-	println("FileName:", media.FileName)
-	println("FileType:", media.FileType)
-	println("ContentType:", media.ContentType)
-	println("Data size:", len(media.Data))
-	println("Size:", media.Size)
-
 	return media, resp, err
 }
 
