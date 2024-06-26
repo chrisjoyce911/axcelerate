@@ -16,10 +16,10 @@ func main() {
 
 	client := axcelerate.NewClient(apitoken, wstoken, nil, nil)
 
-	contactSearch(client)
-	contactEnrolments(client)
-
 	contactCertificate(client)
+	// contactSearch(client)
+	// contactEnrolments(client)
+	// contactCertificate(client)
 
 	// UpdateInstanceMaxParticipants(client)
 
@@ -67,6 +67,19 @@ func main() {
 }
 
 func contactCertificate(client *axcelerate.Client) {
+
+	cert, _, err := client.Contact.ContactVerifyCertificate("8058765-9441274")
+
+	if err != nil {
+		fmt.Print(err)
+		return
+	}
+
+	fmt.Printf("%+v", cert)
+
+}
+
+func ContactCertificate(client *axcelerate.Client) {
 
 	cert, _, err := client.Contact.ContactEnrolmentsCertificate(12787538)
 
