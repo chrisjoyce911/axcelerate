@@ -16,7 +16,8 @@ func main() {
 
 	client := axcelerate.NewClient(apitoken, wstoken, nil, nil)
 
-	savedReport(client)
+	savedReportList(client)
+	// savedReport(client)
 	// contactCertificate(client)
 	// contactSearch(client)
 	// contactEnrolments(client)
@@ -67,6 +68,19 @@ func main() {
 
 }
 
+func savedReportList(client *axcelerate.Client) {
+
+	cert, _, err := client.Report.SavedReportList()
+
+	if err != nil {
+		fmt.Print(err)
+		return
+	}
+
+	fmt.Printf("%+v", cert)
+
+}
+
 func savedReport(client *axcelerate.Client) {
 
 	cert, _, err := client.Report.SavedReportRun(85950, 10, map[string]string{})
@@ -77,7 +91,6 @@ func savedReport(client *axcelerate.Client) {
 	}
 
 	fmt.Printf("%+v", cert)
-
 }
 
 func contactCertificate(client *axcelerate.Client) {

@@ -5,6 +5,8 @@ import (
 	"time"
 
 	jsontime "github.com/liamylian/jsontime/v2/v2"
+
+	"encoding/json"
 )
 
 // CoursesService handles all interactions with Contact
@@ -46,7 +48,18 @@ type ReportData struct {
 	IssuedDate      time.Time `json:"AWARDISSUEDDATE" time_format:"axc_date"`
 }
 
-// GetInvoice will get the details of an invoice / Update an invoice (NOTE: Currently you can only Lock Items and Finalise)
+type ReportList []struct {
+	ReportName         string `json:"REPORTNAME"`
+	CreatedByContactID int    `json:"CREATEDBYCONTACTID"`
+	CreatedBy          string `json:"CREATEDBY"`
+	ReportID           int    `json:"REPORTID"`
+	Reference          string `json:"REPORTREFERENCE"`
+	Active             bool   `json:"ACTIVE"`
+	ReportVersion      string `json:"REPORTVERSION"`
+	Description        string `json:"DESCRIPTION"`
+}
+
+// SavedReportRun Interacts with the aXcelerate Report Builder to run a specified saved report. It will return the results in JSON format.
 // Header			Type		Required	Default	Description
 // filterOverride	json		false		Override the standard filter value(s):
 //											e.g: To override the Enrolment Status Value you can pass:
@@ -74,6 +87,23 @@ func (s *ReportService) SavedReportRun(reportID int, displayLength int, parms ma
 	var json = jsontime.ConfigWithCustomTimeFormat
 
 	jsontime.AddTimeFormatAlias("axc_date", "2006-01-02")
+
+	err = json.Unmarshal([]byte(resp.Body), &obj)
+	return obj, resp, err
+}
+
+// SavedReportList Returns an array of available reports, their names and descriptions.
+func (s *ReportService) SavedReportList() (ReportList, *Response, error) {
+	var obj ReportList
+
+	parms := map[string]string{}
+
+	url := "/report/saved/list"
+	resp, err := do(s.client, "GET", Params{parms: parms, u: url}, obj)
+
+	if err != nil {
+		return obj, resp, err
+	}
 
 	err = json.Unmarshal([]byte(resp.Body), &obj)
 	return obj, resp, err
