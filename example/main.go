@@ -16,7 +16,8 @@ func main() {
 
 	client := axcelerate.NewClient(apitoken, wstoken, nil, nil)
 
-	contactCertificate(client)
+	savedReport(client)
+	// contactCertificate(client)
 	// contactSearch(client)
 	// contactEnrolments(client)
 	// contactCertificate(client)
@@ -63,6 +64,19 @@ func main() {
 	// inv, resp, _ := client.Accounting.GetInvoice(2853348)
 	// fmt.Print(resp)
 	// fmt.Printf("%v", inv)
+
+}
+
+func savedReport(client *axcelerate.Client) {
+
+	cert, _, err := client.Report.SavedReportRun(85950, 10, map[string]string{})
+
+	if err != nil {
+		fmt.Print(err)
+		return
+	}
+
+	fmt.Printf("%+v", cert)
 
 }
 

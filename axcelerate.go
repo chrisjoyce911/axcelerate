@@ -25,6 +25,7 @@ type Client struct {
 	Contact    *ContactService
 	Courses    *CoursesService
 	Accounting *AccountingService
+	Report     *ReportService
 }
 
 // APIerr may happeen along with a status code
@@ -60,7 +61,7 @@ func NewClient(apitoken, wstoken string, baseURL *url.URL, httpClient *http.Clie
 	c.Contact = &ContactService{client: c}
 	c.Courses = &CoursesService{client: c}
 	c.Accounting = &AccountingService{client: c}
-
+	c.Report = &ReportService{client: c}
 	return c
 }
 
@@ -207,16 +208,17 @@ func sanitizeURL(uri *url.URL) *url.URL {
 
 /*
 Error reports more details on an individual error in an ErrorResponse.
- These are the possible validation error codes:
 
-	 missing:
-		 resource does not exist
-	 missing_field:
-		 a required field on a resource has not been set
-	 invalid:
-		 the formatting of a field is invalid
-	 already_exists:
-		 another resource has the same valid as this field
+	 These are the possible validation error codes:
+
+		 missing:
+			 resource does not exist
+		 missing_field:
+			 a required field on a resource has not been set
+		 invalid:
+			 the formatting of a field is invalid
+		 already_exists:
+			 another resource has the same valid as this field
 */
 type Error struct {
 	Resource string `json:"resource"` // resource on which the error occurred
