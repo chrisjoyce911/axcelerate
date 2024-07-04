@@ -62,16 +62,16 @@ func TestContactService_ContactEnrolments(t *testing.T) {
 					Mandatory:      false,
 					Status:         "Completed",
 					Count:          1,
-					Complexdates: []EnrolmentComplexdates{
-						{
-							Date:             time.Date(2022, time.April, 12, 0, 0, 0, 0, time.Local),
-							StartTime:        time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
-							EndTime:          time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
-							TrainerContactID: 0,
-							Location:         "",
-							RoomID:           0,
-						},
-					},
+					// Complexdates: []EnrolmentComplexdates{
+					// 	{
+					// 		Date:             time.Date(2022, time.April, 12, 0, 0, 0, 0, time.Local),
+					// 		StartTime:        time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+					// 		EndTime:          time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+					// 		TrainerContactID: 0,
+					// 		Location:         "",
+					// 		RoomID:           0,
+					// 	},
+					// },
 				},
 			},
 

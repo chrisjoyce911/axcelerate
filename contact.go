@@ -125,57 +125,57 @@ type Contact struct {
 }
 
 type ContactEnrolment struct {
-	RowID                                int                     `json:"ROWID"`
-	Type                                 string                  `json:"TYPE"`
-	ID                                   int                     `json:"ID"`
-	InstanceID                           int                     `json:"INSTANCEID"`
-	EnrolID                              int                     `json:"ENROLID"`
-	VicenrolmentID                       string                  `json:"VICENROLMENTID,omitempty"`
-	InvoiceID                            int                     `json:"INVOICEID"`
-	InvoicePaid                          bool                    `json:"INVOICEPAID"`
-	LearnerID                            int                     `json:"LEARNERID"`
-	Code                                 string                  `json:"CODE"`
-	Location                             string                  `json:"LOCATION"`
-	Delivery                             string                  `json:"DELIVERY"`
-	DeliveryMode                         string                  `json:"DELIVERYMODE"`
-	Activitytype                         string                  `json:"ACTIVITYTYPE"`
-	Name                                 string                  `json:"NAME"`
-	CommencedDate                        time.Time               `json:"COMMENCEDDATE" time_format:"axc_date"`
-	StartDate                            time.Time               `json:"STARTDATE" time_format:"axc_date"`
-	FinishDate                           time.Time               `json:"FINISHDATE" time_format:"axc_date"`
-	CompletionDate                       time.Time               `json:"COMPLETIONDATE" time_format:"axc_date"`
-	Mandatory                            bool                    `json:"MANDATORY"`
-	Status                               string                  `json:"STATUS"`
-	ProgramStatusidvic                   interface{}             `json:"PROGRAMSTATUSIDVIC"`
-	SchoolTypeID                         interface{}             `json:"SCHOOLTYPEID"`
-	SchoolOrgID                          interface{}             `json:"SCHOOLORGID"`
-	Count                                int                     `json:"COUNT"`
-	OutcomeCode                          string                  `json:"OUTCOMECODE,omitempty"`
-	LaunchURL                            string                  `json:"LAUNCHURL,omitempty"`
-	Pstacdatevic                         interface{}             `json:"PSTACDATEVIC,omitempty"`
-	VicprogramenrolmentID                string                  `json:"VICPROGRAMENROLMENTID,omitempty"`
-	CustomfieldAgreetoelearning          string                  `json:"CUSTOMFIELD_AGREETOELEARNING,omitempty"`
-	CustomfieldAgreetosoa                interface{}             `json:"CUSTOMFIELD_AGREETOSOA,omitempty"`
-	CustomfieldTerms                     string                  `json:"CUSTOMFIELD_TERMS,omitempty"`
-	CustomfieldDeclaration               interface{}             `json:"CUSTOMFIELD_DECLARATION,omitempty"`
-	CustomfieldAvetmissconsent           interface{}             `json:"CUSTOMFIELD_AVETMISSCONSENT,omitempty"`
-	CustomfieldPfaquizdate               string                  `json:"CUSTOMFIELD_PFAQUIZDATE,omitempty"`
-	CustomfieldPfaquizlink               string                  `json:"CUSTOMFIELD_PFAQUIZLINK,omitempty"`
-	CustomfieldPfaquiz                   string                  `json:"CUSTOMFIELD_PFAQUIZ,omitempty"`
-	CustomfieldEmployername              interface{}             `json:"CUSTOMFIELD_EMPLOYERNAME,omitempty"`
-	CustomfieldSoaverificationstatus     interface{}             `json:"CUSTOMFIELD_SOAVERIFICATIONSTATUS,omitempty"`
-	CustomfieldSoaverify                 interface{}             `json:"CUSTOMFIELD_SOAVERIFY,omitempty"`
-	CustomfieldSoaverifieddate           interface{}             `json:"CUSTOMFIELD_SOAVERIFIEDDATE,omitempty"`
-	CustomfieldStatementofattainmentlink interface{}             `json:"CUSTOMFIELD_STATEMENTOFATTAINMENTLINK,omitempty"`
-	CustomfieldThirdpartyconsent         interface{}             `json:"CUSTOMFIELD_THIRDPARTYCONSENT,omitempty"`
-	CustomfieldThirdpartyemployer        interface{}             `json:"CUSTOMFIELD_THIRDPARTYEMPLOYER,omitempty"`
-	CustomfieldThirdpartyemployeremail   interface{}             `json:"CUSTOMFIELD_THIRDPARTYEMPLOYEREMAIL,omitempty"`
-	CustomfieldTrueandcorrectdec         interface{}             `json:"CUSTOMFIELD_TRUEANDCORRECTDEC,omitempty"`
-	CustomfieldCprlink                   interface{}             `json:"CUSTOMFIELD_CPRLINK,omitempty"`
-	Complexdates                         []EnrolmentComplexdates `json:"COMPLEXDATES,omitempty"`
-	CustomfieldPriceBeat                 interface{}             `json:"CUSTOMFIELD_PRICEBEAT,omitempty"`
-	CustomfieldCompeteName               interface{}             `json:"CUSTOMFIELD_COMPETENAME,omitempty"`
-	CustomfieldWeekends                  interface{}             `json:"CUSTOMFIELD_WEEKENDS,omitempty"`
+	RowID                                int         `json:"ROWID"`
+	Type                                 string      `json:"TYPE"`
+	ID                                   int         `json:"ID"`
+	InstanceID                           int         `json:"INSTANCEID"`
+	EnrolID                              int         `json:"ENROLID"`
+	VicenrolmentID                       string      `json:"VICENROLMENTID,omitempty"`
+	InvoiceID                            int         `json:"INVOICEID"`
+	InvoicePaid                          bool        `json:"INVOICEPAID"`
+	LearnerID                            int         `json:"LEARNERID"`
+	Code                                 string      `json:"CODE"`
+	Location                             string      `json:"LOCATION"`
+	Delivery                             string      `json:"DELIVERY"`
+	DeliveryMode                         string      `json:"DELIVERYMODE"`
+	Activitytype                         string      `json:"ACTIVITYTYPE"`
+	Name                                 string      `json:"NAME"`
+	CommencedDate                        time.Time   `json:"COMMENCEDDATE" time_format:"axc_date"`
+	StartDate                            time.Time   `json:"STARTDATE" time_format:"axc_date"`
+	FinishDate                           time.Time   `json:"FINISHDATE" time_format:"axc_date"`
+	CompletionDate                       time.Time   `json:"COMPLETIONDATE" time_format:"axc_date"`
+	Mandatory                            bool        `json:"MANDATORY"`
+	Status                               string      `json:"STATUS"`
+	ProgramStatusidvic                   interface{} `json:"PROGRAMSTATUSIDVIC"`
+	SchoolTypeID                         interface{} `json:"SCHOOLTYPEID"`
+	SchoolOrgID                          interface{} `json:"SCHOOLORGID"`
+	Count                                int         `json:"COUNT"`
+	OutcomeCode                          string      `json:"OUTCOMECODE,omitempty"`
+	LaunchURL                            string      `json:"LAUNCHURL,omitempty"`
+	Pstacdatevic                         interface{} `json:"PSTACDATEVIC,omitempty"`
+	VicprogramenrolmentID                string      `json:"VICPROGRAMENROLMENTID,omitempty"`
+	CustomfieldAgreetoelearning          string      `json:"CUSTOMFIELD_AGREETOELEARNING,omitempty"`
+	CustomfieldAgreetosoa                interface{} `json:"CUSTOMFIELD_AGREETOSOA,omitempty"`
+	CustomfieldTerms                     string      `json:"CUSTOMFIELD_TERMS,omitempty"`
+	CustomfieldDeclaration               interface{} `json:"CUSTOMFIELD_DECLARATION,omitempty"`
+	CustomfieldAvetmissconsent           interface{} `json:"CUSTOMFIELD_AVETMISSCONSENT,omitempty"`
+	CustomfieldPfaquizdate               string      `json:"CUSTOMFIELD_PFAQUIZDATE,omitempty"`
+	CustomfieldPfaquizlink               string      `json:"CUSTOMFIELD_PFAQUIZLINK,omitempty"`
+	CustomfieldPfaquiz                   string      `json:"CUSTOMFIELD_PFAQUIZ,omitempty"`
+	CustomfieldEmployername              interface{} `json:"CUSTOMFIELD_EMPLOYERNAME,omitempty"`
+	CustomfieldSoaverificationstatus     interface{} `json:"CUSTOMFIELD_SOAVERIFICATIONSTATUS,omitempty"`
+	CustomfieldSoaverify                 interface{} `json:"CUSTOMFIELD_SOAVERIFY,omitempty"`
+	CustomfieldSoaverifieddate           interface{} `json:"CUSTOMFIELD_SOAVERIFIEDDATE,omitempty"`
+	CustomfieldStatementofattainmentlink interface{} `json:"CUSTOMFIELD_STATEMENTOFATTAINMENTLINK,omitempty"`
+	CustomfieldThirdpartyconsent         interface{} `json:"CUSTOMFIELD_THIRDPARTYCONSENT,omitempty"`
+	CustomfieldThirdpartyemployer        interface{} `json:"CUSTOMFIELD_THIRDPARTYEMPLOYER,omitempty"`
+	CustomfieldThirdpartyemployeremail   interface{} `json:"CUSTOMFIELD_THIRDPARTYEMPLOYEREMAIL,omitempty"`
+	CustomfieldTrueandcorrectdec         interface{} `json:"CUSTOMFIELD_TRUEANDCORRECTDEC,omitempty"`
+	CustomfieldCprlink                   interface{} `json:"CUSTOMFIELD_CPRLINK,omitempty"`
+	// Complexdates                         []EnrolmentComplexdates `json:"COMPLEXDATES,omitempty"`
+	CustomfieldPriceBeat   interface{} `json:"CUSTOMFIELD_PRICEBEAT,omitempty"`
+	CustomfieldCompeteName interface{} `json:"CUSTOMFIELD_COMPETENAME,omitempty"`
+	CustomfieldWeekends    interface{} `json:"CUSTOMFIELD_WEEKENDS,omitempty"`
 }
 
 type EnrolmentComplexdates struct {
