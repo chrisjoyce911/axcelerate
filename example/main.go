@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/chrisjoyce911/axcelerate"
 )
@@ -22,8 +23,46 @@ func main() {
 	// savedReport(client)
 	// contactCertificate(client)
 	// contactSearch(client)
-	contactEnrolments(14446094)
+	// contactEnrolments(14446094)
+	// contactEnrolments(14365825)
 	// contactCertificate(client)
+
+	courseEnrolment()
+
+}
+
+func courseEnrolment() {
+
+	contactID := 11300044
+	instranceID := 1997276
+
+	i, _, err := client.Courses.GetCoursesInstanceDetail(instranceID, "w")
+
+	//
+
+	parms := map[string]string{}
+
+	currentTime := time.Now()
+	formattedDate := currentTime.Format("02/01/2006")
+
+	// $quizKey        = "ELA:" .  $courseDataArr['instanceID'] . ":" . $pd['contactID'];
+	// "https://assessment.australiawidefirstaid.com.au/?k="
+
+	parms["customField_PFAquiz"] = "Complete"
+	parms["customField_PFAquizlink"] = "https://assessment.australiawidefirstaid.com.au/?k=ELA:1997276:11300044"
+	parms["customField_PFAquizdate"] = formattedDate
+	parms["customField_terms"] = "Yes"
+
+	cert, reps, err := client.Courses.UpdateCourseEnrolment(contactID, int(i.LinkedClassID), "p", parms)
+
+	if err != nil {
+		fmt.Print(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", reps)
+
+	fmt.Printf("%+v", cert)
 
 }
 
