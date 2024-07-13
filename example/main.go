@@ -27,7 +27,7 @@ func main() {
 	// contactEnrolments(14365825)
 	// contactCertificate(client)
 
-	courseEnrolment()
+	courseEnrolments(10148651)
 
 }
 
@@ -101,6 +101,26 @@ func contactCertificate() {
 	}
 
 	fmt.Printf("%+v", cert)
+
+}
+
+func courseEnrolments(contactID int) {
+
+	parms := map[string]string{}
+
+	parms["contactID"] = fmt.Sprintf("%d", contactID)
+
+	enrolments, _, err := client.Courses.GetEnrolments(parms)
+
+	if err != nil {
+		fmt.Print(err)
+		return
+	}
+
+	for e := range enrolments {
+		log.Printf("%d\t%s\t%d\n", enrolments[e].EnrolmentID, enrolments[e].Code, enrolments[e].ContactID)
+
+	}
 
 }
 

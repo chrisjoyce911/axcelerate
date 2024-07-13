@@ -16,7 +16,7 @@ type ReportService struct {
 
 type SavedReport struct {
 	ReportType      string          `json:"REPORTTYPE"`
-	Data            []ReportData    `json:"DATA"`
+	Data            interface{}     `json:"DATA"`
 	ErrorMsg        string          `json:"ERRORMSG"`
 	Count           int             `json:"COUNT"`
 	ReportName      string          `json:"REPORTNAME"`
