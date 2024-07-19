@@ -2,7 +2,7 @@ package axcelerate
 
 import (
 	"fmt"
-	"time"
+	"log"
 
 	jsontime "github.com/liamylian/jsontime/v2/v2"
 
@@ -39,15 +39,6 @@ type ReportFilters struct {
 	Value    string `json:"VALUE"`
 }
 
-type ReportData struct {
-	ContactID       int       `json:"CONTACTID"`
-	EmailAddress    string    `json:"EMAILADDRESS"`
-	AwardCourseCode string    `json:"AWARD_COURSECODE"`
-	CertificateNo   string    `json:"CERTIFICATENO"`
-	AwardQualName   string    `json:"AWARD_QUALNAME"`
-	IssuedDate      time.Time `json:"AWARDISSUEDDATE" time_format:"axc_date"`
-}
-
 type ReportList []struct {
 	ReportName         string `json:"REPORTNAME"`
 	CreatedByContactID int    `json:"CREATEDBYCONTACTID"`
@@ -75,6 +66,10 @@ func (s *ReportService) SavedReportRun(reportID int, displayLength int, parms ma
 
 	if len(parms) == 0 {
 		parms = map[string]string{}
+	}
+
+	for key, value := range parms {
+		log.Printf("Key: %s, Value: %s", key, value)
 	}
 
 	url := "/report/saved/run"

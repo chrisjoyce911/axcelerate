@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/url"
 	"os"
 	"path/filepath"
 	"time"
@@ -27,7 +28,9 @@ func main() {
 	// contactEnrolments(14365825)
 	// contactCertificate(client)
 
-	courseEnrolments(10148651)
+	// courseEnrolments(10148651)
+
+	SavedReport()
 
 }
 
@@ -201,5 +204,35 @@ func UpdateInstanceMaxParticipants() {
 		}
 
 	}
+
+}
+
+func SavedReport() {
+	offsetRows := 0
+	displayLength := 10
+
+	parms := map[string]string{}
+
+	parms["offsetRows"] = fmt.Sprintf("%d", offsetRows)
+	//	parms["filterOverride"]
+
+	parms["filterOverride"] = url.QueryEscape(`[{"VALUE2":"","OPERATOR":"IS","DISPLAY":"Cancelled","NAME":"workshops.deleted","VALUE":"0"},{"VALUE2":"","OPERATOR":"IS","DISPLAY":"USI Verified","NAME":"contacts.usi_verified","VALUE":"0"},{"VALUE2":"","OPERATOR":"IS","DISPLAY":"Coordination Type","NAME":"workshops.ptype","VALUE":"Public Workshop"},{"VALUE2":"","OPERATOR":"IN","DISPLAY":"Key Student Status","NAME":"workshopbookings.logentrytypeid","VALUE":"1,14"}]`)
+
+	savedReport, _, err := client.Report.SavedReportRun(85951, displayLength, parms)
+
+	if err != nil {
+		fmt.Print(err)
+	}
+
+	fmt.Print(savedReport.Data)
+	// for w := range workshops {
+	// 	c, _, err := client.Courses.UpdateInstanceMaxParticipants(workshops[w], "w", max)
+
+	// 	log.Printf("%d\t %s\n", c.InstanceID, c.Message)
+	// 	if err != nil {
+	// 		fmt.Print(err)
+	// 	}
+
+	// }
 
 }
