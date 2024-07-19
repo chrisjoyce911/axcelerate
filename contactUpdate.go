@@ -7,7 +7,7 @@ import (
 )
 
 /*
-ContactSearch used as a contact search. This method will return an array of contacts matching all the search parameters.
+ContactUpdate used to update a contact.
 
 Interacts with a specfic contact. You can update (PUT) contact details. The including the parameters below.
 
