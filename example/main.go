@@ -84,7 +84,7 @@ func savedReportList() {
 
 func savedReport() {
 
-	cert, _, err := client.Report.SavedReportRun(85950, 10, map[string]string{})
+	cert, _, err := client.Report.SavedReportRun(85950, map[string]string{})
 
 	if err != nil {
 		fmt.Print(err)
@@ -209,7 +209,6 @@ func UpdateInstanceMaxParticipants() {
 
 func SavedReport() {
 	offsetRows := 0
-	displayLength := 10
 
 	parms := map[string]string{}
 
@@ -218,7 +217,7 @@ func SavedReport() {
 
 	parms["filterOverride"] = url.QueryEscape(`[{"VALUE2":"","OPERATOR":"IS","DISPLAY":"Cancelled","NAME":"workshops.deleted","VALUE":"0"},{"VALUE2":"","OPERATOR":"IS","DISPLAY":"USI Verified","NAME":"contacts.usi_verified","VALUE":"0"},{"VALUE2":"","OPERATOR":"IS","DISPLAY":"Coordination Type","NAME":"workshops.ptype","VALUE":"Public Workshop"},{"VALUE2":"","OPERATOR":"IN","DISPLAY":"Key Student Status","NAME":"workshopbookings.logentrytypeid","VALUE":"1,14"}]`)
 
-	savedReport, _, err := client.Report.SavedReportRun(85951, displayLength, parms)
+	savedReport, _, err := client.Report.SavedReportRun(85951, parms)
 
 	if err != nil {
 		fmt.Print(err)

@@ -58,11 +58,10 @@ type ReportList []struct {
 //											NOTE: You cannot test/use this in our API relax console simulator
 // offsetRows		numeric		true		Warehoused reports only: The number of report rows to skip before returning row objects in the data[] response element. The maximum supported value is 100,000. Reports larger than this are not supported
 
-func (s *ReportService) SavedReportRun(reportID int, displayLength int, parms map[string]string) (SavedReport, *Response, error) {
+func (s *ReportService) SavedReportRun(reportID int, parms map[string]string) (SavedReport, *Response, error) {
 	var obj SavedReport
 
 	parms["reportID"] = fmt.Sprintf("%d", reportID)
-	parms["displayLength"] = fmt.Sprintf("%d", displayLength)
 
 	if len(parms) == 0 {
 		parms = map[string]string{}
@@ -99,6 +98,43 @@ func (s *ReportService) SavedReportList() (ReportList, *Response, error) {
 	if err != nil {
 		return obj, resp, err
 	}
+
+	err = json.Unmarshal([]byte(resp.Body), &obj)
+	return obj, resp, err
+}
+
+// SavedReportWarehousedRun Interacts with the aXcelerate Report Builder to run a specified saved report. It will return the results in JSON format.
+// Header			Type		Required	Default	Description
+// filterOverride	json		false		Override the standard filter value(s):
+//											e.g: To override the Enrolment Status Value you can pass:
+//											[{NAME:'enrolments.enrolstatus', VALUE:'canc', VALUE2:''}]
+//											NOTE: You cannot test/use this in our API relax console simulator
+// offsetRows		numeric		true		Warehoused reports only: The number of report rows to skip before returning row objects in the data[] response element. The maximum supported value is 100,000. Reports larger than this are not supported
+
+func (s *ReportService) SavedReportWarehousedRun(reportID int, displayLength int, parms map[string]string) (SavedReport, *Response, error) {
+	var obj SavedReport
+
+	parms["reportID"] = fmt.Sprintf("%d", reportID)
+	parms["displayLength"] = fmt.Sprintf("%d", displayLength)
+
+	if len(parms) == 0 {
+		parms = map[string]string{}
+	}
+
+	for key, value := range parms {
+		log.Printf("Key: %s, Value: %s", key, value)
+	}
+
+	url := "/report/saved/run"
+	resp, err := do(s.client, "POST", Params{parms: parms, u: url}, obj)
+
+	if err != nil {
+		return obj, resp, err
+	}
+
+	var json = jsontime.ConfigWithCustomTimeFormat
+
+	jsontime.AddTimeFormatAlias("axc_date", "2006-01-02")
 
 	err = json.Unmarshal([]byte(resp.Body), &obj)
 	return obj, resp, err
