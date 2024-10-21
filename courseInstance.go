@@ -33,7 +33,7 @@ type Instance struct {
 	Count                     int               `json:"COUNT"`
 	LinkedClassID             int               `json:"LINKEDCLASSID"`
 	VenueContactID            int               `json:"VENUECONTACTID"`
-	LastUpdatedUTC            time.Time         `json:"LASTUPDATEDUTC" time_format:"axc_datetime"`
+	LastUpdatedUTC            time.Time         `json:"LASTUPDATEDUTC" time_format:"axc_date_hours"`
 	LinkedElearning           []LinkedElearning `json:"LINKEDELEARNING"`
 	ComplexDates              []ComplexDate     `json:"COMPLEXDATES"`
 	SyncDateDescriptor        bool              `json:"SYNCDATEDESCRIPTOR"`
@@ -116,6 +116,9 @@ func (s *CoursesService) GetCoursesInstances(coursesID int, activityType string,
 	}
 
 	var json = jsontime.ConfigWithCustomTimeFormat
+
+	jsontime.AddTimeFormatAlias("axc_datetime", "2006-01-02 15:04:05")
+	jsontime.AddTimeFormatAlias("axc_date_hours", "2006-01-02 15:04")
 
 	err = json.Unmarshal([]byte(resp.Body), &obj)
 

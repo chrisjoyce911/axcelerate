@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/url"
@@ -30,7 +31,44 @@ func main() {
 
 	// courseEnrolments(10148651)
 
-	SavedReport()
+	// SavedReport()
+
+	// getCoursesInstanceDetail()
+	getCoursesInstanceSearch()
+
+}
+
+func getCoursesInstanceDetail() {
+
+	instanceID := 1993857
+
+	i, reps, _ := client.Courses.GetCoursesInstanceDetail(instanceID, "w")
+
+	je, _ := json.MarshalIndent(i, "", "\t")
+	fmt.Printf("e: \n%s", je)
+
+	fmt.Printf("%+v\n", reps.Body)
+
+}
+
+func getCoursesInstanceSearch() {
+
+	instanceID := 1993857
+
+	args := map[string]string{
+		"instanceID": fmt.Sprintf("%d", instanceID), // Convert contactID to string
+		"type":       "w",                           // Convert workshopID to string
+
+	}
+
+	i, reps, err := client.Courses.GetCoursesInstanceSearch(args)
+
+	je, _ := json.MarshalIndent(i, "", "\t")
+	fmt.Printf("e: \n%s", je)
+
+	fmt.Printf("%+v\n", reps.Body)
+
+	fmt.Printf("%+v\n", err)
 
 }
 
