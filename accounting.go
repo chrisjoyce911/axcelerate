@@ -26,13 +26,13 @@ type Items struct {
 	DomainID       int         `json:"DOMAINID"`
 	HasChildren    int         `json:"HASCHILDREN"`
 	PartID         int         `json:"PARTID"`
-	UnitPriceNett  float32     `json:"UNITPRICENETT"`
+	UnitPriceNet   float32     `json:"UNITPRICENETT"`
 	Qty            int         `json:"QTY"`
 	TaxPercent     int         `json:"TAXPERCENT"`
 	TotalGross     int         `json:"TOTALGROSS"`
 	ItemCode       string      `json:"ITEMCODE"`
 	FinanceCode    string      `json:"FINANCECODE"`
-	TotalNett      float32     `json:"TOTALNETT"`
+	TotalNet       float32     `json:"TOTALNETT"`
 	SourceID       int         `json:"SOURCEID"`
 	ServiceDate    string      `json:"SERVICEDATE" time_format:"axc_date"`
 	UnitPriceGross float32     `json:"UNITPRICEGROSS"`
@@ -49,7 +49,7 @@ type Invoice struct {
 	OwnerContactID     int        `json:"OWNERCONTACTID"`
 	Organisation       string     `json:"ORGANISATION"`
 	ShipLastName       string     `json:"SHIPLASTNAME"`
-	Shiphousenr        string     `json:"SHIPHOUSENR"`
+	ShipHousenr        string     `json:"SHIPHOUSENR"`
 	ShipOrgID          int        `json:"SHIPORGID"`
 	ShipPostCode       string     `json:"SHIPPOSTCODE"`
 	Comment            string     `json:"COMMENT"`
@@ -60,16 +60,16 @@ type Invoice struct {
 	DueDate            string     `json:"DUEDATE" time_format:"axc_date"`
 	ShipOrganisation   string     `json:"SHIPORGANISATION"`
 	InvoiceID          int        `json:"INVOICEID"`
-	Duedateoffset      int        `json:"DUEDATEOFFSET"`
-	Areitemslocked     bool       `json:"AREITEMSLOCKED"`
+	DueDateOffset      int        `json:"DUEDATEOFFSET"`
+	AreItemsLocked     bool       `json:"AREITEMSLOCKED"`
 	LastName           string     `json:"LASTNAME"`
 	Street             string     `json:"STREET"`
 	Items              []Items    `json:"ITEMS"`
 	InvoiceDate        string     `json:"INVOICEDATE" time_format:"axc_date"`
 	Currency           string     `json:"CURRENCY"`
-	Shippricenett      int        `json:"SHIPPRICENETT"`
+	ShipPriceNett      int        `json:"SHIPPRICENETT"`
 	ShipState          string     `json:"SHIPSTATE"`
-	Contactname        string     `json:"CONTACTNAME"`
+	ContactName        string     `json:"CONTACTNAME"`
 	ShipCountryISO3166 string     `json:"SHIPCOUNTRYISO3166"`
 	Shipstreet         string     `json:"SHIPSTREET"`
 	Housenr            string     `json:"HOUSENR"`
