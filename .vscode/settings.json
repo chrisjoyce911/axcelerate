@@ -1,6 +1,8 @@
 {
     "cSpell.words": [
+        "accesskey",
         "AGREETOSOA",
+        "apitoken",
         "AVETMISSCONSENT",
         "axcelerate",
         "COMPLEXDATES",
@@ -44,6 +46,7 @@
         "PFAQUIZDATE",
         "PFAQUIZLINK",
         "PSTACDATEVIC",
+        "ratelimit",
         "ROOMID",
         "ROWID",
         "SCHOOLDELIVERYLOCATIONID",
@@ -62,6 +65,7 @@
         "VICENROLMENTID",
         "VICPROGRAMENROLMENTID",
         "VICPROGRAMSTATUSID",
-        "VIRTUALCLASSROOMID"
+        "VIRTUALCLASSROOMID",
+        "wstoken"
     ]
 }

@@ -6,11 +6,13 @@ package axcelerate
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 	"time"
+
+	"go.uber.org/ratelimit"
 )
 
 // Client for the axcelerate SDK
@@ -19,6 +21,7 @@ type Client struct {
 	wstoken  string
 	BaseURL  *url.URL
 	client   *http.Client
+	rl       ratelimit.Limiter
 
 	APIEndSux string
 
@@ -28,7 +31,7 @@ type Client struct {
 	Report     *ReportService
 }
 
-// APIerr may happeen along with a status code
+// APIerr may happen along with a status code
 // aXcelerate has a standard error struct that is returned whenever something goes wrong.
 // This includes validation errors, as well as unexpected application errors.
 type APIerr struct {
@@ -56,6 +59,7 @@ func NewClient(apitoken, wstoken string, baseURL *url.URL, httpClient *http.Clie
 		BaseURL:   baseURL,
 		client:    httpClient,
 		APIEndSux: "api",
+		rl:        ratelimit.New(150, ratelimit.Per(time.Minute)), // per Minute]
 	}
 
 	c.Contact = &ContactService{client: c}
@@ -72,7 +76,7 @@ type Params struct {
 	u     string
 }
 
-// A AxRequest manages communication with the axer API.
+// A AxRequest manages communication with the axe API.
 type AxRequest struct {
 	data   *url.Values
 	method string
@@ -115,7 +119,7 @@ type Response struct {
 
 // newResponse creates a new Response for the provided http.Response.
 func newResponse(r *http.Response) *Response {
-	body, _ := ioutil.ReadAll(r.Body)
+	body, _ := io.ReadAll(r.Body)
 	response := &Response{
 		Status:        r.Status,
 		StatusCode:    r.StatusCode,
@@ -132,6 +136,7 @@ func newResponse(r *http.Response) *Response {
 // first decode it.
 func (c *Client) Do(req AxRequest, v interface{}) (*Response, error) {
 
+	c.rl.Take()
 	req.url.RawQuery, _ = url.QueryUnescape(req.data.Encode())
 
 	thisReq, err := http.NewRequest(req.method, req.url.String(), nil)
