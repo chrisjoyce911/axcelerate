@@ -9,8 +9,12 @@ import (
 
 // Instance of a course
 type Instance struct {
+	RowID                     int               `json:"ROWID"`
+	Type                      string            `json:"TYPE"`
+	CourseName                string            `json:"COURSENAME"`
 	Cost                      int               `json:"COST"`
 	CustomFieldWeekends       interface{}       `json:"CUSTOMFIELD_WEEKENDS"`
+	Code                      string            `json:"CODE"`
 	DateDescriptor            string            `json:"DATEDESCRIPTOR"`
 	EnrolmentOpen             bool              `json:"ENROLMENTOPEN"`
 	Public                    bool              `json:"PUBLIC"`
@@ -46,6 +50,7 @@ type Instance struct {
 	GroupedCourseSimultaneous bool              `json:"GROUPEDCOURSEISSIMULTANEOUS"`
 	GroupedMaxParticipants    int               `json:"GROUPEDMAXPARTICIPANTS"`
 	GroupedParticipants       int               `json:"GROUPEDPARTICIPANTS"`
+	TrainingCategory          interface{}       `json:"TRAININGCATEGORY"`
 }
 
 // LinkedElearning represents the structure for linked e-learning data
