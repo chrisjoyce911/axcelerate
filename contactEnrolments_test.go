@@ -121,8 +121,9 @@ func TestContactService_ContactEnrolments(t *testing.T) {
 				}
 			})
 
+			client, _ := NewClient("", "", HttpClient(tclient))
 			s := &ContactService{
-				client: NewClient("", "", nil, tclient),
+				client: client,
 			}
 
 			got, got1, err := s.ContactEnrolments(tt.args.contactID, tt.args.parms)

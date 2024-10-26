@@ -19,7 +19,7 @@ func main() {
 	var apitoken string = os.Getenv("AXCELERATE_APITOKEN")
 	var wstoken string = os.Getenv("AXCELERATE_WSTOKEN")
 
-	client = axcelerate.NewClient(apitoken, wstoken, nil, nil)
+	client, _ = axcelerate.NewClient(apitoken, wstoken)
 
 	// savedReportList(client)
 	// savedReport(client)

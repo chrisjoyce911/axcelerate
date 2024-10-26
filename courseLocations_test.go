@@ -53,10 +53,10 @@ func TestCoursesService_GetCoursesLocations(t *testing.T) {
 				}
 			})
 
+			client, _ := NewClient("", "", HttpClient(tclient))
 			s := &CoursesService{
-				client: NewClient("", "", nil, tclient),
+				client: client,
 			}
-
 			got, got1, err := s.GetCoursesLocations(tt.args.public, tt.args.onlyFuture)
 
 			if err == nil {

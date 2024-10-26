@@ -81,8 +81,9 @@ func TestContactService_VerifyUSI(t *testing.T) {
 				}
 			})
 
+			client, _ := NewClient("", "", HttpClient(tclient))
 			s := &ContactService{
-				client: NewClient("", "", nil, tclient),
+				client: client,
 			}
 
 			got, got1, err := s.VerifyUSI(tt.args.contactID)

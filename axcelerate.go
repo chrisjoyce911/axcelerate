@@ -43,30 +43,39 @@ type APIerr struct {
 }
 
 // NewClient for all operations
-func NewClient(apitoken, wstoken string, baseURL *url.URL, httpClient *http.Client) *Client {
+func NewClient(apitoken, wstoken string, options ...Option) (*Client, error) {
+	// func NewClient(apitoken, wstoken string, baseURL *url.URL, httpClient *http.Client) *Client {
 
-	if baseURL == nil {
-		baseURL, _ = url.Parse("https://awfa.app.axcelerate.com")
+	s := &Settings{
+		baseURL:    "https://app.axcelerate.com",
+		httpClient: http.DefaultClient,
+		rate:       150,
+		ratePer:    time.Minute,
 	}
 
-	if httpClient == nil {
-		httpClient = http.DefaultClient
+	for _, applyOpt := range options {
+		applyOpt(s)
+	}
+
+	baseURL, err := url.Parse(s.baseURL)
+	if err != nil {
+		return &Client{}, err
 	}
 
 	c := &Client{
 		apitoken:  apitoken,
 		wstoken:   wstoken,
 		BaseURL:   baseURL,
-		client:    httpClient,
+		client:    s.httpClient,
 		APIEndSux: "api",
-		rl:        ratelimit.New(150, ratelimit.Per(time.Minute)), // per Minute]
+		rl:        ratelimit.New(s.rate, ratelimit.Per(s.ratePer)),
 	}
 
 	c.Contact = &ContactService{client: c}
 	c.Courses = &CoursesService{client: c}
 	c.Accounting = &AccountingService{client: c}
 	c.Report = &ReportService{client: c}
-	return c
+	return c, nil
 }
 
 // Params specifies the optional parameters to various List methods that

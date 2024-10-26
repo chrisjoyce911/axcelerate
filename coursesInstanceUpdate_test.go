@@ -78,8 +78,9 @@ func TestCoursesService_UpdateInstanceCost(t *testing.T) {
 				}
 			})
 
+			client, _ := NewClient("", "", HttpClient(tclient))
 			s := &CoursesService{
-				client: NewClient("", "", nil, tclient),
+				client: client,
 			}
 
 			got, got1, err := s.UpdateInstanceCost(tt.args.instanceID, tt.args.activityType, tt.args.cost)
@@ -172,10 +173,10 @@ func TestCoursesService_UpdateInstanceName(t *testing.T) {
 				}
 			})
 
+			client, _ := NewClient("", "", HttpClient(tclient))
 			s := &CoursesService{
-				client: NewClient("", "", nil, tclient),
+				client: client,
 			}
-
 			got, got1, err := s.UpdateInstanceName(tt.args.instanceID, tt.args.activityType, tt.args.name)
 
 			if err == nil {

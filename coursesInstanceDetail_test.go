@@ -65,8 +65,9 @@ func TestCoursesService_GetCoursesInstanceDetail(t *testing.T) {
 				}
 			})
 
+			client, _ := NewClient("", "", HttpClient(tclient))
 			s := &CoursesService{
-				client: NewClient("", "", nil, tclient),
+				client: client,
 			}
 
 			got, got1, err := s.GetCoursesInstanceDetail(tt.args.instanceID, tt.args.activityType)
