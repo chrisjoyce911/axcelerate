@@ -57,7 +57,7 @@ func NewClient(apitoken, wstoken string, options ...Option) (*Client, error) {
 		applyOpt(s)
 	}
 
-	baseURL, err := url.Parse(s.baseURL)
+	BaseURL, err := url.Parse(s.baseURL)
 	if err != nil {
 		return &Client{}, err
 	}
@@ -65,7 +65,7 @@ func NewClient(apitoken, wstoken string, options ...Option) (*Client, error) {
 	c := &Client{
 		apitoken:  apitoken,
 		wstoken:   wstoken,
-		BaseURL:   baseURL,
+		BaseURL:   BaseURL,
 		client:    s.httpClient,
 		APIEndSux: "api",
 		rl:        ratelimit.New(s.rate, ratelimit.Per(s.ratePer)),
