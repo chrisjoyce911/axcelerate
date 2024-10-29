@@ -15,100 +15,100 @@ type ContactService struct {
 // Contact object with the full contact information
 type Contact struct {
 	Address1                            string        `json:"ADDRESS1"`
-	Address2                            string        `json:"ADDRESS2"`
-	AgentContactID                      int64         `json:"AGENTCONTACTID"`
-	Anzscocode                          interface{}   `json:"ANZSCOCODE"`
-	Anzsiccode                          interface{}   `json:"ANZSICCODE"`
-	Atschoolflag                        bool          `json:"ATSCHOOLFLAG"`
-	Atschoolname                        interface{}   `json:"ATSCHOOLNAME"`
-	Buildingname                        string        `json:"BUILDINGNAME"`
+	Address2                            *string       `json:"ADDRESS2"`
+	AgentContactID                      *int          `json:"AGENTCONTACTID"`
+	Anzscocode                          *string       `json:"ANZSCOCODE"`
+	Anzsiccode                          *string       `json:"ANZSICCODE"`
+	Atschoolflag                        *bool         `json:"ATSCHOOLFLAG"`
+	Atschoolname                        *string       `json:"ATSCHOOLNAME"`
+	Buildingname                        *string       `json:"BUILDINGNAME"`
 	CategoryIDs                         []interface{} `json:"CATEGORYIDS"`
-	Citizenstatusid                     interface{}   `json:"CITIZENSTATUSID"`
-	Citizenstatusname                   interface{}   `json:"CITIZENSTATUSNAME"`
+	Citizenstatusid                     *int          `json:"CITIZENSTATUSID"`
+	Citizenstatusname                   *string       `json:"CITIZENSTATUSNAME"`
 	City                                string        `json:"CITY"`
-	CityOfBirth                         interface{}   `json:"CITYOFBIRTH"`
-	Coachcontactid                      interface{}   `json:"COACHCONTACTID"`
-	Comment                             interface{}   `json:"COMMENT"`
+	CityOfBirth                         *string       `json:"CITYOFBIRTH"`
+	Coachcontactid                      *int64        `json:"COACHCONTACTID"`
+	Comment                             *string       `json:"COMMENT"`
 	Contactactive                       bool          `json:"CONTACTACTIVE"`
 	Contactentrydate                    time.Time     `json:"CONTACTENTRYDATE" time_format:"axc_date_hours"`
 	ContactID                           int           `json:"CONTACTID"`
-	ContactRoleID                       interface{}   `json:"CONTACTROLEID"`
+	ContactRoleID                       *int          `json:"CONTACTROLEID"`
 	Country                             string        `json:"COUNTRY"`
 	CountryID                           int           `json:"COUNTRYID"`
-	CountryofBirthID                    interface{}   `json:"COUNTRYOFBIRTHID"`
-	Countryofbirthname                  interface{}   `json:"COUNTRYOFBIRTHNAME"`
-	Countryofcitizenid                  interface{}   `json:"COUNTRYOFCITIZENID"`
-	Countryofcitizenname                interface{}   `json:"COUNTRYOFCITIZENNAME"`
-	Currentschoollevel                  interface{}   `json:"CURRENTSCHOOLLEVEL"`
-	CustomfieldConcernsaboutthecourse   interface{}   `json:"CUSTOMFIELD_CONCERNSABOUTTHECOURSE"`
-	CustomfieldQrcode                   interface{}   `json:"CUSTOMFIELD_QRCODE"`
-	CustomfieldThirdpartydec            interface{}   `json:"CUSTOMFIELD_THIRDPARTYDEC"`
-	CUSTOMFIELDTHIRDPARTYEMPLOYEREMAIL2 interface{}   `json:"CUSTOMFIELD_THIRDPARTYEMPLOYEREMAIL2"`
-	CustomfieldThirdpartyemployername   interface{}   `json:"CUSTOMFIELD_THIRDPARTYEMPLOYERNAME"`
-	Disabilityflag                      bool          `json:"DISABILITYFLAG"`
+	CountryofBirthID                    *int          `json:"COUNTRYOFBIRTHID"`
+	Countryofbirthname                  *string       `json:"COUNTRYOFBIRTHNAME"`
+	Countryofcitizenid                  *int          `json:"COUNTRYOFCITIZENID"`
+	Countryofcitizenname                *string       `json:"COUNTRYOFCITIZENNAME"`
+	Currentschoollevel                  *string       `json:"CURRENTSCHOOLLEVEL"`
+	CustomfieldConcernsaboutthecourse   *string       `json:"CUSTOMFIELD_CONCERNSABOUTTHECOURSE"`
+	CustomfieldQrcode                   *string       `json:"CUSTOMFIELD_QRCODE"`
+	CustomfieldThirdpartydec            *string       `json:"CUSTOMFIELD_THIRDPARTYDEC"`
+	CUSTOMFIELDTHIRDPARTYEMPLOYEREMAIL2 *string       `json:"CUSTOMFIELD_THIRDPARTYEMPLOYEREMAIL2"`
+	CustomfieldThirdpartyemployername   *string       `json:"CUSTOMFIELD_THIRDPARTYEMPLOYERNAME"`
+	Disabilityflag                      *bool         `json:"DISABILITYFLAG"`
 	Disabilitytypeids                   []interface{} `json:"DISABILITYTYPEIDS"`
 	Disabilitytypenames                 []interface{} `json:"DISABILITYTYPENAMES"`
-	Division                            interface{}   `json:"DIVISION"`
-	DOB                                 time.Time     `json:"DOB" time_format:"axc_date"`
+	Division                            *string       `json:"DIVISION"`
+	DOB                                 *time.Time    `json:"DOB" time_format:"axc_date"`
 	Domainids                           []interface{} `json:"DOMAINIDS"`
 	Emailaddress                        string        `json:"EMAILADDRESS"`
-	Emailaddressalternative             string        `json:"EMAILADDRESSALTERNATIVE"`
-	Emergencycontact                    interface{}   `json:"EMERGENCYCONTACT"`
-	Emergencycontactphone               interface{}   `json:"EMERGENCYCONTACTPHONE"`
-	Emergencycontactrelation            interface{}   `json:"EMERGENCYCONTACTRELATION"`
-	Employercontactid                   interface{}   `json:"EMPLOYERCONTACTID"`
-	Englishassistanceflag               interface{}   `json:"ENGLISHASSISTANCEFLAG"`
-	Englishproficiencyid                interface{}   `json:"ENGLISHPROFICIENCYID"`
-	Fax                                 interface{}   `json:"FAX"`
+	Emailaddressalternative             *string       `json:"EMAILADDRESSALTERNATIVE"`
+	Emergencycontact                    *string       `json:"EMERGENCYCONTACT"`
+	Emergencycontactphone               *string       `json:"EMERGENCYCONTACTPHONE"`
+	Emergencycontactrelation            *string       `json:"EMERGENCYCONTACTRELATION"`
+	Employercontactid                   *int          `json:"EMPLOYERCONTACTID"`
+	Englishassistanceflag               *bool         `json:"ENGLISHASSISTANCEFLAG"`
+	Englishproficiencyid                *int          `json:"ENGLISHPROFICIENCYID"`
+	Fax                                 *string       `json:"FAX"`
 	Givenname                           string        `json:"GIVENNAME"`
-	HighestschoollevelID                interface{}   `json:"HIGHESTSCHOOLLEVELID"`
-	Highestschoollevelyear              interface{}   `json:"HIGHESTSCHOOLLEVELYEAR"`
-	Historicclientid                    interface{}   `json:"HISTORICCLIENTID"`
-	Ielts                               interface{}   `json:"IELTS"`
-	Indigenousstatusid                  interface{}   `json:"INDIGENOUSSTATUSID"`
-	Indigenousstatusname                interface{}   `json:"INDIGENOUSSTATUSNAME"`
-	LabourforceID                       interface{}   `json:"LABOURFORCEID"`
-	Labourforcename                     interface{}   `json:"LABOURFORCENAME"`
+	HighestschoollevelID                *int          `json:"HIGHESTSCHOOLLEVELID"`
+	Highestschoollevelyear              *string       `json:"HIGHESTSCHOOLLEVELYEAR"`
+	Historicclientid                    *string       `json:"HISTORICCLIENTID"`
+	Ielts                               *string       `json:"IELTS"`
+	Indigenousstatusid                  *int          `json:"INDIGENOUSSTATUSID"`
+	Indigenousstatusname                *string       `json:"INDIGENOUSSTATUSNAME"`
+	LabourforceID                       *int          `json:"LABOURFORCEID"`
+	Labourforcename                     *string       `json:"LABOURFORCENAME"`
 	LastUpdated                         time.Time     `json:"LASTUPDATED" time_format:"axc_date_hours"`
-	Lui                                 interface{}   `json:"LUI"`
-	Mainlanguageid                      interface{}   `json:"MAINLANGUAGEID"`
-	Mainlanguagename                    interface{}   `json:"MAINLANGUAGENAME"`
-	Middlename                          string        `json:"MIDDLENAME"`
-	Mobilephone                         string        `json:"MOBILEPHONE"`
-	OptionalID                          interface{}   `json:"OPTIONALID"`
+	Lui                                 *string       `json:"LUI"`
+	Mainlanguageid                      *int          `json:"MAINLANGUAGEID"`
+	Mainlanguagename                    *string       `json:"MAINLANGUAGENAME"`
+	Middlename                          *string       `json:"MIDDLENAME"`
+	Mobilephone                         *string       `json:"MOBILEPHONE"`
+	OptionalID                          *string       `json:"OPTIONALID"`
 	Organisation                        string        `json:"ORGANISATION"`
-	OrgID                               int64         `json:"ORGID"`
-	OtherPhone                          interface{}   `json:"OTHERPHONE"`
-	PayerContactID                      interface{}   `json:"PAYERCONTACTID"`
-	Phone                               string        `json:"PHONE"`
-	Photo                               interface{}   `json:"PHOTO"`
-	Pobox                               string        `json:"POBOX"`
-	Position                            string        `json:"POSITION"`
+	OrgID                               int           `json:"ORGID"`
+	OtherPhone                          *string       `json:"OTHERPHONE"`
+	PayerContactID                      *int64        `json:"PAYERCONTACTID"`
+	Phone                               *string       `json:"PHONE"`
+	Photo                               *string       `json:"PHOTO"`
+	Pobox                               *string       `json:"POBOX"`
+	Position                            *string       `json:"POSITION"`
 	Postcode                            string        `json:"POSTCODE"`
-	PreferredName                       string        `json:"PREFERREDNAME"`
+	PreferredName                       *string       `json:"PREFERREDNAME"`
 	Prioreducationids                   []interface{} `json:"PRIOREDUCATIONIDS"`
 	Prioreducationnames                 []interface{} `json:"PRIOREDUCATIONNAMES"`
-	Prioreducationstatus                bool          `json:"PRIOREDUCATIONSTATUS"`
-	Sacestudentid                       interface{}   `json:"SACESTUDENTID"`
-	SADDRESS1                           string        `json:"SADDRESS1"`
-	SADDRESS2                           string        `json:"SADDRESS2"`
-	Sbuildingname                       interface{}   `json:"SBUILDINGNAME"`
-	Scity                               string        `json:"SCITY"`
-	Scountry                            string        `json:"SCOUNTRY"`
-	Scountryid                          int64         `json:"SCOUNTRYID"`
-	Section                             interface{}   `json:"SECTION"`
-	Sex                                 string        `json:"SEX"`
-	Source                              string        `json:"SOURCE"`
-	Sourcecodeid                        int64         `json:"SOURCECODEID"`
-	Spobox                              interface{}   `json:"SPOBOX"`
-	Spostcode                           string        `json:"SPOSTCODE"`
-	Sstate                              string        `json:"SSTATE"`
-	Sstreetname                         string        `json:"SSTREETNAME"`
-	Sstreetno                           string        `json:"SSTREETNO"`
+	Prioreducationstatus                *bool         `json:"PRIOREDUCATIONSTATUS"`
+	Sacestudentid                       *string       `json:"SACESTUDENTID"`
+	SADDRESS1                           *string       `json:"SADDRESS1"`
+	SADDRESS2                           *string       `json:"SADDRESS2"`
+	Sbuildingname                       *string       `json:"SBUILDINGNAME"`
+	Scity                               *string       `json:"SCITY"`
+	Scountry                            *string       `json:"SCOUNTRY"`
+	Scountryid                          *int          `json:"SCOUNTRYID"`
+	Section                             *string       `json:"SECTION"`
+	Sex                                 *string       `json:"SEX"`
+	Source                              *string       `json:"SOURCE"`
+	Sourcecodeid                        *int          `json:"SOURCECODEID"`
+	Spobox                              *string       `json:"SPOBOX"`
+	Spostcode                           *string       `json:"SPOSTCODE"`
+	Sstate                              *string       `json:"SSTATE"`
+	Sstreetname                         *string       `json:"SSTREETNAME"`
+	Sstreetno                           *string       `json:"SSTREETNO"`
 	State                               string        `json:"STATE"`
-	Streetname                          string        `json:"STREETNAME"`
-	Streetno                            string        `json:"STREETNO"`
-	Sunitno                             string        `json:"SUNITNO"`
+	Streetname                          *string       `json:"STREETNAME"`
+	Streetno                            *string       `json:"STREETNO"`
+	Sunitno                             *string       `json:"SUNITNO"`
 	Supervisorcontactid                 interface{}   `json:"SUPERVISORCONTACTID"`
 	Surname                             string        `json:"SURNAME"`
 	Surveycontactstatuscode             interface{}   `json:"SURVEYCONTACTSTATUSCODE"`
