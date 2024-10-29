@@ -8,32 +8,67 @@ import (
 
 // Enrolment for a course
 type Enrolment struct {
-	EnrolmentID   int       `json:"ENROLID"`
-	InstanceID    int       `json:"INSTANCEID"`
-	ContactID     int       `json:"CONTACTID"`
-	CourseID      int       `json:"ID"`
-	LearnerID     int       `json:"LEARNERID"`
-	OwnerID       int       `json:"OWNERID"`
-	AmountPaid    float32   `json:"AMOUNTPAID"`
-	Code          string    `json:"CODE"`
-	CompeteName   *string   `json:"CUSTOMFIELD_COMPETENAME"`
-	PriceBeat     []string  `json:"CUSTOMFIELD_PRICEBEAT"`
-	ELA           *string   `json:"CUSTOMFIELD_PFAQUIZ"`
-	ELALink       *string   `json:"CUSTOMFIELD_PFAQUIZLINK"`
-	ELACompleate  *string   `json:"CUSTOMFIELD_PFAQUIZDATE"`
-	AllowEmployer *string   `json:"CUSTOMFIELD_THIRDPARTYEMPLOYEREMAIL"`
-	Delivery      string    `json:"DELIVERY"`
-	Name          string    `json:"NAME"`
-	EnrolmentDate time.Time `json:"ENROLMENTDATE" time_format:"axc_date_hours"`
-	Startdate     time.Time `json:"STARTDATE" time_format:"axc_date_hours"`
-	Finishdate    time.Time `json:"FINISHDATE" time_format:"axc_date_hours"`
-	MobilePhone   string    `json:"MOBILEPHONE"`
-	GivenName     string    `json:"GIVENNAME"`
-	Surname       string    `json:"SURNAME"`
-	Email         string    `json:"EMAIL"`
-	Status        string    `json:"STATUS"`
-	Type          string    `json:"TYPE"`
-	LastUpdateUTC time.Time `json:"LASTUPDATEDUTC" time_format:"axc_date_hours"`
+	EnrolmentID         int        `json:"ENROLID"`
+	InstanceID          int        `json:"INSTANCEID"`
+	ContactID           int        `json:"CONTACTID"`
+	CourseID            int        `json:"ID"`
+	LearnerID           int        `json:"LEARNERID"`
+	OwnerID             int        `json:"OWNERID"`
+	AmountPaid          *float32   `json:"AMOUNTPAID"` // Nullable
+	Code                string     `json:"CODE"`
+	CompeteName         *string    `json:"CUSTOMFIELD_COMPETENAME"` // Nullable
+	PriceBeat           []string   `json:"CUSTOMFIELD_PRICEBEAT"`
+	ELA                 *string    `json:"CUSTOMFIELD_PFAQUIZ"`     // Nullable
+	ELALink             *string    `json:"CUSTOMFIELD_PFAQUIZLINK"` // Nullable
+	ELACompleate        *string    `json:"CUSTOMFIELD_PFAQUIZDATE"` // Nullable
+	AllowEmployer       *string    `json:"CUSTOMFIELD_THIRDPARTYEMPLOYEREMAIL"`
+	Delivery            Delivery   `json:"DELIVERY"`
+	Name                string     `json:"NAME"`
+	EnrolmentDate       time.Time  `json:"ENROLMENTDATE" time_format:"axc_date_hours"`
+	Startdate           time.Time  `json:"STARTDATE" time_format:"axc_date_hours"`
+	Finishdate          *time.Time `json:"FINISHDATE" time_format:"axc_date_hours"` // Nullable
+	MobilePhone         string     `json:"MOBILEPHONE"`
+	GivenName           string     `json:"GIVENNAME"`
+	Surname             string     `json:"SURNAME"`
+	Email               string     `json:"EMAIL"`
+	Status              string     `json:"STATUS"`
+	Type                string     `json:"TYPE"`
+	LastUpdateUTC       time.Time  `json:"LASTUPDATEDUTC" time_format:"axc_date_hours"`
+	Activities          []Activity `json:"ACTIVITIES"`           // Nested activities array
+	PhotoURL            *string    `json:"PHOTOURL"`             // Nullable
+	CustomFieldWeekends *string    `json:"CUSTOMFIELD_WEEKENDS"` // Nullable
+}
+
+// Delivery struct for nested DELIVERY object
+type Delivery struct {
+	Code        int    `json:"CODE"`
+	Description string `json:"DESCRIPTION"`
+}
+
+// Activity struct to represent each activity in ACTIVITIES array
+type Activity struct {
+	EnrolmentDate      time.Time  `json:"ENROLMENTDATE" time_format:"axc_date_hours"`
+	OutcomeCode        *string    `json:"OUTCOMECODE"`
+	MobilePhone        *string    `json:"MOBILEPHONE"`
+	VirtualClassroomID *string    `json:"VIRTUALCLASSROOMID"` // Nullable
+	VicEnrolmentID     *string    `json:"VICENROLMENTID"`
+	Delivery           Delivery   `json:"DELIVERY"`
+	InstanceID         int        `json:"INSTANCEID"`
+	ContactID          int        `json:"CONTACTID"`
+	StartDate          time.Time  `json:"STARTDATE" time_format:"axc_date_hours"`
+	Surname            string     `json:"SURNAME"`
+	Activities         []Activity `json:"ACTIVITIES"`
+	Status             string     `json:"STATUS"`
+	AmountPaid         *float32   `json:"AMOUNTPAID"` // Nullable
+	FinishDate         *time.Time `json:"FINISHDATE"` // Nullable
+	Code               string     `json:"CODE"`
+	EnrolID            int        `json:"ENROLID"`
+	LearnerID          int        `json:"LEARNERID"`
+	Name               string     `json:"NAME"`
+	ID                 int        `json:"ID"`
+	Type               string     `json:"TYPE"`
+	GivenName          string     `json:"GIVENNAME"`
+	Email              string     `json:"EMAIL"`
 }
 
 /*
