@@ -11,15 +11,15 @@ type AccountingService struct {
 }
 
 type Payments struct {
-	TransactionDate       string `json:"TRANSACTIONDATE" time_format:"axc_date_hours"`
-	TransactionProviderID int    `json:"TRANSACTIONPROVIDERID"`
-	GUID                  string `json:"GUID"`
-	TransactionProvider   string `json:"TRANSACTIONPROVIDER"`
-	FragmentAmount        int    `json:"FRAGMENT_AMOUNT"`
+	TransactionDate       string  `json:"TRANSACTIONDATE" time_format:"axc_date_hours"`
+	TransactionProviderID int     `json:"TRANSACTIONPROVIDERID"`
+	GUID                  string  `json:"GUID"`
+	TransactionProvider   string  `json:"TRANSACTIONPROVIDER"`
+	FragmentAmount        float32 `json:"FRAGMENT_AMOUNT"`
 }
 
 type Items struct {
-	TotalTax int `json:"TOTALTAX"`
+	TotalTax float32 `json:"TOTALTAX"`
 	Children struct {
 	} `json:"CHILDREN"`
 	UnitPriceTax   float32     `json:"UNITPRICETAX"`
@@ -29,7 +29,7 @@ type Items struct {
 	UnitPriceNet   float32     `json:"UNITPRICENETT"`
 	Qty            int         `json:"QTY"`
 	TaxPercent     int         `json:"TAXPERCENT"`
-	TotalGross     int         `json:"TOTALGROSS"`
+	TotalGross     float32     `json:"TOTALGROSS"`
 	ItemCode       string      `json:"ITEMCODE"`
 	FinanceCode    string      `json:"FINANCECODE"`
 	TotalNet       float32     `json:"TOTALNETT"`
@@ -67,7 +67,7 @@ type Invoice struct {
 	Items              []Items    `json:"ITEMS"`
 	InvoiceDate        string     `json:"INVOICEDATE" time_format:"axc_date"`
 	Currency           string     `json:"CURRENCY"`
-	ShipPriceNett      int        `json:"SHIPPRICENETT"`
+	ShipPriceNett      float32    `json:"SHIPPRICENETT"`
 	ShipState          string     `json:"SHIPSTATE"`
 	ContactName        string     `json:"CONTACTNAME"`
 	ShipCountryISO3166 string     `json:"SHIPCOUNTRYISO3166"`
@@ -77,7 +77,7 @@ type Invoice struct {
 	OrderDate          string     `json:"ORDERDATE" time_format:"axc_date"`
 	ContactID          int        `json:"CONTACTID"`
 	ShipCity           string     `json:"SHIPCITY"`
-	Shippricegross     int        `json:"SHIPPRICEGROSS"`
+	Shippricegross     float32    `json:"SHIPPRICEGROSS"`
 	CountryISO3166     string     `json:"COUNTRYISO3166"`
 	Isinvoicenrlocked  bool       `json:"ISINVOICENRLOCKED"`
 	Shiptaxpercent     int        `json:"SHIPTAXPERCENT"`
