@@ -1,6 +1,7 @@
 package axcelerate
 
 import (
+	"encoding/json"
 	"time"
 
 	jsontime "github.com/liamylian/jsontime/v2/v2"
@@ -20,7 +21,7 @@ type Enrolment struct {
 	PriceBeat           []string   `json:"CUSTOMFIELD_PRICEBEAT"`
 	ELA                 *string    `json:"CUSTOMFIELD_PFAQUIZ"`     // Nullable
 	ELALink             *string    `json:"CUSTOMFIELD_PFAQUIZLINK"` // Nullable
-	ELACompleate        *string    `json:"CUSTOMFIELD_PFAQUIZDATE"` // Nullable
+	ELAcomplete         *string    `json:"CUSTOMFIELD_PFAQUIZDATE"` // Nullable
 	AllowEmployer       *string    `json:"CUSTOMFIELD_THIRDPARTYEMPLOYEREMAIL"`
 	Delivery            Delivery   `json:"DELIVERY"`
 	Name                string     `json:"NAME"`
@@ -69,6 +70,28 @@ type Activity struct {
 	Type               string     `json:"TYPE"`
 	GivenName          string     `json:"GIVENNAME"`
 	Email              string     `json:"EMAIL"`
+}
+
+// Custom unmarshaler for Delivery
+func (d *Delivery) UnmarshalJSON(data []byte) error {
+	// First, try to unmarshal as a simple string
+	var deliveryStr string
+	if err := json.Unmarshal(data, &deliveryStr); err == nil {
+		// If successful, set Description and leave Code as default
+		d.Description = deliveryStr
+		return nil
+	}
+
+	// If not a string, try to unmarshal as an object
+	type Alias Delivery // Create an alias to prevent recursion
+	var deliveryObj Alias
+	if err := json.Unmarshal(data, &deliveryObj); err != nil {
+		return err
+	}
+
+	// Assign values from the object
+	*d = Delivery(deliveryObj)
+	return nil
 }
 
 /*
