@@ -2,7 +2,7 @@ package axcelerate
 
 import (
 	"bytes"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"reflect"
 	"testing"
@@ -76,7 +76,7 @@ func TestContactService_VerifyUSI(t *testing.T) {
 			tclient := NewTestClient(func(req *http.Request) *http.Response {
 				return &http.Response{
 					StatusCode: tt.fields.StatusCode,
-					Body:       ioutil.NopCloser(bytes.NewBufferString(tt.fields.Body)),
+					Body:       io.NopCloser(bytes.NewBufferString(tt.fields.Body)),
 					Header:     make(http.Header),
 				}
 			})

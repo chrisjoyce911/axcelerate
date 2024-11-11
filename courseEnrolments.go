@@ -1,7 +1,6 @@
 package axcelerate
 
 import (
-	"encoding/json"
 	"time"
 
 	jsontime "github.com/liamylian/jsontime/v2/v2"
@@ -23,7 +22,7 @@ type Enrolment struct {
 	ELALink             *string    `json:"CUSTOMFIELD_PFAQUIZLINK"` // Nullable
 	ELAcomplete         *string    `json:"CUSTOMFIELD_PFAQUIZDATE"` // Nullable
 	AllowEmployer       *string    `json:"CUSTOMFIELD_THIRDPARTYEMPLOYEREMAIL"`
-	Delivery            Delivery   `json:"DELIVERY"`
+	Delivery            string     `json:"DELIVERY"`
 	Name                string     `json:"NAME"`
 	EnrolmentDate       time.Time  `json:"ENROLMENTDATE" time_format:"axc_date_hours"`
 	Startdate           time.Time  `json:"STARTDATE" time_format:"axc_date_hours"`
@@ -73,26 +72,26 @@ type Activity struct {
 }
 
 // Custom unmarshaler for Delivery
-func (d *Delivery) UnmarshalJSON(data []byte) error {
-	// First, try to unmarshal as a simple string
-	var deliveryStr string
-	if err := json.Unmarshal(data, &deliveryStr); err == nil {
-		// If successful, set Description and leave Code as default
-		d.Description = deliveryStr
-		return nil
-	}
+// func (d *Delivery) UnmarshalJSON(data []byte) error {
+// 	// First, try to unmarshal as a simple string
+// 	var deliveryStr string
+// 	if err := json.Unmarshal(data, &deliveryStr); err == nil {
+// 		// If successful, set Description and leave Code as default
+// 		d.Description = deliveryStr
+// 		return nil
+// 	}
 
-	// If not a string, try to unmarshal as an object
-	type Alias Delivery // Create an alias to prevent recursion
-	var deliveryObj Alias
-	if err := json.Unmarshal(data, &deliveryObj); err != nil {
-		return err
-	}
+// 	// If not a string, try to unmarshal as an object
+// 	type Alias Delivery // Create an alias to prevent recursion
+// 	var deliveryObj Alias
+// 	if err := json.Unmarshal(data, &deliveryObj); err != nil {
+// 		return err
+// 	}
 
-	// Assign values from the object
-	*d = Delivery(deliveryObj)
-	return nil
-}
+// 	// Assign values from the object
+// 	*d = Delivery(deliveryObj)
+// 	return nil
+// }
 
 /*
 GetEnrolments returns an array of struct containing the unique learnerID and contactID for each student's enrolment
