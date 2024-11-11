@@ -39,7 +39,7 @@ type Contact struct {
 	Countryofbirthname                  *string       `json:"COUNTRYOFBIRTHNAME"`
 	Countryofcitizenid                  *int          `json:"COUNTRYOFCITIZENID"`
 	Countryofcitizenname                *string       `json:"COUNTRYOFCITIZENNAME"`
-	Currentschoollevel                  *string       `json:"CURRENTSCHOOLLEVEL"`
+	Currentschoollevel                  *interface{}  `json:"CURRENTSCHOOLLEVEL"`
 	CustomfieldConcernsaboutthecourse   *string       `json:"CUSTOMFIELD_CONCERNSABOUTTHECOURSE"`
 	CustomfieldQrcode                   *string       `json:"CUSTOMFIELD_QRCODE"`
 	CustomfieldThirdpartydec            *string       `json:"CUSTOMFIELD_THIRDPARTYDEC"`
