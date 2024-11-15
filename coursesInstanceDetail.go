@@ -15,10 +15,10 @@ type InstanceDetail struct {
 	DateDescriptor      string        `json:"DATEDESCRIPTOR"`
 	EnrolmentOpen       bool          `json:"ENROLMENTOPEN"`
 	FinishDate          time.Time     `json:"FINISHDATE"`
-	CourseID            int64         `json:"ID"`
-	InstanceID          int64         `json:"INSTANCEID"`
+	CourseID            int           `json:"ID"`
+	InstanceID          int           `json:"INSTANCEID"`
 	Items               []interface{} `json:"ITEMS"`
-	LinkedClassID       int64         `json:"LINKEDCLASSID"`
+	LinkedClassID       int           `json:"LINKEDCLASSID"`
 	LinkedeLearning     []struct {
 		Code       string      `json:"CODE"`
 		Enddate    interface{} `json:"ENDDATE"`
@@ -27,25 +27,28 @@ type InstanceDetail struct {
 		Startdate  interface{} `json:"STARTDATE"`
 	} `json:"LINKEDELEARNING"`
 	Location           string      `json:"LOCATION"`
-	MaxParticipants    int64       `json:"MAXPARTICIPANTS"`
-	MinParticipants    int64       `json:"MINPARTICIPANTS"`
+	MaxParticipants    int         `json:"MAXPARTICIPANTS"`
+	MinParticipants    int         `json:"MINPARTICIPANTS"`
 	Name               string      `json:"NAME"`
 	Notices            interface{} `json:"NOTICES"`
-	OwnerContactID     int64       `json:"OWNERCONTACTID"`
-	Participants       int64       `json:"PARTICIPANTS"`
-	ParticipantVacancy int64       `json:"PARTICIPANTVACANCY"`
+	OwnerContactID     int         `json:"OWNERCONTACTID"`
+	Participants       int         `json:"PARTICIPANTS"`
+	ParticipantVacancy int         `json:"PARTICIPANTVACANCY"`
 	Public             bool        `json:"PUBLIC"`
 	StartDate          time.Time   `json:"STARTDATE"`
-	TrainerContactID   int64       `json:"TRAINERCONTACTID"`
-	VenueContactID     int64       `json:"VENUECONTACTID"`
+	TrainerContactID   int         `json:"TRAINERCONTACTID"`
+	VenueContactID     int         `json:"VENUECONTACTID"`
 }
 
 /*
 GetCoursesInstanceDetail Returns details of an activity instance.
 
 instanceID
+
 	The instanceID of the activity you want details from.
+
 activityType
+
 	The type of the activity. w = workshop, p = accredited program, el = e-learning.
 */
 func (s *CoursesService) GetCoursesInstanceDetail(instanceID int, activityType string) (InstanceDetail, *Response, error) {
