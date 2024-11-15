@@ -61,7 +61,7 @@ type Activity struct {
 	Activities         []Activity `json:"ACTIVITIES"`
 	Status             string     `json:"STATUS"`
 	AmountPaid         *float32   `json:"AMOUNTPAID"` // Nullable
-	FinishDate         *time.Time `json:"FINISHDATE time_format:"axc_date_hours"`
+	FinishDate         *time.Time `json:"FINISHDATE" time_format:"axc_date_hours"`
 	Code               string     `json:"CODE"`
 	EnrolID            int        `json:"ENROLID"`
 	LearnerID          int        `json:"LEARNERID"`
