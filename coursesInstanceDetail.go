@@ -9,7 +9,7 @@ import (
 
 // InstanceDetail details of an activity instance.
 type InstanceDetail struct {
-	ComplexDates        []interface{} `json:"COMPLEXDATES"`
+	ComplexDates        []ComplexDate `json:"COMPLEXDATES"`
 	Cost                int64         `json:"COST"`
 	CustomfieldWeekends interface{}   `json:"CUSTOMFIELD_WEEKENDS"`
 	DateDescriptor      string        `json:"DATEDESCRIPTOR"`
@@ -38,6 +38,10 @@ type InstanceDetail struct {
 	StartDate          time.Time   `json:"STARTDATE"`
 	TrainerContactID   int         `json:"TRAINERCONTACTID"`
 	VenueContactID     int         `json:"VENUECONTACTID"`
+	Status             string      `json:"STATUS"`
+	SyncDateDescriptor bool        `json:"SYNCDATEDESCRIPTOR"`
+	LastUpdatedUTC     time.Time   `json:"LASTUPDATEDUTC"`
+	Address            string      `json:"ADDRESS"`
 }
 
 /*
