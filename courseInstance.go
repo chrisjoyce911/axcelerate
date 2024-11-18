@@ -65,14 +65,14 @@ type LinkedElearning struct {
 // ComplexDate represents the structure for complex date information
 type ComplexDate struct {
 	ComplexID        int         `json:"COMPLEXID"`
-	Date             string      `json:"DATE"`
-	StartTime        string      `json:"STARTTIME"`
-	EndTime          string      `json:"ENDTIME"`
+	Date             string      `json:"DATE"`      // Keep as string for parsing flexibility
+	StartTime        string      `json:"STARTTIME"` // Keep as string for parsing flexibility
+	EndTime          string      `json:"ENDTIME"`   // Keep as string for parsing flexibility
 	TrainerContactID int         `json:"TRAINERCONTACTID"`
 	Location         string      `json:"LOCATION"`
 	RoomID           int         `json:"ROOMID"`
-	VenueContactID   interface{} `json:"VENUECONTACTID"`
-	State            string      `json:"STATE"`
+	VenueContactID   interface{} `json:"VENUECONTACTID"`  // Flexible to handle null, string, or int
+	State            *string     `json:"STATE,omitempty"` // Pointer to handle null or missing values
 }
 
 /*
