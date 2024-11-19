@@ -83,7 +83,7 @@ type Invoice struct {
 	Email              string           `json:"EMAIL"`
 	PriceNett          float32          `json:"PRICENETT"`
 	Country            string           `json:"COUNTRY"`
-	Invguid            string           `json:"INVGUID"`
+	InvGUID            string           `json:"INVGUID"`
 	Balance            float32          `json:"BALANCE"`
 	Postcode           string           `json:"POSTCODE"`
 	IsPaid             bool             `json:"ISPAID"`
@@ -289,8 +289,8 @@ func (s *AccountingService) PaymentForm(reference, invoiceGUID, redirectURL, can
 // Header			Type		Required	Default	Description
 // reference		string		true		The external identifier for the payment flow process.
 
-func (s *AccountingService) PaymentVerify(reference string) (*PaymentResponse, *Response, error) {
-	var obj PaymentResponse
+func (s *AccountingService) PaymentVerify(reference string) (*FullPaymentResponse, *Response, error) {
+	var obj FullPaymentResponse
 
 	parms := map[string]string{}
 	url := fmt.Sprintf("{{axcelerateURL}}/accounting/ecommerce/payment/ref/%s", reference)
