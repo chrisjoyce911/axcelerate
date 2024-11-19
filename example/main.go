@@ -35,7 +35,45 @@ func main() {
 
 	// getCoursesInstanceDetail()
 	// getCoursesInstanceSearch()
-	getInvoices()
+	courseEnrolmentStatus()
+
+}
+
+func courseEnrolmentStatus() {
+
+	contactID := 11300044
+	instanceID := 1977505
+
+	// i, _, err := client.Courses.GetCoursesInstanceDetail(instanceID, "w")
+
+	// //
+
+	parms := map[string]string{}
+
+	// currentTime := time.Now()
+	// formattedDate := currentTime.Format("02/01/2006")
+
+	// $quizKey        = "ELA:" .  $courseDataArr['instanceID'] . ":" . $pd['contactID'];
+	// "https://assessment.australiawidefirstaid.com.au/?k="
+
+	// parms["customField_PFAquiz"] = "Complete"
+	// parms["customField_PFAquizlink"] = "https://assessment.australiawidefirstaid.com.au/?k=ELA:1997276:11300044"
+	// parms["customField_PFAquizdate"] = formattedDate
+	// parms["customField_terms"] = "Yes"
+
+	parms["logType"] = "Booked"
+	parms["theMethod"] = "Online"
+
+	eUpdate, reps, err := client.Courses.CourseEnrolmentUpdate(contactID, instanceID, "w", parms)
+
+	if err != nil {
+		fmt.Print(err)
+		return
+	}
+
+	fmt.Printf("Body%s\n", reps.Body)
+
+	fmt.Printf("eUpdate%+v", eUpdate)
 
 }
 
@@ -108,7 +146,7 @@ func courseEnrolment() {
 	parms["customField_PFAquizdate"] = formattedDate
 	parms["customField_terms"] = "Yes"
 
-	cert, reps, err := client.Courses.UpdateCourseEnrolment(contactID, int(i.LinkedClassID), "p", parms)
+	cert, reps, err := client.Courses.CourseEnrolmentUpdate(contactID, int(i.LinkedClassID), "p", parms)
 
 	if err != nil {
 		fmt.Print(err)
