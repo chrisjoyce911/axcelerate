@@ -16,15 +16,15 @@ type Course struct {
 	Count            int64       `json:"COUNT"`
 	Delivery         string      `json:"DELIVERY"`
 	Duration         float32     `json:"DURATION"`
-	Durationtype     interface{} `json:"DURATIONTYPE"`
+	DurationType     interface{} `json:"DURATIONTYPE"`
 	ID               int64       `json:"ID"`
 	IsActive         bool        `json:"ISACTIVE"`
 	Name             string      `json:"NAME"`
-	Primaryimage     interface{} `json:"PRIMARYIMAGE"`
+	PrimaryImage     interface{} `json:"PRIMARYIMAGE"`
 	RowID            int64       `json:"ROWID"`
-	Secondaryimage   interface{} `json:"SECONDARYIMAGE"`
-	Shortdescription interface{} `json:"SHORTDESCRIPTION"`
-	Streamname       interface{} `json:"STREAMNAME"`
+	SecondaryImage   interface{} `json:"SECONDARYIMAGE"`
+	ShortDescription interface{} `json:"SHORTDESCRIPTION"`
+	StreamName       interface{} `json:"STREAMNAME"`
 	Type             string      `json:"TYPE"`
 }
 

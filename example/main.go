@@ -19,7 +19,7 @@ func main() {
 	var apitoken string = os.Getenv("AXCELERATE_APITOKEN")
 	var wstoken string = os.Getenv("AXCELERATE_WSTOKEN")
 
-	client, _ = axcelerate.NewClient(apitoken, wstoken, axcelerate.RateLimit(10), axcelerate.BaseURL("https://awfa.app.axcelerate.com"))
+	client, _ = axcelerate.NewClient(apitoken, wstoken, axcelerate.RateLimit(10), axcelerate.BaseURL("https://awfa.stg.axcelerate.com"))
 
 	// savedReportList(client)
 	// savedReport(client)
@@ -34,7 +34,21 @@ func main() {
 	// SavedReport()
 
 	// getCoursesInstanceDetail()
-	getCoursesInstanceSearch()
+	// getCoursesInstanceSearch()
+	getInvoices()
+
+}
+
+func getInvoices() {
+
+	contactID := 11300044
+
+	i, reps, _ := client.Accounting.Invoices(contactID, nil)
+
+	je, _ := json.MarshalIndent(i, "", "\t")
+	fmt.Printf("e: \n%s", je)
+
+	fmt.Printf("%+v\n", reps.Body)
 
 }
 

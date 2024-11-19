@@ -184,13 +184,23 @@ func (s *AccountingService) GetInvoice(invoiceID int) (Invoice, *Response, error
 // Header			Type		Required	Default	Description
 // contactID		numeric		true				The contactID to return invoices for that contact
 
-func (s *AccountingService) Invoices(contactID int) (InvoiceCollection, *Response, error) {
-	var obj InvoiceCollection
+func (s *AccountingService) Invoices(contactID int, extra *map[string]string) ([]InvoiceSummary, *Response, error) {
+	var obj []InvoiceSummary
 
-	parms := map[string]string{"contactID": fmt.Sprintf("/%d", contactID)}
+	// Initialize parms as an empty map
+	parms := map[string]string{}
 
-	url := fmt.Sprintf("/accounting/invoice?contactID=%d", contactID)
-	resp, err := do(s.client, "GET", Params{parms: parms, u: url}, obj)
+	// If extra is not nil, merge its contents into parms
+	if extra != nil {
+		for key, value := range *extra {
+			parms[key] = value
+		}
+	}
+
+	// Add contactID to parms
+	parms["contactID"] = fmt.Sprintf("%d", contactID)
+
+	resp, err := do(s.client, "GET", Params{parms: parms, u: "/accounting/invoice"}, obj)
 
 	if err != nil {
 		return obj, resp, err
