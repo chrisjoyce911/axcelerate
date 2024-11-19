@@ -164,7 +164,7 @@ type InvoiceCollection []InvoiceSummary
 // Header			Type		Required	Default	Description
 // invoiceID		numeric		true				The invoiceID to retrieve. Note that this is NOT the same as the invoice number
 
-func (s *AccountingService) GetInvoice(invoiceID int) (Invoice, *Response, error) {
+func (s *AccountingService) GetInvoice(invoiceID int) (*Invoice, *Response, error) {
 	var obj Invoice
 
 	parms := map[string]string{"invoiceID": fmt.Sprintf("/%d", invoiceID)}
@@ -173,11 +173,11 @@ func (s *AccountingService) GetInvoice(invoiceID int) (Invoice, *Response, error
 	resp, err := do(s.client, "GET", Params{parms: parms, u: url}, obj)
 
 	if err != nil {
-		return obj, resp, err
+		return nil, resp, err
 	}
 
 	err = json.Unmarshal([]byte(resp.Body), &obj)
-	return obj, resp, err
+	return &obj, resp, err
 }
 
 // Invoices will get an array of invoices for an account
@@ -214,7 +214,7 @@ func (s *AccountingService) Invoices(contactID int, extra *map[string]string) ([
 // Header			Type		Required	Default	Description
 // invoiceID		numeric		true				The invoiceID to pay
 
-func (s *AccountingService) PaymentAxcelerateURL(invoiceID int) (PaymentURL, *Response, error) {
+func (s *AccountingService) PaymentAxcelerateURL(invoiceID int) (*PaymentURL, *Response, error) {
 	var obj PaymentURL
 
 	parms := map[string]string{}
@@ -222,11 +222,11 @@ func (s *AccountingService) PaymentAxcelerateURL(invoiceID int) (PaymentURL, *Re
 
 	resp, err := do(s.client, "GET", Params{parms: parms, u: url}, obj)
 	if err != nil {
-		return obj, resp, err
+		return nil, resp, err
 	}
 
 	err = json.Unmarshal([]byte(resp.Body), &obj)
-	return obj, resp, err
+	return &obj, resp, err
 }
 
 // PaymentURL will get an array of invoices for an account
@@ -236,7 +236,7 @@ func (s *AccountingService) PaymentAxcelerateURL(invoiceID int) (PaymentURL, *Re
 // redirectURL		string		true		The URL to which the client will be redirected after payment processing.
 // cancelURL		string		true		The URL to which the client is redirected if the client decides to cancel payment processing.
 
-func (s *AccountingService) PaymentURL(reference, invoiceGUID, redirectURL, cancelURL string) (PaymentRequest, *Response, error) {
+func (s *AccountingService) PaymentURL(reference, invoiceGUID, redirectURL, cancelURL string) (*PaymentRequest, *Response, error) {
 	var obj PaymentRequest
 
 	parms := map[string]string{}
@@ -250,11 +250,11 @@ func (s *AccountingService) PaymentURL(reference, invoiceGUID, redirectURL, canc
 	resp, err := do(s.client, "GET", Params{parms: parms, u: url}, obj)
 
 	if err != nil {
-		return obj, resp, err
+		return nil, resp, err
 	}
 
 	err = json.Unmarshal([]byte(resp.Body), &obj)
-	return obj, resp, err
+	return &obj, resp, err
 }
 
 // PaymentForm will get an array of invoices for an account
@@ -264,7 +264,7 @@ func (s *AccountingService) PaymentURL(reference, invoiceGUID, redirectURL, canc
 // redirectURL		string		true		The URL to which the client will be redirected after payment processing.
 // cancelURL		string		true		The URL to which the client is redirected if the client decides to cancel payment processing.
 
-func (s *AccountingService) PaymentForm(reference, invoiceGUID, redirectURL, cancelURL string) (PaymentResponse, *Response, error) {
+func (s *AccountingService) PaymentForm(reference, invoiceGUID, redirectURL, cancelURL string) (*PaymentResponse, *Response, error) {
 	var obj PaymentResponse
 
 	parms := map[string]string{}
@@ -278,18 +278,18 @@ func (s *AccountingService) PaymentForm(reference, invoiceGUID, redirectURL, can
 	resp, err := do(s.client, "GET", Params{parms: parms, u: url}, obj)
 
 	if err != nil {
-		return obj, resp, err
+		return nil, resp, err
 	}
 
 	err = json.Unmarshal([]byte(resp.Body), &obj)
-	return obj, resp, err
+	return &obj, resp, err
 }
 
 // PaymentVerify Returns the current state of a payment flow process.
 // Header			Type		Required	Default	Description
 // reference		string		true		The external identifier for the payment flow process.
 
-func (s *AccountingService) PaymentVerify(reference string) (PaymentResponse, *Response, error) {
+func (s *AccountingService) PaymentVerify(reference string) (*PaymentResponse, *Response, error) {
 	var obj PaymentResponse
 
 	parms := map[string]string{}
@@ -297,9 +297,9 @@ func (s *AccountingService) PaymentVerify(reference string) (PaymentResponse, *R
 
 	resp, err := do(s.client, "GET", Params{parms: parms, u: url}, obj)
 	if err != nil {
-		return obj, resp, err
+		return nil, resp, err
 	}
 
 	err = json.Unmarshal([]byte(resp.Body), &obj)
-	return obj, resp, err
+	return &obj, resp, err
 }

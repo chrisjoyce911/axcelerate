@@ -1,12 +1,16 @@
 package axcelerate
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+	"strconv"
+)
 
 type Enrol struct {
-	InvoiceID int `json:"INVOICEID"`
-	ContactID int `json:"CONTACTID"`
-	LearnerID int `json:"LEARNERID"`
-	Amount    int `json:"AMOUNT"`
+	InvoiceID int `json:"InvoiceID"`
+	ContactID int `json:"ContactID"`
+	LearnerID int `json:"LearnerID"`
+	Amount    int `json:"Amount"`
 }
 
 /*
@@ -74,8 +78,8 @@ if err != nil {
 fmt.Printf("Enrolment ID: %d\n", enrolment.InvoiceID)
 */
 
-func (s *CoursesService) CourseEnrol(parms map[string]string) (Enrol, *Response, error) {
-	var obj Enrol
+func (s *CoursesService) CourseEnrol(parms map[string]string) (*Enrol, *Response, error) {
+	var obj enrolEnteral
 
 	if len(parms) == 0 {
 		parms = map[string]string{}
@@ -84,10 +88,42 @@ func (s *CoursesService) CourseEnrol(parms map[string]string) (Enrol, *Response,
 	resp, err := do(s.client, "POST", Params{parms: parms, u: "/course/enrol"}, obj)
 
 	if err != nil {
-		return obj, resp, err
+		return nil, resp, err
 	}
 
 	err = json.Unmarshal([]byte(resp.Body), &obj)
+	if err != nil {
+		return nil, resp, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
 
-	return obj, resp, err
+	// Convert enrolEnteral to Enrol
+	enrol, err := convertEnteralToEnrol(obj)
+	if err != nil {
+		return nil, resp, fmt.Errorf("failed to convert enrol: %w", err)
+	}
+
+	return enrol, resp, nil
+
+}
+
+// enrolEnteral is the internal data structure for processing enrolments
+type enrolEnteral struct {
+	InvoiceID int    `json:"INVOICEID"`
+	ContactID int    `json:"CONTACTID"`
+	LearnerID int    `json:"LEARNERID"`
+	Amount    string `json:"AMOUNT"`
+}
+
+func convertEnteralToEnrol(internalEnrol enrolEnteral) (*Enrol, error) {
+	amount, err := strconv.Atoi(internalEnrol.Amount) // Convert string to int
+	if err != nil {
+		return nil, fmt.Errorf("invalid amount value: %v", err)
+	}
+
+	return &Enrol{
+		InvoiceID: internalEnrol.InvoiceID,
+		ContactID: internalEnrol.ContactID,
+		LearnerID: internalEnrol.LearnerID,
+		Amount:    amount,
+	}, nil
 }
