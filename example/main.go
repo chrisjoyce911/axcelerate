@@ -12,10 +12,37 @@ import (
 	"github.com/chrisjoyce911/axcelerate"
 )
 
+// EmailResponse struct
+type EmailResponse struct {
+	FailedCount    int      `json:"FAILEDCOUNT"`
+	Message        string   `json:"MESSAGE"`
+	Errors         []string `json:"ERRORS,omitempty"`
+	AttemptedCount int      `json:"ATTEMPTEDCOUNT"`
+	SuccessCount   int      `json:"SUCCESSCOUNT"`
+}
+
 var client *axcelerate.Client
 
 func main() {
 
+	// // JSON response string
+	// responseJSON := `{"FAILEDCOUNT":0,"MESSAGE":"1 Email(s) sent successfully. ","ERRORS":[],"ATTEMPTEDCOUNT":1,"SUCCESSCOUNT":1}`
+
+	// // Unmarshal the JSON into the EmailResponse struct
+	// var emailResponse EmailResponse
+	// err := json.Unmarshal([]byte(responseJSON), &emailResponse)
+	// if err != nil {
+	// 	log.Fatalf("Error unmarshalling JSON: %v", err)
+	// }
+
+	// // Print the result
+	// log.Printf("emailResponse.FailedCount: %+v\n", emailResponse.FailedCount)
+	// log.Printf("emailResponse.Message: %+v\n", emailResponse.Message)
+	// log.Printf("emailResponse.AttemptedCount: %+v\n", emailResponse.AttemptedCount)
+	// log.Printf("emailResponse.SuccessCount: %+v\n", emailResponse.SuccessCount)
+	// log.Printf("emailResponse.Errors: %+v\n", emailResponse.Errors)
+
+	// log.Fatalln("done")
 	var apitoken string = os.Getenv("AXCELERATE_APITOKEN")
 	var wstoken string = os.Getenv("AXCELERATE_WSTOKEN")
 
@@ -33,8 +60,8 @@ func main() {
 
 	// SavedReport()
 
-	// getCoursesInstanceDetail()
-	// getCoursesInstanceSearch()
+	getCoursesInstanceDetail()
+	getCoursesInstanceSearch()
 	// courseEnrolmentStatus()
 	templateEmail()
 
@@ -55,12 +82,10 @@ func templateEmail() {
 	eUpdate, reps, err := client.Template.TemplateEmail(p)
 
 	if err != nil {
-		fmt.Printf("Body%s\n", reps.Body)
+		fmt.Printf("Body: %s", reps.Body)
 		fmt.Print(err.Error())
 		return
 	}
-
-	fmt.Printf("Body%s\n", reps.Body)
 
 	fmt.Printf("eUpdate%+v", eUpdate)
 
@@ -119,7 +144,7 @@ func getInvoices() {
 
 func getCoursesInstanceDetail() {
 
-	instanceID := 1993857
+	instanceID := 1977505
 
 	i, reps, _ := client.Courses.GetCoursesInstanceDetail(instanceID, "w")
 
@@ -132,7 +157,7 @@ func getCoursesInstanceDetail() {
 
 func getCoursesInstanceSearch() {
 
-	instanceID := 1993857
+	instanceID := 1977505
 
 	args := map[string]string{
 		"instanceID": fmt.Sprintf("%d", instanceID), // Convert contactID to string
@@ -140,14 +165,16 @@ func getCoursesInstanceSearch() {
 
 	}
 
-	i, reps, err := client.Courses.GetCoursesInstanceSearch(args)
+	// i, reps, err := client.Courses.GetCoursesInstanceSearch(args)
 
-	je, _ := json.MarshalIndent(i, "", "\t")
-	fmt.Printf("e: \n%s", je)
+	i, _, err := client.Courses.GetCoursesInstanceSearch(args)
 
-	fmt.Printf("%+v\n", reps.Body)
+	// je, _ := json.MarshalIndent(i, "", "\t")
+	// fmt.Printf("e: \n%s", je)
 
-	fmt.Printf("%+v\n", err)
+	fmt.Printf("%+v\n", i)
+
+	fmt.Printf("err %+v\n", err)
 
 }
 

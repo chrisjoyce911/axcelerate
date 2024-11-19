@@ -2,7 +2,6 @@ package axcelerate
 
 import (
 	"fmt"
-	"log"
 
 	"encoding/json"
 )
@@ -13,26 +12,11 @@ type TemplateService struct {
 }
 
 type EmailResponse struct {
-	FailedCount    int           `json:"FAILEDCOUNT"`
-	Message        string        `json:"MESSAGE"`
-	Errors         []string      `json:"ERRORS,omitempty"`
-	AttemptedCount int           `json:"ATTEMPTEDCOUNT"`
-	SuccessCount   int           `json:"SUCCESSCOUNT"`
-	Report         []EmailReport `json:"REPORT,omitempty"`
-}
-
-type EmailReport struct {
-	Subject   string      `json:"SUBJECT"`
-	ContactID int         `json:"CONTACTID"`
-	To        []Recipient `json:"TO"`
-	From      string      `json:"FROM"`
-}
-
-type Recipient struct {
-	EmailAddress string `json:"EMAILADDRESS"`
-	Message      string `json:"MESSAGE"`
-	Emailed      bool   `json:"EMAILED"`
-	ContactID    int    `json:"CONTACTID"`
+	FailedCount int    `json:"FAILEDCOUNT"`
+	Message     string `json:"MESSAGE"`
+	// Errors         []string `json:"ERRORS,omitempty"`
+	AttemptedCount int `json:"ATTEMPTEDCOUNT"`
+	SuccessCount   int `json:"SUCCESSCOUNT"`
 }
 
 type TemplateEmailParams struct {
@@ -118,16 +102,10 @@ func (s *TemplateService) TemplateEmail(params TemplateEmailParams) (*EmailRespo
 		"invoiceAttachmentPlanID": fmt.Sprintf("%d", params.InvoiceAttachmentPlanID),
 	}
 
-	for key, value := range parms {
-		log.Printf("Key: %s, Value: %s", key, value)
-	}
-
 	var obj EmailResponse
 
 	// API call
-	url := "/template/email"
-
-	resp, err := do(s.client, "POST", Params{parms: parms, u: url}, obj)
+	resp, err := do(s.client, "POST", Params{parms: parms, u: "/template/email"}, obj)
 	if err != nil {
 		return nil, resp, err
 	}
