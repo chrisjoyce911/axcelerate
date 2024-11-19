@@ -29,6 +29,7 @@ type Client struct {
 	Courses    *CoursesService
 	Accounting *AccountingService
 	Report     *ReportService
+	Template   *TemplateService
 }
 
 // APIerr may happen along with a status code
@@ -75,6 +76,7 @@ func NewClient(apitoken, wstoken string, options ...Option) (*Client, error) {
 	c.Courses = &CoursesService{client: c}
 	c.Accounting = &AccountingService{client: c}
 	c.Report = &ReportService{client: c}
+	c.Template = &TemplateService{client: c}
 	return c, nil
 }
 
@@ -157,6 +159,42 @@ func (c *Client) Do(req AxRequest, v interface{}) (*Response, error) {
 	thisReq.Header.Set("apitoken", c.apitoken)
 	thisReq.Header.Set("wstoken", c.wstoken)
 
+	// // Log the HTTP method and URL
+	// log.Printf("Request Method: %s\n", thisReq.Method)
+	// log.Printf("Request URL: %s\n", thisReq.URL.String())
+
+	// // Prepare the curl command
+	// curlCommand := fmt.Sprintf("curl -X %s '%s'", thisReq.Method, thisReq.URL.String())
+
+	// // Add headers to the curl command
+	// log.Println("Request Headers:")
+	// for key, values := range thisReq.Header {
+	// 	for _, value := range values {
+	// 		log.Printf("%s: %s\n", key, value)
+	// 		curlCommand += fmt.Sprintf(" -H '%s: %s'", key, value)
+	// 	}
+	// }
+
+	// // Add the body to the curl command (if applicable)
+	// if thisReq.Body != nil {
+	// 	bodyBytes, err := io.ReadAll(thisReq.Body)
+	// 	if err != nil {
+	// 		return nil, fmt.Errorf("error reading request body: %v", err)
+	// 	}
+	// 	// Restore the body after reading
+	// 	thisReq.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
+
+	// 	// Log the body
+	// 	log.Println("Request Body:")
+	// 	log.Println(string(bodyBytes))
+
+	// 	// Add the body to the curl command
+	// 	curlCommand += fmt.Sprintf(" --data '%s'", string(bodyBytes))
+	// }
+
+	// // Log the generated curl command
+	// log.Printf("Generated curl command: %s\n", curlCommand)
+
 	resp, err := c.client.Do(thisReq)
 	if err != nil {
 		return nil, err
@@ -180,8 +218,11 @@ func do(c *Client, m string, p Params, a interface{}) (*Response, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	req.method = m
+
+	// log.Println(req.url)
+	// log.Println(req.method)
+	// log.Println(req.data)
 
 	resp, err := c.Do(*req, a)
 	if err != nil {

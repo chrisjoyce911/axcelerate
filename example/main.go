@@ -35,7 +35,34 @@ func main() {
 
 	// getCoursesInstanceDetail()
 	// getCoursesInstanceSearch()
-	courseEnrolmentStatus()
+	// courseEnrolmentStatus()
+	templateEmail()
+
+}
+
+func templateEmail() {
+
+	p := axcelerate.TemplateEmailParams{
+		PlanID:                  95745,
+		ContactID:               11300044,
+		InstanceID:              1977505,
+		InvoiceID:               3378756,
+		Subject:                 "Booking Confirmation - Australia Wide First Aid",
+		Type:                    "w",
+		InvoiceAttachmentPlanID: 3440,
+	}
+
+	eUpdate, reps, err := client.Template.TemplateEmail(p)
+
+	if err != nil {
+		fmt.Printf("Body%s\n", reps.Body)
+		fmt.Print(err.Error())
+		return
+	}
+
+	fmt.Printf("Body%s\n", reps.Body)
+
+	fmt.Printf("eUpdate%+v", eUpdate)
 
 }
 

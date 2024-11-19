@@ -293,7 +293,7 @@ func (s *AccountingService) PaymentVerify(reference string) (*FullPaymentRespons
 	var obj FullPaymentResponse
 
 	parms := map[string]string{}
-	url := fmt.Sprintf("{{axcelerateURL}}/accounting/ecommerce/payment/ref/%s", reference)
+	url := fmt.Sprintf("/accounting/ecommerce/payment/ref/%s", reference)
 
 	resp, err := do(s.client, "GET", Params{parms: parms, u: url}, obj)
 	if err != nil {
