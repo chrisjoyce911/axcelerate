@@ -30,6 +30,7 @@ type Client struct {
 	Accounting *AccountingService
 	Report     *ReportService
 	Template   *TemplateService
+	Venue      *VenueService
 }
 
 // APIerr may happen along with a status code
@@ -77,6 +78,7 @@ func NewClient(apitoken, wstoken string, options ...Option) (*Client, error) {
 	c.Accounting = &AccountingService{client: c}
 	c.Report = &ReportService{client: c}
 	c.Template = &TemplateService{client: c}
+	c.Venue = &VenueService{client: c}
 	return c, nil
 }
 

@@ -60,10 +60,25 @@ func main() {
 
 	// SavedReport()
 
-	getCoursesInstanceDetail()
-	getCoursesInstanceSearch()
+	//getCoursesInstanceDetail()
+	// getCoursesInstanceSearch()
 	// courseEnrolmentStatus()
-	templateEmail()
+	// templateEmail()
+
+	getVenueDetail()
+
+}
+
+func getVenueDetail() {
+
+	contactID := 12228659
+
+	i, reps, _ := client.Venue.Venue(contactID)
+
+	je, _ := json.MarshalIndent(i, "", "\t")
+	fmt.Printf("e: \n%s", je)
+
+	fmt.Printf("%+v\n", reps.Body)
 
 }
 
