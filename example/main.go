@@ -339,7 +339,7 @@ func contactSearch() {
 	}
 
 	for c := range contacts {
-		log.Printf("%d\t %s\n", contacts[c].ContactID, contacts[c].Emailaddress)
+		log.Printf("%d\t %s\n", contacts[c].ContactID, contacts[c].EmailAddress)
 
 	}
 
