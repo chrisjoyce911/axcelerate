@@ -1,5 +1,7 @@
 package axcelerate
 
+import "fmt"
+
 type MockAccountingService struct {
 	MockGetInvoice           func(invoiceID int) (*Invoice, *Response, error)
 	MockInvoices             func(contactID int, extra *map[string]string) ([]InvoiceSummary, *Response, error)
@@ -47,7 +49,11 @@ func (m *MockAccountingService) PaymentURL(reference, invoiceGUID, redirectURL, 
 	if m.MockPaymentURL != nil {
 		return m.MockPaymentURL(reference, invoiceGUID, redirectURL, cancelURL)
 	}
-	return nil, nil, nil
+	fmt.Printf("[MockAccountingService] PaymentURL called with unset mock. Returning default response.\n")
+	return &PaymentRequest{
+		HTML:   "<form>Default Payment Form</form>",
+		Action: "https://default-payment-url.com",
+	}, defaultMockResponse(), nil
 }
 
 func (m *MockAccountingService) PaymentForm(reference, invoiceGUID, redirectURL, cancelURL string) (*PaymentResponse, *Response, error) {
