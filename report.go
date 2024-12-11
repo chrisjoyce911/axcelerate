@@ -61,11 +61,15 @@ type ReportList []struct {
 func (s *ReportService) SavedReportRun(reportID int, parms map[string]string) (SavedReport, *Response, error) {
 	var obj SavedReport
 
-	parms["reportID"] = fmt.Sprintf("%d", reportID)
+	fmt.Printf("SavedReportRun : %+v", parms)
 
 	if len(parms) == 0 {
 		parms = map[string]string{}
 	}
+
+	parms["reportID"] = fmt.Sprintf("%d", reportID)
+
+	fmt.Printf("SavedReportRun : %+v", parms)
 
 	for key, value := range parms {
 		log.Printf("Key: %s, Value: %s", key, value)

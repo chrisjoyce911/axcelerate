@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"net/url"
 	"os"
 	"path/filepath"
 	"time"
@@ -58,14 +57,49 @@ func main() {
 
 	// courseEnrolments(10148651)
 
-	// SavedReport()
+	SavedReport()
 
 	//getCoursesInstanceDetail()
 	// getCoursesInstanceSearch()
 	// courseEnrolmentStatus()
 	// templateEmail()
 
-	getVenueDetail()
+	// getVenueDetail()
+
+}
+
+func SavedReport() {
+	offsetRows := 0
+
+	parms := map[string]string{}
+
+	parms["offsetRows"] = fmt.Sprintf("%d", offsetRows)
+
+	parms["filterOverride"] = ` [
+ {
+     "VALUE2": "0",
+     "OPERATOR": "BETWEEN N Days",
+     "DISPLAY": "Workshop Start Date",
+     "NAME": "workshops.pstartdate",
+     "VALUE": "0"
+ }]`
+
+	savedReport, _, err := client.Report.SavedReportRun(85957, parms)
+
+	if err != nil {
+		fmt.Print(err)
+	}
+
+	fmt.Print(savedReport.Data)
+	// for w := range workshops {
+	// 	c, _, err := client.Courses.UpdateInstanceMaxParticipants(workshops[w], "w", max)
+
+	// 	log.Printf("%d\t %s\n", c.InstanceID, c.Message)
+	// 	if err != nil {
+	// 		fmt.Print(err)
+	// 	}
+
+	// }
 
 }
 
@@ -196,9 +230,9 @@ func getCoursesInstanceSearch() {
 func courseEnrolment() {
 
 	contactID := 11300044
-	instranceID := 1997276
+	instanceID := 1997276
 
-	i, _, err := client.Courses.GetCoursesInstanceDetail(instranceID, "w")
+	i, _, err := client.Courses.GetCoursesInstanceDetail(instanceID, "w")
 
 	//
 
@@ -239,18 +273,6 @@ func savedReportList() {
 
 	fmt.Printf("%+v", cert)
 
-}
-
-func savedReport() {
-
-	cert, _, err := client.Report.SavedReportRun(85950, map[string]string{})
-
-	if err != nil {
-		fmt.Print(err)
-		return
-	}
-
-	fmt.Printf("%+v", cert)
 }
 
 func contactCertificate() {
@@ -363,34 +385,5 @@ func UpdateInstanceMaxParticipants() {
 		}
 
 	}
-
-}
-
-func SavedReport() {
-	offsetRows := 0
-
-	parms := map[string]string{}
-
-	parms["offsetRows"] = fmt.Sprintf("%d", offsetRows)
-	//	parms["filterOverride"]
-
-	parms["filterOverride"] = url.QueryEscape(`[{"VALUE2":"","OPERATOR":"IS","DISPLAY":"Cancelled","NAME":"workshops.deleted","VALUE":"0"},{"VALUE2":"","OPERATOR":"IS","DISPLAY":"USI Verified","NAME":"contacts.usi_verified","VALUE":"0"},{"VALUE2":"","OPERATOR":"IS","DISPLAY":"Coordination Type","NAME":"workshops.ptype","VALUE":"Public Workshop"},{"VALUE2":"","OPERATOR":"IN","DISPLAY":"Key Student Status","NAME":"workshopbookings.logentrytypeid","VALUE":"1,14"}]`)
-
-	savedReport, _, err := client.Report.SavedReportRun(85951, parms)
-
-	if err != nil {
-		fmt.Print(err)
-	}
-
-	fmt.Print(savedReport.Data)
-	// for w := range workshops {
-	// 	c, _, err := client.Courses.UpdateInstanceMaxParticipants(workshops[w], "w", max)
-
-	// 	log.Printf("%d\t %s\n", c.InstanceID, c.Message)
-	// 	if err != nil {
-	// 		fmt.Print(err)
-	// 	}
-
-	// }
 
 }
