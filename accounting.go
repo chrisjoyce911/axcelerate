@@ -99,6 +99,8 @@ type PaymentRequestDetails struct {
 type PaymentErrorDetails struct {
 	ErrorCode    int    `json:"ERROR_CODE"` // Error code
 	ErrorMessage string `json:"ERROR_MSG"`  // Error message
+	Code         int    `json:"CODE"`       // Error code
+	Msg          string `json:"MSG"`        // Error message
 }
 
 type PaymentResultDetails struct {
@@ -115,6 +117,16 @@ type FullPaymentResponse struct {
 	PaymentPlatform string                `json:"PLATFORM"`          // Platform used for payment
 	ResultDetails   PaymentResultDetails  `json:"RESULT"`            // Result details of the payment process
 	PlatformRefGUID string                `json:"PLATFORMREFERENCE"` // Reference for the platform transaction
+	ErrorResponse   *PaymentErrorResponse `json:"-"`                 // Populated if an error response is detected
+}
+
+// PaymentErrorResponse represents an alternative error response structure
+type PaymentErrorResponse struct {
+	Data     string `json:"DATA"`     // Encoded metadata and variables
+	Error    bool   `json:"ERROR"`    // Indicates if the response is an error
+	Messages string `json:"MESSAGES"` // Error messages
+	Code     string `json:"CODE"`     // Error code
+	Details  string `json:"DETAILS"`  // Error details
 }
 
 type PaymentRequest struct {
@@ -285,21 +297,55 @@ func (s *AccountingService) PaymentForm(reference, invoiceGUID, redirectURL, can
 	return &obj, resp, err
 }
 
+// UnmarshalJSON custom unmarshals PaymentResultDetails to handle string or object cases
+func (r *PaymentResultDetails) UnmarshalJSON(data []byte) error {
+	if string(data) == `""` { // Handle the case where RESULT is an empty string
+		return nil
+	}
+
+	// Otherwise, unmarshal into the struct as usual
+	type Alias PaymentResultDetails
+	aux := (*Alias)(r)
+	return json.Unmarshal(data, aux)
+}
+
 // PaymentVerify Returns the current state of a payment flow process.
 // Header			Type		Required	Default	Description
 // reference		string		true		The external identifier for the payment flow process.
 
+// PaymentVerify returns the current state of a payment flow process, handling dynamic JSON structures
 func (s *AccountingService) PaymentVerify(reference string) (*FullPaymentResponse, *Response, error) {
-	var obj FullPaymentResponse
-
-	parms := map[string]string{}
 	url := fmt.Sprintf("/accounting/ecommerce/payment/ref/%s", reference)
 
-	resp, err := do(s.client, "GET", Params{parms: parms, u: url}, obj)
+	// Make the request
+	resp, err := do(s.client, "GET", Params{parms: nil, u: url}, nil)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	err = json.Unmarshal([]byte(resp.Body), &obj)
-	return &obj, resp, err
+	// Initialize the FullPaymentResponse struct
+	var fullPaymentResp FullPaymentResponse
+
+	// Try to unmarshal into FullPaymentResponse
+	if err := json.Unmarshal([]byte(resp.Body), &fullPaymentResp); err == nil {
+		// Handle cases where RESULT is an empty string
+		if fullPaymentResp.ResultDetails == (PaymentResultDetails{}) && resp.Body != "" {
+			var errorResp PaymentErrorResponse
+			if json.Unmarshal([]byte(resp.Body), &errorResp) == nil && errorResp.Error {
+				fullPaymentResp.ErrorResponse = &errorResp
+				return &fullPaymentResp, resp, fmt.Errorf("error: %s (code: %s, details: %s)", errorResp.Messages, errorResp.Code, errorResp.Details)
+			}
+		}
+		return &fullPaymentResp, resp, nil
+	}
+
+	// Handle direct error response format
+	var errorResp PaymentErrorResponse
+	if err := json.Unmarshal([]byte(resp.Body), &errorResp); err == nil {
+		fullPaymentResp.ErrorResponse = &errorResp
+		return &fullPaymentResp, resp, fmt.Errorf("error: %s (code: %s, details: %s)", errorResp.Messages, errorResp.Code, errorResp.Details)
+	}
+
+	// Fallback for unknown formats
+	return nil, resp, fmt.Errorf("unknown response format: %s", resp.Body)
 }

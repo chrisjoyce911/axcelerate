@@ -56,19 +56,48 @@ func main() {
 	// contactCertificate(client)
 
 	// courseEnrolments(10148651)
-
-	SavedReport()
-
-	//getCoursesInstanceDetail()
+	// savedReport()
+	// getCoursesInstanceDetail()
 	// getCoursesInstanceSearch()
 	// courseEnrolmentStatus()
 	// templateEmail()
 
 	// getVenueDetail()
 
+	paymentVerify()
+
 }
 
-func SavedReport() {
+func paymentVerify() {
+
+	payment, res, err := client.Accounting.PaymentVerify("82A45263-0C31-49F3-B3C7196331B5AFCAcc")
+
+	// Log payment details on success
+	if payment != nil && payment.ErrorResponse != nil {
+		log.Printf("Payment Details: %+v", payment.ErrorResponse)
+	} else {
+		log.Printf("Payment Details: <nil>")
+	}
+
+	if err != nil {
+		log.Printf("Error: %v", err)
+		if payment != nil && payment.ErrorResponse != nil {
+			log.Printf("Error Details: %+v", payment.ErrorResponse)
+		}
+		// log.Printf("Response: %+v", res)
+		return
+	}
+
+	// Log payment details on success
+	if payment != nil {
+		log.Printf("Payment Details: %+v", payment)
+	} else {
+		log.Printf("Payment Details: <nil>")
+	}
+	log.Printf("Response: %+v", res)
+}
+
+func savedReport() {
 	offsetRows := 0
 
 	parms := map[string]string{}

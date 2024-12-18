@@ -1,0 +1,12 @@
+{
+  "REQUEST": {
+    "CANCELURL": "https://australiawidefirstaid.com.au/cancel",
+    "WEBHOOKURL": "",
+    "REDIRECTURL": "https://australiawidefirstaid.com.au/thanks/82A45263-0C31-49F3-B3C7196331B5AFCA",
+    "INVOICEGUID": "82A45263-0C31-49F3-B3C7196331B5AFCA"
+  },
+  "STATE": "pending",
+  "PLATFORM": "ezypay",
+  "RESULT": "",
+  "PLATFORMREFERENCE": "87e63af3-7926-4e9b-acbd-24b537dc8e6a"
+}
