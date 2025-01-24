@@ -45,7 +45,7 @@ func main() {
 	var apitoken string = os.Getenv("AXCELERATE_APITOKEN")
 	var wstoken string = os.Getenv("AXCELERATE_WSTOKEN")
 
-	client, _ = axcelerate.NewClient(apitoken, wstoken, axcelerate.RateLimit(10), axcelerate.BaseURL("https://awfa.stg.axcelerate.com"))
+	client, _ = axcelerate.NewClient(apitoken, wstoken, axcelerate.RateLimit(10), axcelerate.BaseURL("https://awfa.app.axcelerate.com/api"))
 
 	// savedReportList(client)
 	// savedReport(client)
@@ -64,8 +64,38 @@ func main() {
 
 	// getVenueDetail()
 
-	paymentVerify()
+	updateFinCode(client)
 
+}
+
+func updateFinCode(client *axcelerate.Client) {
+	ids := []string{
+		"2003904", "2006097", "2010906", "2010906", "2006095", "2006097", "2006095", "2003904", "2010908", "2010906",
+		"2006095", "2006097", "2003904", "2010906", "2003907", "2006097", "2010907", "2010907", "2006097", "2010908",
+		"2006095", "2006095", "2003907", "2010906", "2003907", "2010907", "2006095", "2006101", "2010906", "2006103",
+		"2006103", "2006097", "2003907", "2006103", "2006097", "2006097", "2010907", "2010907", "2010907", "2006101",
+		"2003904", "2006101", "2010907", "2006097", "2003904", "2006097", "2010906", "2003907", "2010907", "2006097",
+		"2006099", "2010907", "2006099", "2010908", "2010907", "2003904", "2006095", "2006095", "2010906", "2010906",
+		"2003907", "2006101", "2010907", "2006103", "2003907", "2010907", "2010908", "2010907", "2006099", "2006095",
+		"2006101", "2006099", "2006103", "2006103", "2010908", "2006099", "2006099", "2006097", "2006103", "2010908",
+		"2010907", "2006099", "2010907", "2010907", "2010908",
+	}
+
+	for _, id := range ids {
+		params := map[string]string{
+			"finCodeID": "10076",
+			"type":      "w",
+			"ID":        id,
+		}
+
+		_, resp, err := client.Courses.UpdateInstanceDetails(params)
+		if err != nil {
+			log.Printf("Error updating finCodeID for ID %s: %v", id, err)
+			continue
+		}
+
+		log.Printf("Updated ID %s with Response Status Code: %v", id, resp.StatusCode)
+	}
 }
 
 func findME(client *axcelerate.Client) (*string, *string, error) {

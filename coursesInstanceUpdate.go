@@ -122,3 +122,49 @@ func (s *CoursesService) UpdateInstanceMaxParticipants(instanceID int, activityT
 	err = json.Unmarshal([]byte(resp.Body), &obj)
 	return obj, resp, err
 }
+
+/*
+UpdateInstanceDetails updates various details of an existing instance.
+
+Parameters:
+  - parms (map[string]string): A map of parameters to update the instance. Common keys:
+  - "ID" (required): The ID of the instance to update.
+  - "type" (required): The type of activity. Valid values:
+  - "w" = workshop
+  - "p" = accredited program
+  - "el" = e-learning
+  - "ProgramName": The new name for the activity (optional).
+  - "PStartDate": The new start date for the activity (optional).
+  - "PFinishDate": The new finish date for the activity (optional).
+  - "cost": The updated cost per participant (optional).
+  - Additional parameters as described in the API documentation.
+
+Returns:
+  - UpdateInstanceDetail: Contains details of the updated instance.
+  - *Response: The HTTP response object.
+  - error: An error object, if an error occurs during the operation.
+
+Example Usage:
+
+	params := map[string]string{
+	    "ID": "123",
+	    "type": "w",
+	    "PStartDate": "2023-01-01T10:00:00Z",
+	    "PFinishDate": "2023-01-02T15:00:00Z",
+	    "cost": "150",
+	}
+	detail, resp, err := service.UpdateInstanceDetails(params)
+*/
+func (s *CoursesService) UpdateInstanceDetails(parms map[string]string) (UpdateInstanceDetail, *Response, error) {
+
+	var obj UpdateInstanceDetail
+
+	resp, err := do(s.client, "PUT", Params{parms: parms, u: "/course/instance/"}, obj)
+
+	if err != nil {
+		return obj, resp, err
+	}
+
+	err = json.Unmarshal([]byte(resp.Body), &obj)
+	return obj, resp, err
+}
