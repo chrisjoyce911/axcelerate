@@ -64,7 +64,19 @@ func main() {
 
 	// getVenueDetail()
 
-	updateFinCode(client)
+	// updateFinCode(client)
+
+	invoiceVoid()
+
+}
+
+func invoiceVoid() {
+
+	guid := "AAC701C2-1601-48E1-85CB1BC2F59D5E0E"
+
+	i, reps, err := client.Accounting.InvoiceVoid(guid)
+
+	fmt.Printf("%t %+v %s", i, reps.Body, err.Error())
 
 }
 

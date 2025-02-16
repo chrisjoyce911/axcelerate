@@ -349,3 +349,27 @@ func (s *AccountingService) PaymentVerify(reference string) (*FullPaymentRespons
 	// Fallback for unknown formats
 	return nil, resp, fmt.Errorf("unknown response format: %s", resp.Body)
 }
+
+// InvoiceVoid Void an invoice. Note that invoices that have had payments applied cannot be voided.
+// Header			Type		Required	Default	Description
+// invoiceGUID		numeric		true				The invoiceGUID to void
+
+func (s *AccountingService) InvoiceVoid(invoiceGUID string) (bool, *Response, error) {
+	var obj interface{}
+
+	parms := map[string]string{}
+	url := fmt.Sprintf("/accounting/invoice/%s/void", invoiceGUID)
+
+	resp, err := do(s.client, "POST", Params{parms: parms, u: url}, obj)
+	if err != nil {
+		return false, resp, err
+	}
+
+	err = json.Unmarshal([]byte(resp.Body), &obj)
+
+	if resp.StatusCode == 204 {
+		return true, resp, err
+	}
+	return false, resp, err
+
+}
