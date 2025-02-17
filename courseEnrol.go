@@ -3,7 +3,6 @@ package axcelerate
 import (
 	"encoding/json"
 	"fmt"
-	"strconv"
 )
 
 type Enrol struct {
@@ -108,22 +107,22 @@ func (s *CoursesService) CourseEnrol(parms map[string]string) (*Enrol, *Response
 
 // enrolEnteral is the internal data structure for processing enrolments
 type enrolEnteral struct {
-	InvoiceID int    `json:"INVOICEID"`
-	ContactID int    `json:"CONTACTID"`
-	LearnerID int    `json:"LEARNERID"`
-	Amount    string `json:"AMOUNT"`
+	InvoiceID int `json:"INVOICEID"`
+	ContactID int `json:"CONTACTID"`
+	LearnerID int `json:"LEARNERID"`
+	Amount    int `json:"AMOUNT"`
 }
 
 func convertEnteralToEnrol(internalEnrol enrolEnteral) (*Enrol, error) {
-	amount, err := strconv.Atoi(internalEnrol.Amount) // Convert string to int
-	if err != nil {
-		return nil, fmt.Errorf("invalid amount value: %v", err)
-	}
+	// amount, err := strconv.Atoi(internalEnrol.Amount) // Convert string to int
+	// if err != nil {
+	// 	return nil, fmt.Errorf("invalid amount value: %v", err)
+	// }
 
 	return &Enrol{
 		InvoiceID: internalEnrol.InvoiceID,
 		ContactID: internalEnrol.ContactID,
 		LearnerID: internalEnrol.LearnerID,
-		Amount:    amount,
+		Amount:    internalEnrol.Amount,
 	}, nil
 }
