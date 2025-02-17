@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/chrisjoyce911/axcelerate"
+	"github.com/joho/godotenv"
 )
 
 // EmailResponse struct
@@ -42,10 +43,18 @@ func main() {
 	// log.Printf("emailResponse.Errors: %+v\n", emailResponse.Errors)
 
 	// log.Fatalln("done")
+
+	_ = godotenv.Load()
+
 	var apitoken string = os.Getenv("AXCELERATE_APITOKEN")
 	var wstoken string = os.Getenv("AXCELERATE_WSTOKEN")
+	var baseURL string = os.Getenv("AXCELERATE_BASEURL")
 
-	client, _ = axcelerate.NewClient(apitoken, wstoken, axcelerate.RateLimit(10), axcelerate.BaseURL("https://awfa.app.axcelerate.com/api"))
+	fmt.Println(apitoken)
+	fmt.Println(wstoken)
+	fmt.Println(baseURL)
+
+	client, _ = axcelerate.NewClient(apitoken, wstoken, axcelerate.RateLimit(10), axcelerate.BaseURL(baseURL))
 
 	// savedReportList(client)
 	// savedReport(client)
@@ -72,7 +81,7 @@ func main() {
 
 func invoiceVoid() {
 
-	guid := "AAC701C2-1601-48E1-85CB1BC2F59D5E0E"
+	guid := "DEF95391-7FDF-4A92-8D3F7717123F0881"
 
 	i, reps, err := client.Accounting.InvoiceVoid(guid)
 

@@ -3,6 +3,7 @@ module github.com/chrisjoyce911/axcelerate
 go 1.22
 
 require (
+	github.com/joho/godotenv v1.5.1
 	github.com/liamylian/jsontime/v2 v2.0.0
 	github.com/stretchr/testify v1.10.0
 	go.uber.org/ratelimit v0.3.1

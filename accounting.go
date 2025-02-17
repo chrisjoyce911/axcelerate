@@ -365,11 +365,10 @@ func (s *AccountingService) InvoiceVoid(invoiceGUID string) (bool, *Response, er
 		return false, resp, err
 	}
 
-	err = json.Unmarshal([]byte(resp.Body), &obj)
-
 	if resp.StatusCode == 204 {
 		return true, resp, err
 	}
+
 	return false, resp, err
 
 }
