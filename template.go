@@ -20,14 +20,14 @@ type EmailResponse struct {
 }
 
 type TemplateEmailParams struct {
+	PlanID                  int    `json:"planID,omitempty"`
 	ContactID               int    `json:"contactID" validate:"required"`
 	InstanceID              int    `json:"instanceID,omitempty"`
-	Type                    string `json:"type,omitempty"`
-	PlanID                  int    `json:"planID,omitempty"`
-	Subject                 string `json:"subject,omitempty"`
-	InvoiceAttachmentPlanID int    `json:"invoiceAttachmentPlanID,omitempty"`
 	InvoiceID               int    `json:"invoiceID,omitempty"`
-
+	Subject                 string `json:"subject,omitempty"`
+	Type                    string `json:"type,omitempty"`
+	InvoiceAttachmentPlanID int    `json:"invoiceAttachmentPlanID,omitempty"`
+	HasIcalAttachment       bool
 	// Content            *string `json:"content,omitempty"`            // Optional
 	// From               *string `json:"from,omitempty"`               // Optional
 	// To                 *string `json:"to,omitempty"`                 // Optional
@@ -100,6 +100,10 @@ func (s *TemplateService) TemplateEmail(params TemplateEmailParams) (*EmailRespo
 		"subject":                 params.Subject,
 		"type":                    params.Type,
 		"invoiceAttachmentPlanID": fmt.Sprintf("%d", params.InvoiceAttachmentPlanID),
+	}
+
+	if params.HasIcalAttachment {
+		parms["hasIcalAttachment"] = "true"
 	}
 
 	var obj EmailResponse
