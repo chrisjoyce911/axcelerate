@@ -45,12 +45,14 @@ type Instance struct {
 	Duration                  string            `json:"DURATION"`
 	DomainID                  int               `json:"DOMAINID"`
 	State                     string            `json:"STATE"`
-	GroupedCourseID           int               `json:"GROUPEDCOURSEID"`
-	GroupedCourseName         string            `json:"GROUPEDCOURSENAME"`
+	GroupedCourseID           *int              `json:"GROUPEDCOURSEID"`
+	GroupedCourseName         *string           `json:"GROUPEDCOURSENAME"`
 	GroupedCourseSimultaneous bool              `json:"GROUPEDCOURSEISSIMULTANEOUS"`
 	GroupedMaxParticipants    int               `json:"GROUPEDMAXPARTICIPANTS"`
 	GroupedParticipants       int               `json:"GROUPEDPARTICIPANTS"`
 	TrainingCategory          interface{}       `json:"TRAININGCATEGORY"`
+	GSTType                   int               `json:"GST_TYPE"`
+	Status                    string            `json:"STATUS"`
 }
 
 // LinkedElearning represents the structure for linked e-learning data
@@ -70,9 +72,21 @@ type ComplexDate struct {
 	EndTime          string      `json:"ENDTIME"`   // Keep as string for parsing flexibility
 	TrainerContactID int         `json:"TRAINERCONTACTID"`
 	Location         string      `json:"LOCATION"`
+	Address          string      `json:"ADDRESS"`
 	RoomID           int         `json:"ROOMID"`
 	VenueContactID   interface{} `json:"VENUECONTACTID"`  // Flexible to handle null, string, or int
 	State            *string     `json:"STATE,omitempty"` // Pointer to handle null or missing values
+	Trainers         []Trainer   `json:"TRAINERS"`
+}
+
+// Trainer models each entry in the COMPLEXDATES[].TRAINERS array
+type Trainer struct {
+	FinishDateAndTimeOverride interface{} `json:"FINISHDATEANDTIMEOVERRIDE"`
+	FKComplexID               int         `json:"FKCOMPLEXID"`
+	PackUp                    bool        `json:"PACKUP"`
+	TrainerContactID          int         `json:"FKTRAINERCONTACTID"`
+	SetUp                     bool        `json:"SETUP"`
+	StartDateAndTimeOverride  interface{} `json:"STARTDATEANDTIMEOVERRIDE"`
 }
 
 /*

@@ -66,8 +66,8 @@ func main() {
 
 	// courseEnrolments(10148651)
 	// savedReport()
-	// getCoursesInstanceDetail()
-	// getCoursesInstanceSearch()
+	getCoursesInstanceDetail()
+	getCoursesInstanceSearch()
 	// courseEnrolmentStatus()
 	// templateEmail()
 
@@ -75,7 +75,7 @@ func main() {
 
 	// updateFinCode(client)
 
-	invoiceVoid()
+	// invoiceVoid()
 
 }
 
@@ -316,7 +316,7 @@ func getInvoices() {
 
 func getCoursesInstanceDetail() {
 
-	instanceID := 1977505
+	instanceID := 2014519
 
 	i, reps, _ := client.Courses.GetCoursesInstanceDetail(instanceID, "w")
 
@@ -329,7 +329,7 @@ func getCoursesInstanceDetail() {
 
 func getCoursesInstanceSearch() {
 
-	instanceID := 1977505
+	instanceID := 2014519
 
 	args := map[string]string{
 		"instanceID": fmt.Sprintf("%d", instanceID), // Convert contactID to string
