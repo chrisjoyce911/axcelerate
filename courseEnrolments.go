@@ -17,6 +17,7 @@ type Enrolment struct {
 	OwnerID             int        `json:"OWNERID"`
 	AmountPaid          *float32   `json:"AMOUNTPAID"` // Nullable
 	Code                string     `json:"CODE"`
+	Coupon              *string    `json:"CUSTOMFIELD_COUPON"`      // Nullable
 	CompeteName         *string    `json:"CUSTOMFIELD_COMPETENAME"` // Nullable
 	PriceBeat           []string   `json:"CUSTOMFIELD_PRICEBEAT"`
 	ELA                 *string    `json:"CUSTOMFIELD_PFAQUIZ"`     // Nullable
