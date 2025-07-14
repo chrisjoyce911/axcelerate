@@ -66,8 +66,8 @@ func main() {
 
 	// courseEnrolments(10148651)
 	// savedReport()
-	getCoursesInstanceDetail()
-	getCoursesInstanceSearch()
+	//getCoursesInstanceDetail()
+	// getCoursesInstanceSearch()
 	// courseEnrolmentStatus()
 	// templateEmail()
 
@@ -76,6 +76,32 @@ func main() {
 	// updateFinCode(client)
 
 	// invoiceVoid()
+
+	transact()
+}
+
+func transact() {
+
+	params := map[string]string{
+		"amount":      "59",
+		"ContactID":   "14518907",
+		"invoiceID":   "3643466",
+		"description": "Stripe Payment pi_3RkeLoHiVYttPAwh1dmGSw6f",
+	}
+
+	i, reps, err := client.Accounting.CreateTransaction(params)
+
+	log.Println("-----")
+	log.Printf("Transaction\n%+v", i)
+	log.Println("-----")
+	log.Printf("Body\n%s", reps.Body)
+	log.Println("-----")
+	if err != nil {
+		log.Printf("%+v", err.Error())
+	} else {
+		log.Printf("No error!")
+	}
+	log.Println("-----")
 
 }
 

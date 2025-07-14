@@ -3,6 +3,9 @@ package axcelerate
 import (
 	"encoding/json"
 	"fmt"
+	"time"
+
+	jsontime "github.com/liamylian/jsontime/v2/v2"
 )
 
 // CoursesService handles all interactions with Contact
@@ -168,6 +171,44 @@ type InvoiceSummary struct {
 	InvoiceDate       string  `json:"INVOICEDATE"`       // Invoice creation date
 	IsVoid            bool    `json:"ISVOID"`            // Indicates if the invoice is void
 	IsPaid            bool    `json:"ISPAID"`            // Indicates if the invoice is paid
+}
+
+// TransactionFragment represents a fragment of a transaction,
+// such as a payment applied to a particular invoice or credit note.
+type TransactionFragment struct {
+	InvoiceID    *StringInt  `json:"INVOICEID"`                                // InvoiceID is the ID of the invoice this fragment is applied to (nullable).
+	CreditNoteID *StringInt  `json:"CREDITNOTEID"`                             // CreditNoteID is the ID of the credit note if this fragment is related to one (nullable).
+	LockedDate   *time.Time  `json:"LOCKEDDATE" time_format:"axc_date_hours"`  // LockedDate is the date when the fragment was locked, if applicable (nullable).
+	AppliedDate  *time.Time  `json:"APPLIEDDATE" time_format:"axc_date_hours"` // AppliedDate is the date when this fragment was applied (nullable).
+	IsLocked     *bool       `json:"ISLOCKED"`                                 // IsLocked is a flag or identifier for whether this fragment is locked (nullable).
+	Amount       StringFloat `json:"AMOUNT"`                                   // Amount is the amount applied in this fragment.
+	FragmentID   StringInt   `json:"FRAGMENTID"`                               // FragmentID is the unique identifier for this fragment.
+}
+
+// Transaction represents a single transaction object as returned by the accounting API.
+type Transaction struct {
+	TransactionID         StringInt             `json:"TRANSACTIONID"`                          // TransactionID is the unique identifier for the transaction.
+	ChequeNr              *string               `json:"CHEQUENR"`                               // ChequeNr is the cheque number, if applicable (nullable).
+	ContactID             StringInt             `json:"CONTACTID"`                              // ContactID is the ID of the contact the transaction is associated with.
+	GUID                  string                `json:"GUID"`                                   // GUID is the globally unique identifier for this transaction.
+	ChequeDrawer          *string               `json:"CHEQUEDRAWER"`                           // ChequeDrawer is the name of the cheque drawer (nullable, for cheque payments).
+	Start                 *time.Time            `json:"START" time_format:"axc_date_hours"`     // Start is the transaction start time (nullable).
+	UnassignedAmount      StringInt             `json:"UNASSIGNEDAMOUNT"`                       // UnassignedAmount is any remaining amount not applied to invoices.
+	Reference             *string               `json:"REFERENCE"`                              // Reference is the reference or receipt number for the transaction (nullable).
+	IsCompleted           bool                  `json:"ISCOMPLETED"`                            // IsCompleted indicates whether the transaction is completed.
+	TransDate             time.Time             `json:"TRANSDATE" time_format:"axc_date_hours"` // TransDate is the date and time the transaction was made.
+	Finish                *time.Time            `json:"FINISH" time_format:"axc_date_hours"`    // Finish is the transaction finish time (nullable).
+	BankName              *string               `json:"BANKNAME"`                               // BankName is the name of the bank (nullable, for cheque payments).
+	PaymentMethodID       StringInt             `json:"PAYMENTMETHODID"`                        // PaymentMethodID is the ID for the payment method used (e.g., 1=Cash, 2=Credit Card, etc.).
+	TransactionProviderID StringInt             `json:"TRANSACTIONPROVIDERID"`                  // TransactionProviderID is the provider ID for this transaction.
+	TransactionTypeID     StringInt             `json:"TRANSACTIONTYPEID"`                      // TransactionTypeID is the type of transaction.
+	Organisation          *StringInt            `json:"ORGANISATION"`                           // Organisation is the name of the associated organisation (nullable).
+	OrgID                 *int                  `json:"ORGID"`                                  // OrgID is the unique identifier of the organisation (nullable).
+	BankBSB               *string               `json:"BANKBSB"`                                // BankBSB is the BSB number for the bank (nullable, 6-digit string, cheque payments).
+	Currency              string                `json:"CURRENCY"`                               // Currency is the currency code for the transaction (e.g., "AUD").
+	Fragments             []TransactionFragment `json:"FRAGMENTS"`                              // Fragments contains one or more fragments (e.g., how payment is applied to invoices).
+	Description           *string               `json:"DESCRIPTION"`                            // Description is an optional description for the transaction (nullable).
+	Amount                StringFloat           `json:"AMOUNT"`                                 // Amount is the dollar amount of the transaction.
 }
 
 type InvoiceCollection []InvoiceSummary
@@ -371,4 +412,47 @@ func (s *AccountingService) InvoiceVoid(invoiceGUID string) (bool, *Response, er
 
 	return false, resp, err
 
+}
+
+// CreateTransaction sends a POST request to create a new accounting transaction.
+//
+// Allowed params (all should be provided in the 'parms' map):
+//
+//	contactID        (required, numeric)   - The contact ID this transaction is for (payer).
+//	amount           (required, numeric)   - Transaction amount in dollars.
+//	invoiceID        (optional, numeric)   - If provided, applies this transaction to the given invoice ID.
+//	paymentMethodID  (optional, numeric)   - Payment method: 1=Cash, 2=Credit Card (default), 4=Direct Deposit, 5=Cheque, 6=EFTPOS.
+//	transDate        (optional, datetime)  - Date of the transaction. Format: "2006-01-02 15:04". Defaults to now.
+//	reference        (optional, string)    - An optional reference or receipt number.
+//	description      (optional, string)    - An optional description for the transaction.
+//	ChequeNr         (optional, string)    - Cheque number (only for paymentMethodID=5).
+//	ChequeDrawer     (optional, string)    - Cheque drawer (only for paymentMethodID=5).
+//	BankName         (optional, string)    - Bank name (only for paymentMethodID=5).
+//	BankBSB          (optional, string)    - 6-digit BSB number (only for paymentMethodID=5).
+//
+// Returns:
+//
+//	The created Transaction object, the API Response, and any error encountered.
+func (s *AccountingService) CreateTransaction(parms map[string]string) (*Transaction, *Response, error) {
+
+	var obj Transaction
+
+	if len(parms) == 0 {
+		parms = map[string]string{}
+	}
+
+	resp, err := do(s.client, "POST", Params{parms: parms, u: "/accounting/transaction/"}, obj)
+
+	if err != nil {
+		return nil, resp, err
+	}
+
+	var json = jsontime.ConfigWithCustomTimeFormat
+	jsontime.AddTimeFormatAlias("axc_datetime", "2006-01-02 15:04:05")
+	jsontime.AddTimeFormatAlias("axc_date_hours", "2006-01-02 15:04")
+
+	// Unmarshal the response body into the result Transaction
+	err = json.Unmarshal([]byte(resp.Body), &obj)
+
+	return &obj, resp, err
 }
