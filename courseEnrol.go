@@ -6,10 +6,10 @@ import (
 )
 
 type Enrol struct {
-	InvoiceID int `json:"InvoiceID"`
-	ContactID int `json:"ContactID"`
-	LearnerID int `json:"LearnerID"`
-	Amount    int `json:"Amount"`
+	InvoiceID int     `json:"InvoiceID"`
+	ContactID int     `json:"ContactID"`
+	LearnerID int     `json:"LearnerID"`
+	Amount    float64 `json:"Amount"`
 }
 
 /*
@@ -107,10 +107,10 @@ func (s *CoursesService) CourseEnrol(parms map[string]string) (*Enrol, *Response
 
 // enrolEnteral is the internal data structure for processing enrolments
 type enrolEnteral struct {
-	InvoiceID int `json:"INVOICEID"`
-	ContactID int `json:"CONTACTID"`
-	LearnerID int `json:"LEARNERID"`
-	Amount    int `json:"AMOUNT"`
+	InvoiceID int     `json:"INVOICEID"`
+	ContactID int     `json:"CONTACTID"`
+	LearnerID int     `json:"LEARNERID"`
+	Amount    float64 `json:"AMOUNT,string"`
 }
 
 func convertEnteralToEnrol(internalEnrol enrolEnteral) (*Enrol, error) {
