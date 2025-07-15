@@ -69,7 +69,7 @@ func main() {
 	//getCoursesInstanceDetail()
 	// getCoursesInstanceSearch()
 	// courseEnrolmentStatus()
-	// templateEmail()
+	templateEmail()
 
 	// getVenueDetail()
 
@@ -77,7 +77,7 @@ func main() {
 
 	// invoiceVoid()
 
-	transact()
+	//transact()
 }
 
 func transact() {
@@ -267,8 +267,18 @@ func getVenueDetail() {
 
 func templateEmail() {
 
+	// p := axcelerate.TemplateEmailParams{
+	// 	PlanID:                  95745,
+	// 	ContactID:               11300044,
+	// 	InstanceID:              1977505,
+	// 	InvoiceID:               3378756,
+	// 	Subject:                 "Booking Confirmation - Australia Wide First Aid",
+	// 	Type:                    "w",
+	// 	InvoiceAttachmentPlanID: 3440,
+	// }
+
 	p := axcelerate.TemplateEmailParams{
-		PlanID:                  95745,
+		PlanID:                  16247,
 		ContactID:               11300044,
 		InstanceID:              1977505,
 		InvoiceID:               3378756,

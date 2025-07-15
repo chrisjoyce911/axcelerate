@@ -55,6 +55,13 @@ func NewClient(apitoken, wstoken string, options ...Option) (*Client, error) {
 		ratePer:    time.Minute,
 	}
 
+	// If no custom httpClient provided, set default with timeout
+	if s.httpClient == nil {
+		s.httpClient = &http.Client{
+			Timeout: 10 * time.Second,
+		}
+	}
+
 	for _, applyOpt := range options {
 		applyOpt(s)
 	}

@@ -44,3 +44,22 @@ type Settings struct {
 	rate       int
 	ratePer    time.Duration
 }
+
+// Add this to your options.go file (or wherever your Option funcs live)
+
+// Timeout sets the timeout for the HTTP client. If HttpClient is provided, it modifies that client. Otherwise, it's used when creating the default client.
+func Timeout(timeout time.Duration) Option {
+	return func(s *Settings) {
+		if s.httpClient != nil {
+			s.httpClient.Timeout = timeout
+		} else {
+			// Store a dummy client with the timeout, will be used in NewClient
+			s.httpClient = &http.Client{Timeout: timeout}
+		}
+	}
+}
+
+// Example usage:
+// c, _ := NewClient(token, ws, Timeout(10*time.Second))
+// or, override other options as needed
+// c, _ := NewClient(token, ws, HttpClient(myClient), Timeout(25*time.Second))
