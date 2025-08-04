@@ -2,7 +2,6 @@ package axcelerate
 
 import (
 	"fmt"
-	"log"
 
 	jsontime "github.com/liamylian/jsontime/v2/v2"
 
@@ -61,7 +60,7 @@ type ReportList []struct {
 func (s *ReportService) SavedReportRun(reportID int, parms map[string]string) (SavedReport, *Response, error) {
 	var obj SavedReport
 
-	fmt.Printf("SavedReportRun : %+v", parms)
+	// fmt.Printf("SavedReportRun : %+v", parms)
 
 	if len(parms) == 0 {
 		parms = map[string]string{}
@@ -69,11 +68,11 @@ func (s *ReportService) SavedReportRun(reportID int, parms map[string]string) (S
 
 	parms["reportID"] = fmt.Sprintf("%d", reportID)
 
-	fmt.Printf("SavedReportRun : %+v", parms)
+	// fmt.Printf("SavedReportRun : %+v", parms)
 
-	for key, value := range parms {
-		log.Printf("Key: %s, Value: %s", key, value)
-	}
+	// for key, value := range parms {
+	// 	log.Printf("Key: %s, Value: %s", key, value)
+	// }
 
 	url := "/report/saved/run"
 	resp, err := do(s.client, "POST", Params{parms: parms, u: url}, obj)
@@ -125,9 +124,9 @@ func (s *ReportService) SavedReportWarehousedRun(reportID int, displayLength int
 		parms = map[string]string{}
 	}
 
-	for key, value := range parms {
-		log.Printf("Key: %s, Value: %s", key, value)
-	}
+	// for key, value := range parms {
+	// 	log.Printf("Key: %s, Value: %s", key, value)
+	// }
 
 	url := "/report/saved/run"
 	resp, err := do(s.client, "POST", Params{parms: parms, u: url}, obj)
