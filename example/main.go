@@ -1,18 +1,14 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"log"
 	"os"
-	"path/filepath"
-	"time"
 
 	"github.com/chrisjoyce911/axcelerate"
 	"github.com/joho/godotenv"
 )
 
-// EmailResponse struct
+// EmailResponse struct for handling email responses
 type EmailResponse struct {
 	FailedCount    int      `json:"FAILEDCOUNT"`
 	Message        string   `json:"MESSAGE"`
@@ -24,525 +20,131 @@ type EmailResponse struct {
 var client *axcelerate.Client
 
 func main() {
-
-	// // JSON response string
-	// responseJSON := `{"FAILEDCOUNT":0,"MESSAGE":"1 Email(s) sent successfully. ","ERRORS":[],"ATTEMPTEDCOUNT":1,"SUCCESSCOUNT":1}`
-
-	// // Unmarshal the JSON into the EmailResponse struct
-	// var emailResponse EmailResponse
-	// err := json.Unmarshal([]byte(responseJSON), &emailResponse)
-	// if err != nil {
-	// 	log.Fatalf("Error unmarshalling JSON: %v", err)
-	// }
-
-	// // Print the result
-	// log.Printf("emailResponse.FailedCount: %+v\n", emailResponse.FailedCount)
-	// log.Printf("emailResponse.Message: %+v\n", emailResponse.Message)
-	// log.Printf("emailResponse.AttemptedCount: %+v\n", emailResponse.AttemptedCount)
-	// log.Printf("emailResponse.SuccessCount: %+v\n", emailResponse.SuccessCount)
-	// log.Printf("emailResponse.Errors: %+v\n", emailResponse.Errors)
-
-	// log.Fatalln("done")
-
 	_ = godotenv.Load()
 
 	var apitoken string = os.Getenv("AXCELERATE_APITOKEN")
 	var wstoken string = os.Getenv("AXCELERATE_WSTOKEN")
 	var baseURL string = os.Getenv("AXCELERATE_BASEURL")
 
-	fmt.Println(apitoken)
-	fmt.Println(wstoken)
-	fmt.Println(baseURL)
+	fmt.Println("API Token:", apitoken)
+	fmt.Println("WS Token:", wstoken)
+	fmt.Println("Base URL:", baseURL)
 
 	client, _ = axcelerate.NewClient(apitoken, wstoken, axcelerate.RateLimit(10), axcelerate.BaseURL(baseURL))
 
-	// savedReportList(client)
-	// savedReport(client)
-	// contactCertificate(client)
-	// contactSearch(client)
-	// contactEnrolments(14446094)
-	// contactEnrolments(14365825)
-	// contactCertificate(client)
-
-	// courseEnrolments(10148651)
-	// savedReport()
-	//getCoursesInstanceDetail()
-	// getCoursesInstanceSearch()
-	// courseEnrolmentStatus()
-	templateEmail()
-
-	// getVenueDetail()
-
-	// updateFinCode(client)
-
-	// invoiceVoid()
-
-	//transact()
-}
-
-func transact() {
-
-	params := map[string]string{
-		"amount":      "59",
-		"ContactID":   "14518907",
-		"invoiceID":   "3643466",
-		"description": "Stripe Payment pi_3RkeLoHiVYttPAwh1dmGSw6f",
-	}
-
-	i, reps, err := client.Accounting.CreateTransaction(params)
-
-	log.Println("-----")
-	log.Printf("Transaction\n%+v", i)
-	log.Println("-----")
-	log.Printf("Body\n%s", reps.Body)
-	log.Println("-----")
-	if err != nil {
-		log.Printf("%+v", err.Error())
-	} else {
-		log.Printf("No error!")
-	}
-	log.Println("-----")
-
-}
-
-func invoiceVoid() {
-
-	guid := "DEF95391-7FDF-4A92-8D3F7717123F0881"
-
-	i, reps, err := client.Accounting.InvoiceVoid(guid)
-
-	fmt.Printf("%t %+v %s", i, reps.Body, err.Error())
-
-}
-
-func updateFinCode(client *axcelerate.Client) {
-	ids := []string{
-		"2003904", "2006097", "2010906", "2010906", "2006095", "2006097", "2006095", "2003904", "2010908", "2010906",
-		"2006095", "2006097", "2003904", "2010906", "2003907", "2006097", "2010907", "2010907", "2006097", "2010908",
-		"2006095", "2006095", "2003907", "2010906", "2003907", "2010907", "2006095", "2006101", "2010906", "2006103",
-		"2006103", "2006097", "2003907", "2006103", "2006097", "2006097", "2010907", "2010907", "2010907", "2006101",
-		"2003904", "2006101", "2010907", "2006097", "2003904", "2006097", "2010906", "2003907", "2010907", "2006097",
-		"2006099", "2010907", "2006099", "2010908", "2010907", "2003904", "2006095", "2006095", "2010906", "2010906",
-		"2003907", "2006101", "2010907", "2006103", "2003907", "2010907", "2010908", "2010907", "2006099", "2006095",
-		"2006101", "2006099", "2006103", "2006103", "2010908", "2006099", "2006099", "2006097", "2006103", "2010908",
-		"2010907", "2006099", "2010907", "2010907", "2010908",
-	}
-
-	for _, id := range ids {
-		params := map[string]string{
-			"finCodeID": "10076",
-			"type":      "w",
-			"ID":        id,
-		}
-
-		_, resp, err := client.Courses.UpdateInstanceDetails(params)
-		if err != nil {
-			log.Printf("Error updating finCodeID for ID %s: %v", id, err)
-			continue
-		}
-
-		log.Printf("Updated ID %s with Response Status Code: %v", id, resp.StatusCode)
-	}
-}
-
-func findME(client *axcelerate.Client) (*string, *string, error) {
-	params := map[string]string{"name": "John"}
-
-	contacts, resp, err := client.Contact.SearchContacts(params)
-
-	log.Printf("Response Body: %v\n", resp.Body)
-	log.Printf("Response Status Code: %v\n", resp.StatusCode)
-
-	if err != nil {
-		return nil, &resp.Body, fmt.Errorf("API error: %v", err)
-	}
-
-	if len(contacts) > 1 {
-		return &contacts[1].GivenName, &resp.Body, nil
-	}
-
-	return nil, &resp.Body, fmt.Errorf("second contact not found")
-}
-
-func findMEandVerifyUSI(client *axcelerate.Client) (bool, error) {
-	params := map[string]string{"name": "John"}
-
-	contacts, resp, err := client.Contact.SearchContacts(params)
-
-	log.Printf("Response Body: %v\n", resp.Body)
-	log.Printf("Response Status Code: %v\n", resp.StatusCode)
-
-	if err != nil {
-		return false, fmt.Errorf("API error: %v", err)
-	}
-
-	if len(contacts) > 1 {
-		status, _, err := client.Contact.VerifyUSI(contacts[1].ContactID)
-		if err != nil {
-			return false, fmt.Errorf("API error: %v", err)
-		}
-
-		return status.UsiVerified, nil
-	}
-
-	return false, fmt.Errorf("second contact not found")
-}
-
-func paymentVerify() {
-
-	payment, res, err := client.Accounting.PaymentVerify("82A45263-0C31-49F3-B3C7196331B5AFCAcc")
-
-	// Log payment details on success
-	if payment != nil && payment.ErrorResponse != nil {
-		log.Printf("Payment Details: %+v", payment.ErrorResponse)
-	} else {
-		log.Printf("Payment Details: <nil>")
-	}
-
-	if err != nil {
-		log.Printf("Error: %v", err)
-		if payment != nil && payment.ErrorResponse != nil {
-			log.Printf("Error Details: %+v", payment.ErrorResponse)
-		}
-		// log.Printf("Response: %+v", res)
+	// Check for command line argument to run specific example
+	if len(os.Args) > 1 {
+		example := os.Args[1]
+		runExample(example)
 		return
 	}
 
-	// Log payment details on success
-	if payment != nil {
-		log.Printf("Payment Details: %+v", payment)
-	} else {
-		log.Printf("Payment Details: <nil>")
-	}
-	log.Printf("Response: %+v", res)
+	// Default: run contactNoteAddExample if no argument provided
+	fmt.Println("No example specified. Running default contactNoteAddExample...")
+	fmt.Println("Use: go run main.go <example_name> to run specific examples")
+	fmt.Println("Run: go run main.go help for list of available examples")
+	contactNoteAddExample()
 }
 
-func savedReport() {
-	offsetRows := 0
+// runExample runs the specified example function
+func runExample(example string) {
+	switch example {
+	case "help":
+		showHelp()
 
-	parms := map[string]string{}
+	// Contact Examples
+	case "contactNoteAdd":
+		contactNoteAddExample()
+	case "contactSearch":
+		contactSearch()
+	case "contactEnrolments":
+		contactEnrolments(14446094) // Default contact ID
+	case "findME":
+		findME(client)
+	case "findMEandVerifyUSI":
+		findMEandVerifyUSI(client)
 
-	parms["offsetRows"] = fmt.Sprintf("%d", offsetRows)
+	// Course Examples
+	case "courseEnrolmentStatus":
+		courseEnrolmentStatus()
+	case "courseEnrolments":
+		courseEnrolments(10148651) // Default contact ID
+	case "courseEnrolment":
+		courseEnrolment()
+	case "getCoursesInstanceDetail":
+		getCoursesInstanceDetail()
+	case "getCoursesInstanceSearch":
+		getCoursesInstanceSearch()
+	case "updateInstanceMaxParticipants":
+		updateInstanceMaxParticipants()
+	case "updateFinCode":
+		updateFinCode()
 
-	parms["filterOverride"] = ` [
- {
-     "VALUE2": "0",
-     "OPERATOR": "BETWEEN N Days",
-     "DISPLAY": "Workshop Start Date",
-     "NAME": "workshops.pstartdate",
-     "VALUE": "0"
- }]`
+	// Accounting Examples
+	case "transact":
+		transact()
+	case "invoiceVoid":
+		invoiceVoid()
+	case "paymentVerify":
+		paymentVerify()
+	case "getInvoices":
+		getInvoices()
 
-	savedReport, _, err := client.Report.SavedReportRun(85957, parms)
+	// Template & Report Examples
+	case "templateEmail":
+		templateEmail()
+	case "savedReport":
+		savedReport()
+	case "savedReportList":
+		savedReportList()
 
-	if err != nil {
-		fmt.Print(err)
+	// Venue & Media Examples
+	case "getVenueDetail":
+		getVenueDetail()
+	case "contactCertificate":
+		contactCertificate()
+
+	default:
+		fmt.Printf("Unknown example: %s\n", example)
+		fmt.Println("Run: go run main.go help for list of available examples")
 	}
-
-	fmt.Print(savedReport.Data)
-	// for w := range workshops {
-	// 	c, _, err := client.Courses.UpdateInstanceMaxParticipants(workshops[w], "w", max)
-
-	// 	log.Printf("%d\t %s\n", c.InstanceID, c.Message)
-	// 	if err != nil {
-	// 		fmt.Print(err)
-	// 	}
-
-	// }
-
 }
 
-func getVenueDetail() {
-
-	contactID := 12228659
-
-	i, reps, _ := client.Venue.Venue(contactID)
-
-	je, _ := json.MarshalIndent(i, "", "\t")
-	fmt.Printf("e: \n%s", je)
-
-	fmt.Printf("%+v\n", reps.Body)
-
-}
-
-func templateEmail() {
-
-	// p := axcelerate.TemplateEmailParams{
-	// 	PlanID:                  95745,
-	// 	ContactID:               11300044,
-	// 	InstanceID:              1977505,
-	// 	InvoiceID:               3378756,
-	// 	Subject:                 "Booking Confirmation - Australia Wide First Aid",
-	// 	Type:                    "w",
-	// 	InvoiceAttachmentPlanID: 3440,
-	// }
-
-	p := axcelerate.TemplateEmailParams{
-		PlanID:                  16247,
-		ContactID:               11300044,
-		InstanceID:              1977505,
-		InvoiceID:               3378756,
-		Subject:                 "Booking Confirmation - Australia Wide First Aid",
-		Type:                    "w",
-		InvoiceAttachmentPlanID: 3440,
-	}
-
-	eUpdate, reps, err := client.Template.TemplateEmail(p)
-
-	if err != nil {
-		fmt.Printf("Body: %s", reps.Body)
-		fmt.Print(err.Error())
-		return
-	}
-
-	fmt.Printf("eUpdate%+v", eUpdate)
-
-}
-
-func courseEnrolmentStatus() {
-
-	contactID := 11300044
-	instanceID := 1977505
-
-	// i, _, err := client.Courses.GetCoursesInstanceDetail(instanceID, "w")
-
-	// //
-
-	parms := map[string]string{}
-
-	// currentTime := time.Now()
-	// formattedDate := currentTime.Format("02/01/2006")
-
-	// $quizKey        = "ELA:" .  $courseDataArr['instanceID'] . ":" . $pd['contactID'];
-	// "https://assessment.australiawidefirstaid.com.au/?k="
-
-	// parms["customField_PFAquiz"] = "Complete"
-	// parms["customField_PFAquizlink"] = "https://assessment.australiawidefirstaid.com.au/?k=ELA:1997276:11300044"
-	// parms["customField_PFAquizdate"] = formattedDate
-	// parms["customField_terms"] = "Yes"
-
-	parms["logType"] = "Booked"
-	parms["theMethod"] = "Online"
-
-	eUpdate, reps, err := client.Courses.CourseEnrolmentUpdate(contactID, instanceID, "w", parms)
-
-	if err != nil {
-		fmt.Print(err)
-		return
-	}
-
-	fmt.Printf("Body%s\n", reps.Body)
-
-	fmt.Printf("eUpdate%+v", eUpdate)
-
-}
-
-func getInvoices() {
-
-	contactID := 11300044
-
-	i, reps, _ := client.Accounting.Invoices(contactID, nil)
-
-	je, _ := json.MarshalIndent(i, "", "\t")
-	fmt.Printf("e: \n%s", je)
-
-	fmt.Printf("%+v\n", reps.Body)
-
-}
-
-func getCoursesInstanceDetail() {
-
-	instanceID := 2014519
-
-	i, reps, _ := client.Courses.GetCoursesInstanceDetail(instanceID, "w")
-
-	je, _ := json.MarshalIndent(i, "", "\t")
-	fmt.Printf("e: \n%s", je)
-
-	fmt.Printf("%+v\n", reps.Body)
-
-}
-
-func getCoursesInstanceSearch() {
-
-	instanceID := 2014519
-
-	args := map[string]string{
-		"instanceID": fmt.Sprintf("%d", instanceID), // Convert contactID to string
-		"type":       "w",                           // Convert workshopID to string
-
-	}
-
-	// i, reps, err := client.Courses.GetCoursesInstanceSearch(args)
-
-	i, _, err := client.Courses.GetCoursesInstanceSearch(args)
-
-	// je, _ := json.MarshalIndent(i, "", "\t")
-	// fmt.Printf("e: \n%s", je)
-
-	fmt.Printf("%+v\n", i)
-
-	fmt.Printf("err %+v\n", err)
-
-}
-
-func courseEnrolment() {
-
-	contactID := 11300044
-	instanceID := 1997276
-
-	i, _, err := client.Courses.GetCoursesInstanceDetail(instanceID, "w")
-
-	//
-
-	parms := map[string]string{}
-
-	currentTime := time.Now()
-	formattedDate := currentTime.Format("02/01/2006")
-
-	// $quizKey        = "ELA:" .  $courseDataArr['instanceID'] . ":" . $pd['contactID'];
-	// "https://assessment.australiawidefirstaid.com.au/?k="
-
-	parms["customField_PFAquiz"] = "Complete"
-	parms["customField_PFAquizlink"] = "https://assessment.australiawidefirstaid.com.au/?k=ELA:1997276:11300044"
-	parms["customField_PFAquizdate"] = formattedDate
-	parms["customField_terms"] = "Yes"
-
-	cert, reps, err := client.Courses.CourseEnrolmentUpdate(contactID, int(i.LinkedClassID), "p", parms)
-
-	if err != nil {
-		fmt.Print(err)
-		return
-	}
-
-	fmt.Printf("%+v\n", reps)
-
-	fmt.Printf("%+v", cert)
-
-}
-
-func savedReportList() {
-
-	cert, _, err := client.Report.SavedReportList()
-
-	if err != nil {
-		fmt.Print(err)
-		return
-	}
-
-	fmt.Printf("%+v", cert)
-
-}
-
-func contactCertificate() {
-
-	cert, _, err := client.Contact.ContactVerifyCertificate("8058765-9441274")
-
-	if err != nil {
-		fmt.Print(err)
-		return
-	}
-
-	fmt.Printf("%+v", cert)
-
-}
-
-func courseEnrolments(contactID int) {
-
-	parms := map[string]string{}
-
-	parms["contactID"] = fmt.Sprintf("%d", contactID)
-
-	enrolments, _, err := client.Courses.GetEnrolments(parms)
-
-	if err != nil {
-		fmt.Print(err)
-		return
-	}
-
-	for e := range enrolments {
-		log.Printf("%d\t%s\t%d\n", enrolments[e].EnrolmentID, enrolments[e].Code, enrolments[e].ContactID)
-
-	}
-
-}
-
-func ContactCertificate() {
-
-	cert, _, err := client.Contact.ContactEnrolmentsCertificate(12787538)
-
-	if err != nil {
-		fmt.Print(err)
-		return
-	}
-
-	saveMediaToDisk(cert, "./example/")
-
-}
-
-func saveMediaToDisk(media axcelerate.Media, directory string) error {
-	err := os.MkdirAll(directory, 0755)
-	if err != nil {
-		return err
-	}
-
-	filePath := filepath.Join(directory, media.FileName)
-	err = os.WriteFile(filePath, media.Data, 0644)
-	return err
-}
-
-func contactEnrolments(contactID int) {
-
-	parms := map[string]string{}
-	enrolments, resp, err := client.Contact.ContactEnrolments(contactID, parms)
-
-	if err != nil {
-		fmt.Println(err.Error())
-		fmt.Println(resp.Body)
-		return
-	}
-
-	for e := range enrolments {
-		log.Printf("%d\t %s\n", enrolments[e].EnrolID, enrolments[e].Code)
-
-	}
-
-}
-
-func contactSearch() {
-
-	parms := map[string]string{"emailAddress": "chris@joyce.au"}
-	contacts, _, err := client.Contact.ContactSearch(parms)
-
-	if err != nil {
-		fmt.Print(err)
-		return
-	}
-
-	for c := range contacts {
-		log.Printf("%d\t %s\n", contacts[c].ContactID, contacts[c].EmailAddress)
-
-	}
-
-}
-
-func UpdateInstanceMaxParticipants() {
-
-	max := 10
-	workshops := []int{
-		1904663,
-		1904664,
-		1913826,
-	}
-
-	for w := range workshops {
-		c, _, err := client.Courses.UpdateInstanceMaxParticipants(workshops[w], "w", max)
-
-		log.Printf("%d\t %s\n", c.InstanceID, c.Message)
-		if err != nil {
-			fmt.Print(err)
-		}
-
-	}
-
+// showHelp displays all available examples
+func showHelp() {
+	fmt.Println("Available Examples:")
+	fmt.Println()
+	fmt.Println("Contact Examples:")
+	fmt.Println("  contactNoteAdd           - Add a note to a contact")
+	fmt.Println("  contactSearch            - Search for contacts by email")
+	fmt.Println("  contactEnrolments        - Get contact enrollments")
+	fmt.Println("  findME                   - Basic contact search")
+	fmt.Println("  findMEandVerifyUSI       - Contact search with USI verification")
+	fmt.Println()
+	fmt.Println("Course Examples:")
+	fmt.Println("  courseEnrolmentStatus    - Update course enrollment status")
+	fmt.Println("  courseEnrolments         - Get course enrollments")
+	fmt.Println("  courseEnrolment          - Update course enrollment with custom fields")
+	fmt.Println("  getCoursesInstanceDetail - Get course instance details")
+	fmt.Println("  getCoursesInstanceSearch - Search course instances")
+	fmt.Println("  updateInstanceMaxParticipants - Update max participants")
+	fmt.Println("  updateFinCode            - Bulk update financial codes")
+	fmt.Println()
+	fmt.Println("Accounting Examples:")
+	fmt.Println("  transact                 - Create transactions")
+	fmt.Println("  invoiceVoid              - Void invoices")
+	fmt.Println("  paymentVerify            - Verify payments")
+	fmt.Println("  getInvoices              - Get invoices for a contact")
+	fmt.Println()
+	fmt.Println("Template & Report Examples:")
+	fmt.Println("  templateEmail            - Send template emails")
+	fmt.Println("  savedReport              - Run saved reports")
+	fmt.Println("  savedReportList          - Get list of saved reports")
+	fmt.Println()
+	fmt.Println("Venue & Media Examples:")
+	fmt.Println("  getVenueDetail           - Get venue details")
+	fmt.Println("  contactCertificate       - Get contact certificates")
+	fmt.Println()
+	fmt.Println("Usage: go run main.go <example_name>")
+	fmt.Println("Example: go run main.go contactNoteAdd")
 }
