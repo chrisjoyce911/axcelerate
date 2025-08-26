@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/chrisjoyce911/axcelerate"
+	"github.com/chrisjoyce911/axcelerate/example/files"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -72,7 +73,7 @@ func TestFindME(t *testing.T) {
 			assert.NoError(t, err, "Client creation should not return an error")
 
 			// Call the findME function
-			result, respBody, err := findME(client)
+			result, respBody, err := files.FindME(client)
 
 			// Validate the result
 			if tc.expectedErr != "" {
@@ -150,7 +151,7 @@ func TestMockServerFindME(t *testing.T) {
 			defer mockServer.Close()
 
 			// Call the findME function
-			result, respBody, err := findME(mockClient)
+			result, respBody, err := files.FindME(mockClient)
 
 			// Validate the result
 			if tc.expectedErr != "" {
@@ -258,7 +259,7 @@ func TestFindMEandVerifyUSI(t *testing.T) {
 			assert.NoError(t, err)
 
 			// Call the findMEandVerifyUSI function
-			result, err := findMEandVerifyUSI(client)
+			result, err := files.FindMEandVerifyUSI(client)
 
 			// Validate results
 			if tc.expectedErr != "" {
@@ -351,7 +352,7 @@ func TestMockServerFindMEandVerifyUSI(t *testing.T) {
 			mockServer, mockClient := axcelerate.SetupMockServer(t, tc.mockResponses)
 			defer mockServer.Close()
 
-			result, err := findMEandVerifyUSI(mockClient)
+			result, err := files.FindMEandVerifyUSI(mockClient)
 
 			if tc.expectedErr != "" {
 				assert.Error(t, err)

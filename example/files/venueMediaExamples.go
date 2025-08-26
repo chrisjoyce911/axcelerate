@@ -1,12 +1,14 @@
-package main
+package files
 
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/chrisjoyce911/axcelerate"
 )
 
-// getVenueDetail demonstrates getting venue details
-func getVenueDetail() {
+// GetVenueDetail demonstrates getting venue details
+func GetVenueDetail(client *axcelerate.Client) {
 	contactID := 12228659
 
 	i, reps, _ := client.Venue.Venue(contactID)

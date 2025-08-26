@@ -1,13 +1,15 @@
-package main
+package files
 
 import (
 	"fmt"
 	"log"
 	"time"
+
+	"github.com/chrisjoyce911/axcelerate"
 )
 
-// courseEnrolmentStatus demonstrates how to update course enrollment status
-func courseEnrolmentStatus() {
+// CourseEnrolmentStatus demonstrates how to update course enrollment status
+func CourseEnrolmentStatus(client *axcelerate.Client) {
 	contactID := 11300044
 	instanceID := 1977505
 
@@ -28,7 +30,7 @@ func courseEnrolmentStatus() {
 }
 
 // courseEnrolments demonstrates how to get course enrollments
-func courseEnrolments(contactID int) {
+func CourseEnrolments(contactID int, client *axcelerate.Client) {
 	parms := map[string]string{}
 	parms["contactID"] = fmt.Sprintf("%d", contactID)
 
@@ -44,12 +46,12 @@ func courseEnrolments(contactID int) {
 	}
 }
 
-// courseEnrolment demonstrates course enrollment update with custom fields
-func courseEnrolment() {
+// CourseEnrolment demonstrates course enrollment update with custom fields
+func CourseEnrolment(client *axcelerate.Client) {
 	contactID := 11300044
 	instanceID := 1997276
 
-	i, _, err := client.Courses.GetCoursesInstanceDetail(instanceID, "w")
+	i, _, _ := client.Courses.GetCoursesInstanceDetail(instanceID, "w")
 
 	parms := map[string]string{}
 
@@ -72,8 +74,8 @@ func courseEnrolment() {
 	fmt.Printf("%+v", cert)
 }
 
-// getCoursesInstanceDetail demonstrates how to get course instance details
-func getCoursesInstanceDetail() {
+// GetCoursesInstanceDetail demonstrates how to get course instance details
+func GetCoursesInstanceDetail(client *axcelerate.Client) {
 	instanceID := 2014519
 
 	i, reps, _ := client.Courses.GetCoursesInstanceDetail(instanceID, "w")
@@ -83,7 +85,7 @@ func getCoursesInstanceDetail() {
 }
 
 // getCoursesInstanceSearch demonstrates how to search course instances
-func getCoursesInstanceSearch() {
+func GetCoursesInstanceSearch(client *axcelerate.Client) {
 	instanceID := 2014519
 
 	args := map[string]string{
@@ -97,8 +99,8 @@ func getCoursesInstanceSearch() {
 	fmt.Printf("Error: %+v\n", err)
 }
 
-// updateInstanceMaxParticipants demonstrates updating max participants for workshops
-func updateInstanceMaxParticipants() {
+// UpdateInstanceMaxParticipants demonstrates updating max participants for workshops
+func UpdateInstanceMaxParticipants(client *axcelerate.Client) {
 	max := 10
 	workshops := []int{
 		1904663,
@@ -116,8 +118,8 @@ func updateInstanceMaxParticipants() {
 	}
 }
 
-// updateFinCode demonstrates bulk updating of financial codes
-func updateFinCode() {
+// UpdateFinCode demonstrates bulk updating of financial codes
+func UpdateFinCode(client *axcelerate.Client) {
 	ids := []string{
 		"2003904", "2006097", "2010906", "2010906", "2006095", "2006097", "2006095", "2003904", "2010908", "2010906",
 		"2006095", "2006097", "2003904", "2010906", "2003907", "2006097", "2010907", "2010907", "2006097", "2010908",

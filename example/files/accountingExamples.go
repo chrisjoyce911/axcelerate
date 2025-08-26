@@ -1,13 +1,15 @@
-package main
+package files
 
 import (
 	"encoding/json"
 	"fmt"
 	"log"
+
+	"github.com/chrisjoyce911/axcelerate"
 )
 
 // transact demonstrates creating a transaction
-func transact() {
+func Transact(client *axcelerate.Client) {
 	params := map[string]string{
 		"amount":      "59",
 		"ContactID":   "14518907",
@@ -30,8 +32,8 @@ func transact() {
 	log.Println("-----")
 }
 
-// invoiceVoid demonstrates voiding an invoice
-func invoiceVoid() {
+// InvoiceVoid demonstrates voiding an invoice
+func InvoiceVoid(client *axcelerate.Client) {
 	guid := "DEF95391-7FDF-4A92-8D3F7717123F0881"
 
 	i, reps, err := client.Accounting.InvoiceVoid(guid)
@@ -39,8 +41,8 @@ func invoiceVoid() {
 	fmt.Printf("%t %+v %s", i, reps.Body, err.Error())
 }
 
-// paymentVerify demonstrates payment verification
-func paymentVerify() {
+// PaymentVerify demonstrates payment verification
+func PaymentVerify(client *axcelerate.Client) {
 	payment, res, err := client.Accounting.PaymentVerify("82A45263-0C31-49F3-B3C7196331B5AFCAcc")
 
 	// Log payment details on success
@@ -67,8 +69,8 @@ func paymentVerify() {
 	log.Printf("Response: %+v", res)
 }
 
-// getInvoices demonstrates getting invoices for a contact
-func getInvoices() {
+// GetInvoices demonstrates getting invoices for a contact
+func GetInvoices(client *axcelerate.Client) {
 	contactID := 11300044
 
 	i, reps, _ := client.Accounting.Invoices(contactID, nil)

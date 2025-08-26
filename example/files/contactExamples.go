@@ -1,4 +1,4 @@
-package main
+package files
 
 import (
 	"fmt"
@@ -7,8 +7,8 @@ import (
 	"github.com/chrisjoyce911/axcelerate"
 )
 
-// contactNoteAddExample demonstrates how to add a note to a contact
-func contactNoteAddExample() {
+// ContactNoteAddExample demonstrates how to add a note to a contact
+func ContactNoteAddExample(client *axcelerate.Client) {
 	contactID := 11300044
 
 	params := map[string]string{
@@ -57,8 +57,8 @@ func contactNoteAddExample() {
 	log.Println("-----")
 }
 
-// contactSearch demonstrates how to search for contacts
-func contactSearch() {
+// ContactSearch demonstrates how to search for contacts
+func ContactSearch(client *axcelerate.Client) {
 	parms := map[string]string{"emailAddress": "chris@joyce.au"}
 	contacts, _, err := client.Contact.ContactSearch(parms)
 
@@ -72,8 +72,8 @@ func contactSearch() {
 	}
 }
 
-// contactEnrolments demonstrates how to get contact enrollments
-func contactEnrolments(contactID int) {
+// ContactEnrolments demonstrates how to get contact enrollments
+func ContactEnrolments(contactID int, client *axcelerate.Client) {
 	parms := map[string]string{}
 	enrolments, resp, err := client.Contact.ContactEnrolments(contactID, parms)
 
@@ -88,8 +88,8 @@ func contactEnrolments(contactID int) {
 	}
 }
 
-// contactCertificate demonstrates how to verify a certificate
-func contactCertificate() {
+// ContactCertificate demonstrates how to verify a certificate
+func ContactCertificate(client *axcelerate.Client) {
 	cert, _, err := client.Contact.ContactVerifyCertificate("8058765-9441274")
 
 	if err != nil {
@@ -100,8 +100,8 @@ func contactCertificate() {
 	fmt.Printf("%+v", cert)
 }
 
-// findME demonstrates basic contact search functionality
-func findME(client *axcelerate.Client) (*string, *string, error) {
+// FindME demonstrates basic contact search functionality
+func FindME(client *axcelerate.Client) (*string, *string, error) {
 	params := map[string]string{"name": "John"}
 
 	contacts, resp, err := client.Contact.SearchContacts(params)
@@ -120,8 +120,8 @@ func findME(client *axcelerate.Client) (*string, *string, error) {
 	return nil, &resp.Body, fmt.Errorf("second contact not found")
 }
 
-// findMEandVerifyUSI demonstrates contact search and USI verification
-func findMEandVerifyUSI(client *axcelerate.Client) (bool, error) {
+// FindMEandVerifyUSI demonstrates contact search and USI verification
+func FindMEandVerifyUSI(client *axcelerate.Client) (bool, error) {
 	params := map[string]string{"name": "John"}
 
 	contacts, resp, err := client.Contact.SearchContacts(params)

@@ -6,6 +6,9 @@ import (
 
 	"github.com/chrisjoyce911/axcelerate"
 	"github.com/joho/godotenv"
+
+	// Import your example packages
+	"github.com/chrisjoyce911/axcelerate/example/files"
 )
 
 // EmailResponse struct for handling email responses
@@ -43,7 +46,7 @@ func main() {
 	fmt.Println("No example specified. Running default contactNoteAddExample...")
 	fmt.Println("Use: go run main.go <example_name> to run specific examples")
 	fmt.Println("Run: go run main.go help for list of available examples")
-	contactNoteAddExample()
+	files.ContactNoteAddExample(client)
 }
 
 // runExample runs the specified example function
@@ -52,57 +55,61 @@ func runExample(example string) {
 	case "help":
 		showHelp()
 
-	// Contact Examples
+		// Contact Examples
 	case "contactNoteAdd":
-		contactNoteAddExample()
+		files.ContactNoteAddExample(client)
 	case "contactSearch":
-		contactSearch()
+		files.ContactSearch(client)
 	case "contactEnrolments":
-		contactEnrolments(14446094) // Default contact ID
+		files.ContactEnrolments(14446094, client) // Default contact ID
 	case "findME":
-		findME(client)
+		files.FindME(client)
 	case "findMEandVerifyUSI":
-		findMEandVerifyUSI(client)
+		files.FindMEandVerifyUSI(client)
 
-	// Course Examples
+		// Course Examples
 	case "courseEnrolmentStatus":
-		courseEnrolmentStatus()
+		files.CourseEnrolmentStatus(client)
 	case "courseEnrolments":
-		courseEnrolments(10148651) // Default contact ID
+		files.CourseEnrolments(10148651, client) // Default contact ID
 	case "courseEnrolment":
-		courseEnrolment()
+		files.CourseEnrolment(client)
 	case "getCoursesInstanceDetail":
-		getCoursesInstanceDetail()
+		files.GetCoursesInstanceDetail(client)
 	case "getCoursesInstanceSearch":
-		getCoursesInstanceSearch()
+		files.GetCoursesInstanceSearch(client)
 	case "updateInstanceMaxParticipants":
-		updateInstanceMaxParticipants()
+		files.UpdateInstanceMaxParticipants(client)
 	case "updateFinCode":
-		updateFinCode()
+		files.UpdateFinCode(client)
 
 	// Accounting Examples
 	case "transact":
-		transact()
+		files.Transact(client)
 	case "invoiceVoid":
-		invoiceVoid()
+		files.InvoiceVoid(client)
 	case "paymentVerify":
-		paymentVerify()
+		files.PaymentVerify(client)
 	case "getInvoices":
-		getInvoices()
+		files.GetInvoices(client)
 
 	// Template & Report Examples
 	case "templateEmail":
-		templateEmail()
+		files.TemplateEmail(client)
 	case "savedReport":
-		savedReport()
+		files.SavedReport(client)
 	case "savedReportList":
-		savedReportList()
+		files.SavedReportList(client)
 
 	// Venue & Media Examples
 	case "getVenueDetail":
-		getVenueDetail()
+		files.GetVenueDetail(client)
 	case "contactCertificate":
-		contactCertificate()
+		files.ContactCertificate(client)
+
+	// Venue & Media Examples
+	case "activeTrainer":
+		files.ActiveTrainer(client)
 
 	default:
 		fmt.Printf("Unknown example: %s\n", example)

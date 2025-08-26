@@ -1,4 +1,4 @@
-package main
+package files
 
 import (
 	"fmt"
@@ -6,8 +6,8 @@ import (
 	"github.com/chrisjoyce911/axcelerate"
 )
 
-// templateEmail demonstrates sending template emails
-func templateEmail() {
+// TemplateEmail demonstrates sending template emails
+func TemplateEmail(client *axcelerate.Client) {
 	p := axcelerate.TemplateEmailParams{
 		PlanID:                  16247,
 		ContactID:               11300044,
@@ -29,8 +29,8 @@ func templateEmail() {
 	fmt.Printf("eUpdate%+v", eUpdate)
 }
 
-// savedReport demonstrates running a saved report
-func savedReport() {
+// SavedReport demonstrates running a saved report
+func SavedReport(client *axcelerate.Client) {
 	offsetRows := 0
 
 	parms := map[string]string{}
@@ -53,8 +53,8 @@ func savedReport() {
 	fmt.Print(savedReport.Data)
 }
 
-// savedReportList demonstrates getting a list of saved reports
-func savedReportList() {
+// SavedReportList demonstrates getting a list of saved reports
+func SavedReportList(client *axcelerate.Client) {
 	cert, _, err := client.Report.SavedReportList()
 
 	if err != nil {

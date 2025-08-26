@@ -26,6 +26,7 @@ type Client struct {
 	APIEndSux string
 
 	Contact    *ContactService
+	Trainer    *TrainerService
 	Courses    *CoursesService
 	Accounting *AccountingService
 	Report     *ReportService
@@ -81,6 +82,7 @@ func NewClient(apitoken, wstoken string, options ...Option) (*Client, error) {
 	}
 
 	c.Contact = &ContactService{client: c}
+	c.Trainer = &TrainerService{client: c}
 	c.Courses = &CoursesService{client: c}
 	c.Accounting = &AccountingService{client: c}
 	c.Report = &ReportService{client: c}

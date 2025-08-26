@@ -58,47 +58,67 @@ This directory contains organized examples for using the Axcelerate Go SDK. The 
    AXCELERATE_BASEURL=your_base_url
    ```
 
-2. Run specific examples using command line arguments:
+2. Run specific examples using one of these methods:
+
+   **Option A: Using the convenience script (recommended):**
 
    ```bash
-   go run main.go <example_name>
+   ./run.sh <example_name>
+   ./run.sh help
+   ```
+
+   **Option B: Using go run with all files:**
+
+   ```bash
+   go run main.go contactExamples.go courseExamples.go accountingExamples.go templateReportExamples.go venueMediaExamples.go <example_name>
+   ```
+
+   **Option C: Build and run:**
+
+   ```bash
+   go build -o examples .
+   ./examples <example_name>
    ```
 
 3. Get a list of all available examples:
 
    ```bash
-   go run main.go help
+   ./run.sh help
    ```
 
 4. Run the default example (contactNoteAdd):
    ```bash
-   go run main.go
+   ./run.sh
    ```
 
 ### Example Commands
 
 ```bash
 # Contact examples
-go run main.go contactNoteAdd
-go run main.go contactSearch
-go run main.go contactEnrolments
+./run.sh contactNoteAdd
+./run.sh contactSearch
+./run.sh contactEnrolments
 
 # Course examples
-go run main.go courseEnrolmentStatus
-go run main.go getCoursesInstanceDetail
+./run.sh courseEnrolmentStatus
+./run.sh getCoursesInstanceDetail
 
 # Accounting examples
-go run main.go transact
-go run main.go paymentVerify
+./run.sh transact
+./run.sh paymentVerify
 
 # Template & Report examples
-go run main.go templateEmail
-go run main.go savedReport
+./run.sh templateEmail
+./run.sh savedReport
 
 # Venue & Media examples
-go run main.go getVenueDetail
-go run main.go contactCertificate
+./run.sh getVenueDetail
+./run.sh contactCertificate
 ```
+
+### Why not `go run *.go`?
+
+The `go run *.go` command includes test files (`*_test.go`) which cannot be run directly with `go run`. The convenience script `run.sh` solves this by only including the necessary source files.
 
 ## Note Add Example
 

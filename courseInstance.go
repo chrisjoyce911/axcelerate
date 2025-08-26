@@ -76,11 +76,11 @@ type ComplexDate struct {
 	RoomID           int         `json:"ROOMID"`
 	VenueContactID   interface{} `json:"VENUECONTACTID"`  // Flexible to handle null, string, or int
 	State            *string     `json:"STATE,omitempty"` // Pointer to handle null or missing values
-	Trainers         []Trainer   `json:"TRAINERS"`
+	Trainers         []Trainers  `json:"TRAINERS"`
 }
 
-// Trainer models each entry in the COMPLEXDATES[].TRAINERS array
-type Trainer struct {
+// Trainers models each entry in the COMPLEXDATES[].TRAINERS array
+type Trainers struct {
 	FinishDateAndTimeOverride interface{} `json:"FINISHDATEANDTIMEOVERRIDE"`
 	FKComplexID               int         `json:"FKCOMPLEXID"`
 	PackUp                    bool        `json:"PACKUP"`
