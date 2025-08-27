@@ -13,23 +13,23 @@ type TrainerService struct {
 }
 
 type Trainer struct {
-	CONSULTANTID                 int         `json:"CONSULTANTID"`
-	CONTACTHRSTIMEFRAME          string      `json:"CONTACTHRSTIMEFRAME"`
-	EMPTYPE                      string      `json:"EMPTYPE"`
-	DOMAINID                     interface{} `json:"DOMAINID"`
-	CONENTRYDATE                 *time.Time  `json:"CONENTRYDATE" time_format:"axc_date_hours"`
-	CONSULTANTUPDATEDDATETIMEUTC *time.Time  `json:"CONSULTANTUPDATEDDATETIMEUTC" time_format:"axc_date_hours"`
-	CONTACTHRS                   int         `json:"CONTACTHRS"`
-	CONTACTID                    int         `json:"CONTACTID"`
-	IMAGE                        string      `json:"IMAGE"`
-	RATEAMOUNT                   string      `json:"RATEAMOUNT"`
-	NAME                         string      `json:"NAME"`
-	ACTIVE                       bool        `json:"ACTIVE"`
-	EXPERIENCE                   string      `json:"EXPERIENCE"`
-	PAYTIMEFRAME                 string      `json:"PAYTIMEFRAME"`
-	FILLINONLY                   bool        `json:"FILLINONLY"`
-	PAGE                         string      `json:"PAGE"`
-	EMAIL                        string      `json:"EMAIL"`
+	ConsultantID                 int         `json:"CONSULTANTID"`
+	ContactHrsTimeFrame          string      `json:"CONTACTHRSTIMEFRAME"`
+	EmpType                      string      `json:"EMPTYPE"`
+	DomainID                     interface{} `json:"DOMAINID"`
+	ConEntryDate                 *time.Time  `json:"CONENTRYDATE" time_format:"axc_date_hours"`
+	ConsultantUpdatedDateTimeUTC *time.Time  `json:"CONSULTANTUPDATEDDATETIMEUTC" time_format:"axc_date_hours"`
+	ContactHrs                   int         `json:"CONTACTHRS"`
+	ContactID                    int         `json:"CONTACTID"`
+	Image                        string      `json:"IMAGE"`
+	RateAmount                   string      `json:"RATEAMOUNT"`
+	Name                         string      `json:"NAME"`
+	Active                       bool        `json:"ACTIVE"`
+	Experience                   string      `json:"EXPERIENCE"`
+	PayTimeFrame                 string      `json:"PAYTIMEFRAME"`
+	FillInOnly                   bool        `json:"FILLINONLY"`
+	Page                         string      `json:"PAGE"`
+	Email                        string      `json:"EMAIL"`
 }
 
 // GetTrainer Interacts with a specific trainer.
