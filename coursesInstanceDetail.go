@@ -36,7 +36,7 @@ type InstanceDetail struct {
 	ParticipantVacancy int         `json:"PARTICIPANTVACANCY"`
 	Public             bool        `json:"PUBLIC"`
 	StartDate          time.Time   `json:"STARTDATE"`
-	TrainerContactID   int         `json:"TRAINERCONTACTID"`
+	TrainerContactID   IntOrZero   `json:"TRAINERCONTACTID"`
 	VenueContactID     int         `json:"VENUECONTACTID"`
 	Status             string      `json:"STATUS"`
 	SyncDateDescriptor bool        `json:"SYNCDATEDESCRIPTOR"`

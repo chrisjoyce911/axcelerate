@@ -70,7 +70,7 @@ type ComplexDate struct {
 	Date             string      `json:"DATE"`      // Keep as string for parsing flexibility
 	StartTime        string      `json:"STARTTIME"` // Keep as string for parsing flexibility
 	EndTime          string      `json:"ENDTIME"`   // Keep as string for parsing flexibility
-	TrainerContactID int         `json:"TRAINERCONTACTID"`
+	TrainerContactID IntOrZero   `json:"TRAINERCONTACTID"`
 	Location         string      `json:"LOCATION"`
 	Address          string      `json:"ADDRESS"`
 	RoomID           int         `json:"ROOMID"`

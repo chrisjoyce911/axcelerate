@@ -76,7 +76,7 @@ func CourseEnrolment(client *axcelerate.Client) {
 
 // GetCoursesInstanceDetail demonstrates how to get course instance details
 func GetCoursesInstanceDetail(client *axcelerate.Client) {
-	instanceID := 2014519
+	instanceID := 378210
 
 	i, reps, _ := client.Courses.GetCoursesInstanceDetail(instanceID, "w")
 
