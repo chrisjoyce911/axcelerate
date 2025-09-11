@@ -32,7 +32,7 @@ type Instance struct {
 	ParticipantVacancy        int               `json:"PARTICIPANTVACANCY"`
 	StartDate                 time.Time         `json:"STARTDATE" time_format:"axc_datetime"`
 	FinishDate                time.Time         `json:"FINISHDATE" time_format:"axc_datetime"`
-	TrainerContactID          int               `json:"TRAINERCONTACTID"`
+	TrainerContactID          IntOrZero         `json:"TRAINERCONTACTID"`
 	VirtualClassroomID        interface{}       `json:"VIRTUALCLASSROOMID"`
 	Count                     int               `json:"COUNT"`
 	LinkedClassID             int               `json:"LINKEDCLASSID"`

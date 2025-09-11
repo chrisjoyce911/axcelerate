@@ -76,7 +76,9 @@ func CourseEnrolment(client *axcelerate.Client) {
 
 // GetCoursesInstanceDetail demonstrates how to get course instance details
 func GetCoursesInstanceDetail(client *axcelerate.Client) {
-	instanceID := 378210
+	// use the instance that previously caused parsing issues so we can confirm
+	// the tolerant IntOrZero unmarshaler handles empty TRAINERCONTACTID
+	instanceID := 1449401
 
 	i, reps, _ := client.Courses.GetCoursesInstanceDetail(instanceID, "w")
 

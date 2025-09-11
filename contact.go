@@ -183,9 +183,9 @@ type EnrolmentComplexdates struct {
 	StartTime time.Time `json:"STARTTIME" time_format:"axc_time_long"`
 	EndTime   time.Time `json:"ENDTIME" time_format:"axc_time_long"`
 
-	TrainerContactID int    `json:"TRAINERCONTACTID"`
-	Location         string `json:"LOCATION"`
-	RoomID           int    `json:"ROOMID"`
+	TrainerContactID IntOrZero `json:"TRAINERCONTACTID"`
+	Location         string    `json:"LOCATION"`
+	RoomID           int       `json:"ROOMID"`
 }
 
 // ContactOptions for Updateing
