@@ -137,6 +137,7 @@ type Response struct {
 	StatusCode    int    // e.g. 200
 	Body          string
 	ContentLength int64
+	DataWarning   []string // incorrect or missing data types detected when decoding
 }
 
 // newResponse creates a new Response for the provided http.Response.

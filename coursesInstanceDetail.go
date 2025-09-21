@@ -75,5 +75,9 @@ func (s *CoursesService) GetCoursesInstanceDetail(instanceID int, activityType s
 	}
 
 	err = json.Unmarshal([]byte(resp.Body), &obj)
+	// Collect data warnings for fields that may be poorly-typed
+	if resp != nil {
+		resp.DataWarning = CollectDataWarnings(&obj, []byte(resp.Body))
+	}
 	return obj, resp, err
 }

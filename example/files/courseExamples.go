@@ -84,6 +84,7 @@ func GetCoursesInstanceDetail(client *axcelerate.Client) {
 
 	fmt.Printf("Course Instance Detail: %+v\n", i)
 	fmt.Printf("Response Body: %+v\n", reps.Body)
+	fmt.Printf("Response DataWarning: %+v\n", reps.DataWarning)
 }
 
 // getCoursesInstanceSearch demonstrates how to search course instances
