@@ -11,3 +11,24 @@ This library is being initially developed for use with the [aXcelerate RESTFul S
 
 I would like to cover the entire aXcelerate RESTFul Service API and contributions are of course always welcome. See CONTRIBUTING.md for details.
 ```
+
+## Secrets (SOPS)
+
+`.env` is gitignored and never committed. The encrypted copy `.env.enc` **is**
+committed and is the portable source of truth — clone the repo on any machine and
+decrypt, rather than copying `.env` around by hand.
+
+```sh
+# after cloning or pulling
+sops -d --input-type dotenv --output-type dotenv .env.enc > .env
+
+# after changing .env — re-encrypt and commit the .enc file
+sops -e --input-type dotenv --output-type dotenv .env > .env.enc
+```
+
+Requires the personal age key at `~/.config/sops/age/keys.txt` (0600). On macOS
+sops looks in `~/Library/Application Support/sops/age/keys.txt`, so that path must
+symlink to it. Recipient: `age1yngetl7fdm7m0dlycfn3mfrgcvnj6ezeyjan2dppla78ndf7lsts3l5wve`.
+
+Note: sops's dotenv parser drops blank lines, so a decrypted `.env` may differ
+cosmetically from the original. Keys and values are preserved exactly.

@@ -1,0 +1,7 @@
+# Encrypt .env and its variants to Chris's personal age key.
+# Decrypt: sops -d --input-type dotenv --output-type dotenv .env.enc > .env
+creation_rules:
+  - path_regex: (^|/)\.env(\..*)?$
+    key_groups:
+      - age:
+          - age1yngetl7fdm7m0dlycfn3mfrgcvnj6ezeyjan2dppla78ndf7lsts3l5wve
