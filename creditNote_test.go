@@ -41,7 +41,7 @@ func TestAccountingService_CreateCreditNote(t *testing.T) {
 			UnitPriceGross: "59.00",
 			FinanceCode:    "14180",
 		}},
-		Reference: "payment 16607",
+		Date: "2026-08-26",
 	})
 	require.NoError(t, err)
 	require.NotNil(t, resp)
@@ -53,7 +53,9 @@ func TestAccountingService_CreateCreditNote(t *testing.T) {
 	assert.Contains(t, got.Get("aItem"), `"UNITPRICEGROSS":"59.00"`)
 	assert.Contains(t, got.Get("aItem"), `"TAXPERCENT":"0.00"`)
 	assert.Contains(t, got.Get("aItem"), `"FINANCECODE":"14180"`)
-	assert.Equal(t, "payment 16607", got.Get("DATA"))
+	// The API documents creditnoteDate as optional and then refuses the
+	// call without it (production, 26 Aug 2026).
+	assert.Equal(t, "2026-08-26", got.Get("creditnoteDate"))
 
 	// The response the caller acts on.
 	assert.Equal(t, 88123, int(note.CreditNoteID))
@@ -91,4 +93,26 @@ func TestAccountingService_CreditNotes(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, notes, 1)
 	assert.Equal(t, 88123, int(notes[0].CreditNoteID))
+}
+
+// Left empty, the client supplies today's date rather than reproducing
+// the API's UNDEFINED_DATE refusal.
+func TestAccountingService_CreateCreditNoteDefaultsDate(t *testing.T) {
+	var got url.Values
+	tclient := NewTestClient(func(req *http.Request) *http.Response {
+		body, _ := io.ReadAll(req.Body)
+		got, _ = url.ParseQuery(string(body))
+		return &http.Response{StatusCode: 200,
+			Body: io.NopCloser(bytes.NewBufferString(creditNoteBody)), Header: make(http.Header)}
+	})
+	client, _ := NewClient("", "", HttpClient(tclient))
+	s := &AccountingService{client: client}
+
+	_, _, err := s.CreateCreditNote(CreditNoteRequest{
+		ContactID: 1, FirstName: "A", Surname: "B",
+		Items: []CreditNoteItem{{Description: "x", Qty: 1, ItemCode: "CREDIT",
+			TaxPercent: "0.00", UnitPriceGross: "1.00"}},
+	})
+	require.NoError(t, err)
+	assert.NotEmpty(t, got.Get("creditnoteDate"), "always sent")
 }

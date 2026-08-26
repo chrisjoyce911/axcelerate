@@ -3,6 +3,7 @@ package axcelerate
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 )
 
 // CreditNoteItem is one line of a credit note. The field names mirror
@@ -46,12 +47,12 @@ type CreditNoteRequest struct {
 	FirstName string
 	Surname   string
 	Items     []CreditNoteItem
-	// Optional header-level fields, sent only when set.
-	FinanceCode    string
-	CostCentreCode string
-	ServiceDate    string
-	DomainID       *int
-	Reference      string
+	// Date is the credit note's date, YYYY-MM-DD. The API documents it
+	// as OPTIONAL and then refuses the call without it —
+	// `key [UNDEFINED_DATE] doesn't exist in the request scope`
+	// (observed in production, 26 Aug 2026). Left empty, this client
+	// sends today's date rather than reproducing that error.
+	Date string
 }
 
 // CreateCreditNote records a credit note for a contact — money held for
@@ -72,6 +73,9 @@ type CreditNoteRequest struct {
 //	surname     string    contact's surname
 //	aItem       json      array of line items; each needs DESCRIPTION,
 //	                      QTY, ITEMCODE, TAXPERCENT, UNITPRICEGROSS
+//
+// creditnoteDate (YYYY-MM-DD) is documented as optional but the API
+// refuses the call without it; this client always sends one.
 //
 // Optional: FINANCECODE, COSTCENTRECODE, SERVICEDATE, DOMAINID, DATA.
 //
@@ -96,26 +100,19 @@ func (s *AccountingService) CreateCreditNote(req CreditNoteRequest) (*CreditNote
 		return nil, nil, fmt.Errorf("credit note: encoding items: %w", err)
 	}
 
+	date := req.Date
+	if date == "" {
+		date = time.Now().Format("2006-01-02")
+	}
+	// Header-level fields are contactID, firstname, surname,
+	// creditnoteDate and aItem — everything else (finance code, cost
+	// centre, service date, data) belongs on the LINE, not here.
 	parms := map[string]string{
-		"contactID": fmt.Sprintf("%d", req.ContactID),
-		"firstname": req.FirstName,
-		"surname":   req.Surname,
-		"aItem":     string(items),
-	}
-	if req.FinanceCode != "" {
-		parms["FINANCECODE"] = req.FinanceCode
-	}
-	if req.CostCentreCode != "" {
-		parms["COSTCENTRECODE"] = req.CostCentreCode
-	}
-	if req.ServiceDate != "" {
-		parms["SERVICEDATE"] = req.ServiceDate
-	}
-	if req.DomainID != nil {
-		parms["DOMAINID"] = fmt.Sprintf("%d", *req.DomainID)
-	}
-	if req.Reference != "" {
-		parms["DATA"] = req.Reference
+		"contactID":      fmt.Sprintf("%d", req.ContactID),
+		"firstname":      req.FirstName,
+		"surname":        req.Surname,
+		"creditnoteDate": date,
+		"aItem":          string(items),
 	}
 
 	var obj CreditNote
