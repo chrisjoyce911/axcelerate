@@ -17,7 +17,7 @@ type CreditNoteItem struct {
 	UnitPriceGross string  `json:"UNITPRICEGROSS"`           // Gross unit price as a decimal string
 	FinanceCode    string  `json:"FINANCECODE,omitempty"`    // Optional finance (account) code
 	CostCentreCode string  `json:"COSTCENTRECODE,omitempty"` // Optional cost centre
-	ServiceDate    string  `json:"SERVICEDATE,omitempty"`    // Optional service date
+	ServiceDate    string  `json:"SERVICEDATE,omitempty"`    // REQUIRED — see CreateCreditNote
 	DomainID       *int    `json:"DOMAINID,omitempty"`       // Optional domain
 	PartID         *int    `json:"PARTID,omitempty"`         // Optional part id
 	Data           *string `json:"DATA,omitempty"`           // Optional free-form data
@@ -74,10 +74,20 @@ type CreditNoteRequest struct {
 //	aItem       json      array of line items; each needs DESCRIPTION,
 //	                      QTY, ITEMCODE, TAXPERCENT, UNITPRICEGROSS
 //
-// creditnoteDate (YYYY-MM-DD) is documented as optional but the API
-// refuses the call without it; this client always sends one.
+// SERVICEDATE (YYYY-MM-DD) is documented as OPTIONAL on a line and is
+// not: without it every call fails with
 //
-// Optional: FINANCECODE, COSTCENTRECODE, SERVICEDATE, DOMAINID, DATA.
+//	http 500: key [UNDEFINED_DATE] doesn't exist in the request scope
+//
+// which names no field and reads like a server fault. It is not the
+// header date — creditnoteDate, creditNoteDate, date and every other
+// spelling change nothing; the date the endpoint wants is on each LINE.
+// This client fills a missing SERVICEDATE with the note's date so the
+// call cannot be made without one. (Established against the live API on
+// 26 Aug 2026, after six failed credits for real customers whose money
+// went unrecorded.)
+//
+// Optional: FINANCECODE, COSTCENTRECODE, DOMAINID, DATA.
 //
 // Usage:
 //
@@ -95,14 +105,23 @@ func (s *AccountingService) CreateCreditNote(req CreditNoteRequest) (*CreditNote
 	if len(req.Items) == 0 {
 		return nil, nil, fmt.Errorf("credit note: at least one item is required")
 	}
-	items, err := json.Marshal(req.Items)
-	if err != nil {
-		return nil, nil, fmt.Errorf("credit note: encoding items: %w", err)
-	}
-
 	date := req.Date
 	if date == "" {
 		date = time.Now().Format("2006-01-02")
+	}
+	// Every line needs a service date or the whole call fails; see the
+	// doc comment. Filling it here means a caller cannot get this wrong.
+	lines := make([]CreditNoteItem, len(req.Items))
+	copy(lines, req.Items)
+	for i := range lines {
+		if lines[i].ServiceDate == "" {
+			lines[i].ServiceDate = date
+		}
+	}
+
+	items, err := json.Marshal(lines)
+	if err != nil {
+		return nil, nil, fmt.Errorf("credit note: encoding items: %w", err)
 	}
 	// Header-level fields are contactID, firstname, surname,
 	// creditnoteDate and aItem — everything else (finance code, cost

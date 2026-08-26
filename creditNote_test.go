@@ -116,3 +116,57 @@ func TestAccountingService_CreateCreditNoteDefaultsDate(t *testing.T) {
 	require.NoError(t, err)
 	assert.NotEmpty(t, got.Get("creditnoteDate"), "always sent")
 }
+
+// SERVICEDATE is documented as optional on a line and is not: without it
+// aXcelerate answers "key [UNDEFINED_DATE] doesn't exist in the request
+// scope" and no credit is recorded. Six real customers' money went
+// unrecorded that way on 26 Aug 2026, so the client fills it in rather
+// than trusting a caller to remember.
+func TestCreateCreditNoteAlwaysSendsALineServiceDate(t *testing.T) {
+	var got url.Values
+	tclient := NewTestClient(func(req *http.Request) *http.Response {
+		body, _ := io.ReadAll(req.Body)
+		got, _ = url.ParseQuery(string(body))
+		return &http.Response{StatusCode: 200,
+			Body:   io.NopCloser(bytes.NewBufferString(creditNoteBody)),
+			Header: make(http.Header)}
+	})
+	client, _ := NewClient("", "", HttpClient(tclient))
+	s := &AccountingService{client: client}
+
+	_, _, err := s.CreateCreditNote(CreditNoteRequest{
+		ContactID: 14754152, FirstName: "Jinky", Surname: "Abayan", Date: "2026-08-26",
+		Items: []CreditNoteItem{{
+			Description: "Payment held", Qty: 1, ItemCode: "CREDIT",
+			TaxPercent: "0.00", UnitPriceGross: "59.00",
+		}},
+	})
+	require.NoError(t, err)
+	assert.Contains(t, got.Get("aItem"), `"SERVICEDATE":"2026-08-26"`,
+		"a line without a service date is a call that fails")
+}
+
+// A caller's own service date is kept — the fill is a floor, not a
+// rewrite.
+func TestCreateCreditNoteKeepsAGivenServiceDate(t *testing.T) {
+	var got url.Values
+	tclient := NewTestClient(func(req *http.Request) *http.Response {
+		body, _ := io.ReadAll(req.Body)
+		got, _ = url.ParseQuery(string(body))
+		return &http.Response{StatusCode: 200,
+			Body:   io.NopCloser(bytes.NewBufferString(creditNoteBody)),
+			Header: make(http.Header)}
+	})
+	client, _ := NewClient("", "", HttpClient(tclient))
+	s := &AccountingService{client: client}
+
+	_, _, err := s.CreateCreditNote(CreditNoteRequest{
+		ContactID: 1, FirstName: "A", Surname: "B", Date: "2026-08-26",
+		Items: []CreditNoteItem{{
+			Description: "x", Qty: 1, ItemCode: "CREDIT", TaxPercent: "0.00",
+			UnitPriceGross: "1.00", ServiceDate: "2026-09-12",
+		}},
+	})
+	require.NoError(t, err)
+	assert.Contains(t, got.Get("aItem"), `"SERVICEDATE":"2026-09-12"`)
+}
