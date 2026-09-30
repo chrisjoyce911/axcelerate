@@ -85,6 +85,15 @@ func TestCoursesService_GetCoursesInstanceDetail(t *testing.T) {
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("CoursesService.GetCoursesInstanceDetail() got = %v, want %v", got, tt.want)
 			}
+			// DataWarning (CollectDataWarnings, 6e8f30a) reports JSON keys the
+			// struct does not declare. This 2014 fixture has several —
+			// REPORTINGSTANDARD, UNITS, NOTICES — so warnings are the feature
+			// working, not noise. Assert they are produced, then compare the
+			// rest of the response as before.
+			if got1 != nil {
+				assert.NotEmpty(t, got1.DataWarning, "undeclared fixture keys should be reported")
+				got1.DataWarning = nil
+			}
 			if !reflect.DeepEqual(got1, tt.want1) {
 				t.Errorf("CoursesService.GetCoursesInstanceDetail() got1 = %v, want %v", got1, tt.want1)
 			}
