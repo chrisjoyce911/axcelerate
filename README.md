@@ -7,6 +7,15 @@ Provides a simple interface to theRESTFul API for interfacing with aXcelerate.
 
 This library is being initially developed for use with the [aXcelerate RESTFul Service API](https://admin.axcelerate.com.au/apidocs/), so API methods will likely be implemented in the order that they are needed by any project that accesses this service.
 
+## Undocumented endpoints
+
+Some endpoints the library wraps are live but missing from aXcelerate's published docs:
+
+- `GET /domains` — `Accounting.Domains()`: every domain id and name (135 on
+  staging and production, 29 Sep 2026). aXcelerate stores any `DOMAINID` on an
+  invoice line without checking it exists, so this list is the only way to
+  validate one before writing it.
+
 ## Contributing
 
 I would like to cover the entire aXcelerate RESTFul Service API and contributions are of course always welcome. See CONTRIBUTING.md for details.
