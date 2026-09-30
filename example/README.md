@@ -4,9 +4,11 @@ This directory contains organized examples for using the Axcelerate Go SDK. The 
 
 ## File Structure
 
-### Main Entry Point
+### Layout
 
-- `main.go` - Main application entry point with example function calls
+- `example/main.go` - entry point: picks an example by name
+- `files/` - the example functions, one file per area
+- `run.sh` - runs `go run ./example <name>`
 
 ### Example Categories
 
@@ -35,6 +37,9 @@ This directory contains organized examples for using the Axcelerate Go SDK. The 
 - `invoiceVoid()` - Void invoices
 - `paymentVerify()` - Verify payments
 - `getInvoices()` - Get invoices for a contact
+- `domains()` - List every domain id and name (`GET /domains`, undocumented by aXcelerate)
+- `invoiceFlow()` - Create an invoice, add a line, issue it, apply the payment — **writes a real invoice and payment; run it against staging**
+- `transactions()` - List a contact's transactions, including unassigned money
 
 #### Template & Report Examples (`templateReportExamples.go`)
 
@@ -58,6 +63,9 @@ This directory contains organized examples for using the Axcelerate Go SDK. The 
    AXCELERATE_BASEURL=your_base_url
    ```
 
+   `invoiceFlow` and `transact` write money. Point `AXCELERATE_BASEURL` at
+   staging (e.g. `https://yourorg.stg.axcelerate.com`) before running them.
+
 2. Run specific examples using one of these methods:
 
    **Option A: Using the convenience script (recommended):**
@@ -67,16 +75,16 @@ This directory contains organized examples for using the Axcelerate Go SDK. The 
    ./run.sh help
    ```
 
-   **Option B: Using go run with all files:**
+   **Option B: go run directly (from this directory):**
 
    ```bash
-   go run main.go contactExamples.go courseExamples.go accountingExamples.go templateReportExamples.go venueMediaExamples.go <example_name>
+   go run ./example <example_name>
    ```
 
    **Option C: Build and run:**
 
    ```bash
-   go build -o examples .
+   go build -o examples ./example
    ./examples <example_name>
    ```
 
@@ -104,7 +112,10 @@ This directory contains organized examples for using the Axcelerate Go SDK. The 
 ./run.sh getCoursesInstanceDetail
 
 # Accounting examples
-./run.sh transact
+./run.sh domains
+./run.sh transactions
+./run.sh invoiceFlow      # writes — staging only
+./run.sh transact         # writes — staging only
 ./run.sh paymentVerify
 
 # Template & Report examples
@@ -116,9 +127,11 @@ This directory contains organized examples for using the Axcelerate Go SDK. The 
 ./run.sh contactCertificate
 ```
 
-### Why not `go run *.go`?
+### Why `go run ./example`?
 
-The `go run *.go` command includes test files (`*_test.go`) which cannot be run directly with `go run`. The convenience script `run.sh` solves this by only including the necessary source files.
+`main.go` lives in `example/` and imports the example functions from the
+`files` package, so it is run as a package. `go run` on a package never
+includes its `*_test.go` files.
 
 ## Note Add Example
 

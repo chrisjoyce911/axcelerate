@@ -19,8 +19,26 @@ Some endpoints the library wraps are live but missing from aXcelerate's publishe
 ## Invoice writes — rules the API docs get wrong
 
 `CreateInvoice`, `AddInvoiceLines`, `ApproveInvoice`, `ApplyPayment` and
-`Transactions` enforce these before a request is sent. Each was established
-against the live API (most of them in production):
+`Transactions` enforce these before a request is sent. The order aXcelerate
+requires is create → add lines → approve → pay:
+
+```go
+a := client.Accounting
+inv, _, err := a.CreateInvoice(axcelerate.InvoiceRequest{
+	ContactID: 14518907, FirstName: "Chris", LastName: "Joyce",
+	Lines: []axcelerate.InvoiceLine{{Description: "Pocket Mask Training", Qty: 1,
+		UnitPriceGross: "19.00", TaxPercent: "0.00", DomainID: axcelerate.Int(5566)}},
+})
+_, err = a.AddInvoiceLines(inv.InvoiceID, axcelerate.InvoiceLine{Description: "Afterpay transaction fee",
+	Qty: 1, UnitPriceGross: "2.00", TaxPercent: "0.00", DomainID: axcelerate.Int(5494)})
+_, err = a.ApproveInvoice(inv.InvGUID) // a draft cannot take a payment
+txn, _, err := a.ApplyPayment(axcelerate.InvoicePayment{
+	ContactID: 14518907, InvoiceID: inv.InvoiceID, Amount: "21.00"}) // dollars
+```
+
+The full, runnable version is `invoiceFlow` in [`example/`](example/README.md).
+Each rule below was established against the live API (most of them in
+production):
 
 - **The Bill To surname is `lastname`.** The docs say `surname`; aXcelerate
   ignores it and stores `LASTNAME` null. `firstname` and `lastname` are both

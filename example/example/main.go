@@ -92,6 +92,12 @@ func runExample(example string) {
 		files.PaymentVerify(client)
 	case "getInvoices":
 		files.GetInvoices(client)
+	case "domains":
+		files.Domains(client)
+	case "invoiceFlow":
+		files.InvoiceFlow(client)
+	case "transactions":
+		files.Transactions(client)
 
 	// Template & Report Examples
 	case "templateEmail":
@@ -142,6 +148,9 @@ func showHelp() {
 	fmt.Println("  invoiceVoid              - Void invoices")
 	fmt.Println("  paymentVerify            - Verify payments")
 	fmt.Println("  getInvoices              - Get invoices for a contact")
+	fmt.Println("  domains                  - List every domain id and name")
+	fmt.Println("  invoiceFlow              - Create, add a line, issue, pay (writes! use staging)")
+	fmt.Println("  transactions             - List a contact's transactions")
 	fmt.Println()
 	fmt.Println("Template & Report Examples:")
 	fmt.Println("  templateEmail            - Send template emails")

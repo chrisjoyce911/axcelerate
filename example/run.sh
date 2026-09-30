@@ -1,6 +1,6 @@
 #!/bin/bash
-# Simple script to run examples without including test files
-
+# Run an example by name. `go run ./example` builds the example package
+# (main.go plus the files package it imports) without the test files.
+set -e
 cd "$(dirname "$0")"
-
-go run main.go contactExamples.go courseExamples.go accountingExamples.go templateReportExamples.go venueMediaExamples.go trainerExamples.go"$@"
+go run ./example "$@"
