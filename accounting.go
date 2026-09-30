@@ -394,7 +394,6 @@ func (s *AccountingService) PaymentVerify(reference string) (*FullPaymentRespons
 // InvoiceVoid Void an invoice. Note that invoices that have had payments applied cannot be voided.
 // Header			Type		Required	Default	Description
 // invoiceGUID		numeric		true				The invoiceGUID to void
-
 //
 // Only an ISSUED invoice can be voided. A draft (INVOICENR "AUTO") is
 // refused with HTTP 400 "An invoice without a invoice number cannot be
