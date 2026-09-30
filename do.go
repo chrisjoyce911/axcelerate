@@ -18,8 +18,8 @@ func (c *Client) Do(req AxRequest, v interface{}) (*Response, error) {
 
 	var body io.Reader
 
-	if req.method == "POST" {
-		body = strings.NewReader(req.data.Encode()) // Encode form data for POST
+	if req.method == "POST" || req.formBody {
+		body = strings.NewReader(req.data.Encode()) // Encode form data for POST (or an opted-in PUT)
 	} else {
 		req.url.RawQuery, _ = url.QueryUnescape(req.data.Encode()) // For non-POST, add query parameters
 	}
@@ -34,8 +34,8 @@ func (c *Client) Do(req AxRequest, v interface{}) (*Response, error) {
 	thisReq.Header.Set("apitoken", c.apitoken)
 	thisReq.Header.Set("wstoken", c.wstoken)
 
-	// Set Content-Type for POST requests
-	if req.method == "POST" {
+	// Set Content-Type for form bodies
+	if req.method == "POST" || req.formBody {
 		thisReq.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	}
 
@@ -63,6 +63,7 @@ func do(c *Client, m string, p Params, a interface{}) (*Response, error) {
 		return nil, err
 	}
 	req.method = m
+	req.formBody = p.body
 
 	resp, err := c.Do(*req, a)
 	if err != nil {

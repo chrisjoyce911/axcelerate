@@ -16,6 +16,34 @@ Some endpoints the library wraps are live but missing from aXcelerate's publishe
   invoice line without checking it exists, so this list is the only way to
   validate one before writing it.
 
+## Invoice writes — rules the API docs get wrong
+
+`CreateInvoice`, `AddInvoiceLines`, `ApproveInvoice`, `ApplyPayment` and
+`Transactions` enforce these before a request is sent. Each was established
+against the live API (most of them in production):
+
+- **The Bill To surname is `lastname`.** The docs say `surname`; aXcelerate
+  ignores it and stores `LASTNAME` null. `firstname` and `lastname` are both
+  required ("The Bill To Given Name and Surname fields cannot be empty").
+- **`invoiceDate` and `orderDate` are required** ("The invoice order date is
+  out of bounds"); the client defaults both to today.
+- **`ITEMCODE` must be on every line**, even as `""` — a line without the key
+  fails the whole request with "The invoice items are invalid."
+- **The invoice PUT's `aItem` replaces every line.** `AddInvoiceLines` reads
+  the invoice and re-sends the existing lines with their `ITEMID`; sending
+  only the new line deletes the rest. The JSON goes in the form body — a PUT's
+  query string does not survive `&`, `#` or `+` in a description.
+- **A draft invoice cannot take a payment — and a payment against one still
+  records the money**, as an unassigned receipt, while answering HTTP 400.
+  Retrying after that 400 pays twice. `ApplyPayment` refuses a draft before
+  sending anything; `ApproveInvoice` (by GUID) issues it first.
+- **Amounts are dollars**, as decimal strings — not a gateway's cents.
+- **`DOMAINID` is not validated** by aXcelerate; check ids against `Domains()`.
+- **A draft cannot be voided** — only an issued invoice.
+- **`Transaction` decoding:** `ORGANISATION` is a name, `ORGID` a quoted id and
+  `UNASSIGNEDAMOUNT` a decimal string. Before these were typed correctly a
+  payment that succeeded returned a decode error.
+
 ## Contributing
 
 I would like to cover the entire aXcelerate RESTFul Service API and contributions are of course always welcome. See CONTRIBUTING.md for details.

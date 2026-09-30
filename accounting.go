@@ -193,7 +193,7 @@ type Transaction struct {
 	GUID                  string                `json:"GUID"`                                   // GUID is the globally unique identifier for this transaction.
 	ChequeDrawer          *string               `json:"CHEQUEDRAWER"`                           // ChequeDrawer is the name of the cheque drawer (nullable, for cheque payments).
 	Start                 *time.Time            `json:"START" time_format:"axc_date_hours"`     // Start is the transaction start time (nullable).
-	UnassignedAmount      StringInt             `json:"UNASSIGNEDAMOUNT"`                       // UnassignedAmount is any remaining amount not applied to invoices.
+	UnassignedAmount      StringFloat           `json:"UNASSIGNEDAMOUNT"`                       // UnassignedAmount is any remaining amount not applied to invoices ("0", "61.36").
 	Reference             *string               `json:"REFERENCE"`                              // Reference is the reference or receipt number for the transaction (nullable).
 	IsCompleted           bool                  `json:"ISCOMPLETED"`                            // IsCompleted indicates whether the transaction is completed.
 	TransDate             time.Time             `json:"TRANSDATE" time_format:"axc_date_hours"` // TransDate is the date and time the transaction was made.
@@ -202,8 +202,8 @@ type Transaction struct {
 	PaymentMethodID       StringInt             `json:"PAYMENTMETHODID"`                        // PaymentMethodID is the ID for the payment method used (e.g., 1=Cash, 2=Credit Card, etc.).
 	TransactionProviderID StringInt             `json:"TRANSACTIONPROVIDERID"`                  // TransactionProviderID is the provider ID for this transaction.
 	TransactionTypeID     StringInt             `json:"TRANSACTIONTYPEID"`                      // TransactionTypeID is the type of transaction.
-	Organisation          *StringInt            `json:"ORGANISATION"`                           // Organisation is the name of the associated organisation (nullable).
-	OrgID                 *int                  `json:"ORGID"`                                  // OrgID is the unique identifier of the organisation (nullable).
+	Organisation          *string               `json:"ORGANISATION"`                           // Organisation is the payer's organisation NAME, e.g. "Chris Joyce" (nullable).
+	OrgID                 *StringInt            `json:"ORGID"`                                  // OrgID is the organisation id, sent as a string ("1143205") (nullable).
 	BankBSB               *string               `json:"BANKBSB"`                                // BankBSB is the BSB number for the bank (nullable, 6-digit string, cheque payments).
 	Currency              string                `json:"CURRENCY"`                               // Currency is the currency code for the transaction (e.g., "AUD").
 	Fragments             []TransactionFragment `json:"FRAGMENTS"`                              // Fragments contains one or more fragments (e.g., how payment is applied to invoices).
@@ -395,6 +395,10 @@ func (s *AccountingService) PaymentVerify(reference string) (*FullPaymentRespons
 // Header			Type		Required	Default	Description
 // invoiceGUID		numeric		true				The invoiceGUID to void
 
+//
+// Only an ISSUED invoice can be voided. A draft (INVOICENR "AUTO") is
+// refused with HTTP 400 "An invoice without a invoice number cannot be
+// voided." (staging, 30 Sep 2026) — remove a draft in the aXcelerate UI.
 func (s *AccountingService) InvoiceVoid(invoiceGUID string) (bool, *Response, error) {
 	var obj interface{}
 

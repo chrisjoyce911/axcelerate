@@ -96,13 +96,20 @@ func NewClient(apitoken, wstoken string, options ...Option) (*Client, error) {
 type Params struct {
 	parms map[string]string
 	u     string
+	// body sends parms as a form-encoded request body for a non-POST
+	// method. Without it a PUT puts them in the query string, unescaped —
+	// fine for a few plain values, but an aItem JSON array (spaces, '&',
+	// '#', '+' in a description) does not survive that. Opt-in so existing
+	// PUT callers keep their exact behaviour.
+	body bool
 }
 
 // A AxRequest manages communication with the axe API.
 type AxRequest struct {
-	data   *url.Values
-	method string
-	url    *url.URL
+	data     *url.Values
+	method   string
+	url      *url.URL
+	formBody bool // send data as a form body even when method is not POST
 }
 
 // addFormValues adds the parameters in opt as URL values parameters.
